@@ -8,7 +8,7 @@
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
     <style>
         body {
-            font-family:monospace;
+            font-family: Arial, sans-serif;
             padding: 20px;
             background-color: #f4f7fc;
         }
@@ -105,13 +105,13 @@
         </div>
 
         <!-- Информация о балансе -->
-        <div id="currencyInfo" class="currency-info">Ваш баланс: 0.00 ETH</div>
+        <div id="currencyInfo" class="currency-info">wallet not connected</div>
     </div>
 
     <script>
         // Проверка наличия MetaMask
         if (typeof window.ethereum === 'undefined') {
-            document.getElementById('walletStatus').innerText = 'Кошелек не подключен';
+            document.getElementById('currencyInfo').innerText = 'wallet not connected';
         } else {
             const updateBalances = async () => {
                 try {
@@ -120,7 +120,7 @@
                     const account = accounts[0];
 
                     if (!account) {
-                        document.getElementById('walletStatus').innerText = 'Кошелек не подключен';
+                        document.getElementById('currencyInfo').innerText = 'wallet not connected';
                         return;
                     }
 
@@ -130,7 +130,7 @@
 
                     // Проверка корректности суммы
                     if (isNaN(balanceEth)) {
-                        document.getElementById('walletStatus').innerText = 'Ошибка: неверный баланс';
+                        document.getElementById('currencyInfo').innerText = 'Ошибка: неверный баланс';
                         return;
                     }
 
@@ -167,7 +167,7 @@
                     updateSelectedCurrency(balanceEth, rates, currencyBalances);
                 } catch (error) {
                     console.error(error);
-                    document.getElementById('walletStatus').innerText = 'Ошибка при обновлении баланса';
+                    document.getElementById('currencyInfo').innerText = 'Ошибка при обновлении баланса';
                 }
             };
 
@@ -272,7 +272,7 @@
                 updateBalances();
             }).catch((error) => {
                 console.error("Ошибка подключения к кошельку:", error);
-                document.getElementById('walletStatus').innerText = 'Ошибка при подключении к кошельку';
+                document.getElementById('currencyInfo').innerText = 'Ошибка при подключении к кошельку';
             });
         }
     </script>
