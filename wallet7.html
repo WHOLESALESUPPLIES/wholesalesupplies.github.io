@@ -41,6 +41,22 @@
                     const accounts = await web3.eth.getAccounts();
                     const account = accounts[0];
 
+                    // Проверяем, что элемент существует перед обновлением
+                    const ethElem = document.getElementById('eth');
+                    const usdElem = document.getElementById('usd');
+                    const rubElem = document.getElementById('rub');
+                    const eurElem = document.getElementById('eur');
+                    const cnyElem = document.getElementById('cny');
+                    const ghsElem = document.getElementById('ghs');
+                    const ngnElem = document.getElementById('ngn');
+                    const kesElem = document.getElementById('kes');
+                    const zarElem = document.getElementById('zar');
+
+                    if (!ethElem || !usdElem || !rubElem || !eurElem || !cnyElem || !ghsElem || !ngnElem || !kesElem || !zarElem) {
+                        console.error("Не удалось найти элементы для отображения баланса.");
+                        return;
+                    }
+
                     // Получаем баланс в Wei и конвертируем в Ether
                     const balanceWei = await web3.eth.getBalance(account);
                     const balanceEth = parseFloat(web3.utils.fromWei(balanceWei, 'ether'));
@@ -67,15 +83,15 @@
                     const formatNumber = (num) => num.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
 
                     // Обновляем значения в выпадающем списке
-                    document.getElementById('eth').innerText = formatNumber(balanceEth);
-                    document.getElementById('usd').innerText = formatNumber(usd);
-                    document.getElementById('rub').innerText = formatNumber(rub);
-                    document.getElementById('eur').innerText = formatNumber(eur);
-                    document.getElementById('cny').innerText = formatNumber(cny);
-                    document.getElementById('ghs').innerText = formatNumber(ghs);
-                    document.getElementById('ngn').innerText = formatNumber(ngn);
-                    document.getElementById('kes').innerText = formatNumber(kes);
-                    document.getElementById('zar').innerText = formatNumber(zar);
+                    ethElem.innerText = formatNumber(balanceEth);
+                    usdElem.innerText = formatNumber(usd);
+                    rubElem.innerText = formatNumber(rub);
+                    eurElem.innerText = formatNumber(eur);
+                    cnyElem.innerText = formatNumber(cny);
+                    ghsElem.innerText = formatNumber(ghs);
+                    ngnElem.innerText = formatNumber(ngn);
+                    kesElem.innerText = formatNumber(kes);
+                    zarElem.innerText = formatNumber(zar);
 
                     // Отображаем выпадающий список
                     document.getElementById('currencySelect').style.display = 'block';
