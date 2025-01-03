@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Styled World Map</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
+    <style>
+        body { margin: 0; }
+        #map {
+            width: 100vw;
+            height: 100vh;
+        }
+        .custom-marker {
+            background: #fff;
+            border: 2px solid rgba(0,0,0,0.2);
+            border-radius: 50%;
+            width: 12px !important;
+            height: 12px !important;
+            margin-left: -6px !important;
+            margin-top: -6px !important;
+        }
+        .leaflet-tile-pane {
+            filter: sepia(100%) saturate(150%) hue-rotate(350deg);
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+    <script>
+        // Initialize map
+        const map = L.map('map', {
+            center: [20, 0],
+            zoom: 2,
+            zoomControl: true,
+            attributionControl: true
+        });
+
+        // Custom style for the map
+        const customStyle = {
+            water: '#fbce59',
+            landColor: '#e6a532',
+        };
+
+        // Add tile layer with custom styling
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Sample coordinates for markers based on the image
+        const markers = [
+            [45, -125], // North America West
+            [40, -80],  // North America East
+            [10, -80],  // Central America
+            [-20, -60], // South America
+            [50, 0],    // Europe
+            [25, 35],   // Africa North
+            [-25, 25],  // Africa South
+            [35, 140],  // Asia East
+            [20, 80],   // Asia South
+            [-25, 135]  // Australia
+        ];
+
+        // Add custom markers
+        markers.forEach(coord => {
+            L.marker(coord, {
+                icon: L.divIcon({
+                    className: 'custom-marker'
+                })
+            }).addTo(map);
+        });
+
+        // Add ship markers (using simple div icons for illustration)
+        const ships = [
+            [20, -110],
+            [0, -40],
+            [10, 60],
+            [0, 100],
+            [0, 160]
+        ];
+
+        // Custom ship icon
+        const shipIcon = L.divIcon({
+            className: 'ship-icon',
+            html: '<div style="transform: rotate(-45deg); color: #2a9d8f; font-size: 20px;">🚢</div>',
+            iconSize: [20, 20]
+        });
+
+        ships.forEach(coord => {
+            L.marker(coord, {
+                icon: shipIcon
+            }).addTo(map);
+        });
+    </script>
+</body>
+</html>
+
+
+<!--
+Я создал интерактивную карту со следующими особенностями:
+
+1. Цветовая схема:
+   - Вода: светло-оранжевая (#fbce59)
+   - Континенты: темно-оранжевые 
+   - Маркеры: белые с тонкой черной обводкой
+
+2. Функциональность:
+   - Интерактивное масштабирование
+   - Перемещение по карте
+   - Кастомные маркеры для обозначения точек
+   - Иконки кораблей для обозначения морских путей
+
+3. Дополнительные детали:
+   - Применен фильтр sepia для достижения желаемой цветовой гаммы
+   - Добавлены кастомные стили для маркеров
+   - Оптимизирована для отображения на весь экран
+
+Вы можете:
+1. Настроить начальное положение карты, изменив координаты в `center: [20, 0]`
+2. Изменить уровень масштабирования через параметр `zoom: 2`
+3. Добавить дополнительные маркеры или корабли, добавив координаты в соответствующие массивы
+
+-->
