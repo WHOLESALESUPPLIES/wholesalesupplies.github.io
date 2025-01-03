@@ -70,10 +70,9 @@
                     const usd = balanceEth * rates.ethToUsd;
                     const eur = balanceEth * rates.ethToEur;
                     const cny = balanceEth * rates.ethToCny;
-                    const ghs = usd * rates.usdToGhs;  // Конвертация USD в GHS
-                    const ngn = balanceEth * rates.ethToNgn;
-                    const kes = balanceEth * rates.ethToKes;
-                    const zar = balanceEth * rates.ethToZar;
+
+                    // Конвертация USD в GHS
+                    const ghs = usd * rates.usdToGhs;
 
                     // Форматирование чисел с пробелами в качестве разделителя тысяч
                     const formatNumber = (num) => {
@@ -86,10 +85,6 @@
                     document.getElementById('eur').innerText = formatNumber(eur);
                     document.getElementById('cny').innerText = formatNumber(cny);
                     document.getElementById('ghs').innerText = formatNumber(ghs);
-                    document.getElementById('ngn').innerText = formatNumber(ngn);
-                    document.getElementById('kes').innerText = formatNumber(kes);
-                    document.getElementById('zar').innerText = formatNumber(zar);
-
                     document.getElementById('currencyBalances').style.display = 'block';
                 } catch (error) {
                     console.error(error);
