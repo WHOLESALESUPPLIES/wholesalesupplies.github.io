@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Карта с кастомной цветовой гаммой</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+  <style>
+    #map {
+      height: 500px;
+    }
+
+    /* Стили для маркера */
+    .custom-marker {
+      background-color: #fbce59; /* Желтый */
+      border-radius: 50%;
+      width: 25px;
+      height: 25px;
+      border: 2px solid #000; /* Черная обводка */
+    }
+
+    /* Стили для полигона */
+    .custom-polygon {
+      fill-color: #fff;
+      fill-opacity: 0.3;
+      color: #fbce59; /* Желтая обводка */
+      weight: 3;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    // Инициализация карты
+    var map = L.map('map').setView([51.505, -0.09], 13);
+
+    // Добавление Tile Layer (фон карты) с белым и черным
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      maxZoom: 19
+    }).addTo(map);
+
+    // Создание кастомного маркера с цветами #fbce59 (желтый) и #000 (черный)
+    var customIcon = L.divIcon({
+      className: 'custom-marker'
+    });
+
+    L.marker([51.505, -0.09], { icon: customIcon }).addTo(map);
+
+    // Создание полигона с цветами #fbce59 (желтый) и #fff (белый)
+    var polygon = L.polygon([
+      [51.5, -0.09],
+      [51.51, -0.1],
+      [51.52, -0.12]
+    ], {
+      color: '#fbce59', // Желтая обводка
+      fillColor: '#fff', // Белая заливка
+      fillOpacity: 0.3, // Прозрачность заливки
+      weight: 3
+    }).addTo(map);
+  </script>
+
+</body>
+</html>
