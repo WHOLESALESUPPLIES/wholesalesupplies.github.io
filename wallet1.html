@@ -114,15 +114,17 @@
                 const response = await fetch('https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD,RUB,EUR,CNY,GHS,NGN,KES,ZAR');
                 const data = await response.json();
 
+                console.log('API Response:', data);  // Логирование ответа API
+
                 return {
-                    ethToUsd: data.USD,
-                    ethToRub: data.RUB,
-                    ethToEur: data.EUR,
-                    ethToCny: data.CNY,
-                    ethToGhs: data.GHS,
-                    ethToNgn: data.NGN,
-                    ethToKes: data.KES,
-                    ethToZar: data.ZAR
+                    ethToUsd: data.USD || 0,
+                    ethToRub: data.RUB || 0,
+                    ethToEur: data.EUR || 0,
+                    ethToCny: data.CNY || 0,
+                    ethToGhs: data.GHS || 0,
+                    ethToNgn: data.NGN || 0,
+                    ethToKes: data.KES || 0,
+                    ethToZar: data.ZAR || 0
                 };
             } catch (error) {
                 console.error('Ошибка при получении курсов валют:', error);
