@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shipping Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #fbce59;
+        }
+        #map {
+            width: 100vw;
+            height: 100vh;
+        }
+        .ship-icon {
+            background-color: #fff;
+            border: 2px solid #000;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+        }
+    </style>
+</head>
+<body>
+<div id="map"></div>
+<script>
+    const map = L.map('map', {
+        zoomControl: false
+    }).setView([20, 0], 2);
+
+    // Custom tile layer with a Mapbox-style URL and dark orange continents, light orange water
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors',
+        subdomains: 'abcd',
+        minZoom: 1,
+        maxZoom: 19,
+        noWrap: true
+    }).addTo(map);
+
+    // Adjusting land and water colors with CSS filters
+    map.getPane('tilePane').style.filter = 'hue-rotate(30deg) saturate(1.5) contrast(1.2)';
+
+    // Ship routes
+    const routes = [
+        [[37, -122], [10, -70], [-15, -30]], // Example route
+        [[20, 80], [30, 50], [40, 20]]       // Another route
+    ];
+
+    // Plot routes
+    routes.forEach(route => {
+        L.polyline(route, {
+            color: '#000',
+            weight: 2,
+            dashArray: '5, 5'
+        }).addTo(map);
+    });
+
+    // Add ship icons (white markers with black borders)
+    const ships = [
+        [37, -122], [10, -70], [-15, -30], [20, 80], [30, 50], [40, 20]
+    ];
+
+    ships.forEach(coord => {
+        L.circleMarker(coord, {
+            color: '#000',      // Border color (black)
+            fillColor: '#fff',  // Fill color (white)
+            fillOpacity: 1,
+            radius: 8
+        }).addTo(map);
+    });
+</script>
+</body>
+</html>
