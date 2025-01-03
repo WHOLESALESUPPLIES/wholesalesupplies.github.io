@@ -13,7 +13,7 @@
             text-align: left;
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: center;border-radius: 8px;
         }
 
         .custom-select .arrow {
@@ -51,7 +51,7 @@
 
         /* Открытие выпадающего списка */
         .custom-select.open .custom-select-options {
-            display: block;
+            display: block;border-radius: 8px;
         }
 
         /* Стили для выбранного элемента */
