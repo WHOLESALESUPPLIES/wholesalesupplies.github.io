@@ -59,15 +59,18 @@
 
         /* Стили для выбранного элемента */
         .selected-value {
-            font-weight: bold;
+            font-weight: bolder;
         }
 
         /* Стили для отображаемого баланса */
         .currency-info {
+            color: white;
             font-size: 35px;
             margin-left: 20px;
-            color: white;
-            padding-right: 18px;
+            padding-right: 15px;
+            padding-left: 15px;
+            background-color: black;
+            border-radius: 8px;
         }
 
         /* Стили для полосы прокрутки */
