@@ -107,7 +107,7 @@
         async function getExchangeRates() {
             try {
                 // Используем ExchangeRate-API для получения курса USD в GHS
-                const exchangeRateResponse = await fetch('https://v6.exchangerate-api.com/v6/YOUR_API_KEY/latest/USD');
+                const exchangeRateResponse = await fetch('https://v6.exchangerate-api.com/v6/58dc3def9033dec59baf1b26/latest/USD');
                 const exchangeRateData = await exchangeRateResponse.json();
                 const usdToGhs = exchangeRateData.conversion_rates.GHS;
 
