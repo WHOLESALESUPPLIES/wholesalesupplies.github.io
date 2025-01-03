@@ -33,24 +33,25 @@
     </div>
 
     <script>
+        // Объявление объекта balances на глобальном уровне
+        const balances = {
+            ETH: 0.00,
+            USD: 0.00,
+            RUB: 0.00,
+            EUR: 0.00,
+            CNY: 0.00,
+            GHS: 0.00,
+            NGN: 0.00,
+            KES: 0.00,
+            ZAR: 0.00
+        };
+
         // Проверка наличия MetaMask
         if (typeof window.ethereum === 'undefined') {
             document.getElementById('currencySelect').style.display = 'none'; // Скрыть выпадающий список
             document.getElementById('balanceText').innerText = 'Кошелек не подключен!';
         } else {
             document.addEventListener('DOMContentLoaded', () => {
-                const balances = {
-                    ETH: 0.00,
-                    USD: 0.00,
-                    RUB: 0.00,
-                    EUR: 0.00,
-                    CNY: 0.00,
-                    GHS: 0.00,
-                    NGN: 0.00,
-                    KES: 0.00,
-                    ZAR: 0.00
-                };
-
                 const updateBalances = async () => {
                     try {
                         const web3 = new Web3(window.ethereum);
