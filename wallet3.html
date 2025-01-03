@@ -71,7 +71,7 @@
                     const eur = balanceEth * rates.ethToEur;
                     const cny = balanceEth * rates.ethToCny;
 
-                    // Конвертация USD в GHS
+                    // Конвертация USD в GHS через другой API
                     const ghs = usd * rates.usdToGhs;
 
                     // Форматирование чисел с пробелами в качестве разделителя тысяч
@@ -106,26 +106,27 @@
         // Получение актуальных курсов валют из CoinGecko
         async function getExchangeRates() {
             try {
-                const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd,rub,eur,cny,ghs,ngn,kes,zar');
-                const data = await response.json();
+                // Используем ExchangeRate-API для получения курса USD в GHS
+                const exchangeRateResponse = await fetch('https://v6.exchangerate-api.com/v6/YOUR_API_KEY/latest/USD');
+                const exchangeRateData = await exchangeRateResponse.json();
+                const usdToGhs = exchangeRateData.conversion_rates.GHS;
 
-                console.log('API Response:', data);  // Логирование ответа API
+                // Получение курсов через CoinGecko для других валют
+                const coingeckoResponse = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd,rub,eur,cny');
+                const coingeckoData = await coingeckoResponse.json();
 
                 return {
-                    ethToUsd: data.ethereum.usd || 0,
-                    ethToRub: data.ethereum.rub || 0,
-                    ethToEur: data.ethereum.eur || 0,
-                    ethToCny: data.ethereum.cny || 0,
-                    usdToGhs: data.ethereum.ghs || 0,  // Добавлен курс USD к GHS
-                    ethToNgn: data.ethereum.ngn || 0,
-                    ethToKes: data.ethereum.kes || 0,
-                    ethToZar: data.ethereum.zar || 0
+                    ethToUsd: coingeckoData.ethereum.usd || 0,
+                    ethToRub: coingeckoData.ethereum.rub || 0,
+                    ethToEur: coingeckoData.ethereum.eur || 0,
+                    ethToCny: coingeckoData.ethereum.cny || 0,
+                    usdToGhs: usdToGhs || 0,  // Добавлен курс USD в GHS из ExchangeRate-API
                 };
             } catch (error) {
                 console.error('Ошибка при получении курсов валют:', error);
                 return { 
                     ethToUsd: 0, ethToRub: 0, ethToEur: 0, ethToCny: 0,
-                    usdToGhs: 0, ethToNgn: 0, ethToKes: 0, ethToZar: 0 
+                    usdToGhs: 0
                 }; // Возврат нулевых курсов в случае ошибки
             }
         }
