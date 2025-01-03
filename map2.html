@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shipping Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #fbce59;
+        }
+        #map {
+            width: 100vw;
+            height: 100vh;
+        }
+        .ship-icon {
+            background-color: #fff;
+            border: 2px solid #000;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+        }
+    </style>
+</head>
+<body>
+<div id="map"></div>
+<script>
+    const map = L.map('map').setView([20, 0], 2);
+
+    // Add a tile layer
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Ship routes
+    const routes = [
+        [[37, -122], [10, -70], [-15, -30]], // Example route
+        [[20, 80], [30, 50], [40, 20]]       // Another route
+    ];
+
+    // Plot routes
+    routes.forEach(route => {
+        L.polyline(route, {
+            color: '#000',
+            weight: 2,
+            dashArray: '5, 5'
+        }).addTo(map);
+    });
+
+    // Add ship icons
+    const ships = [
+        [37, -122], [10, -70], [-15, -30], [20, 80], [30, 50], [40, 20]
+    ];
+
+    ships.forEach(coord => {
+        L.circleMarker(coord, {
+            color: '#000',
+            fillColor: '#fff',
+            fillOpacity: 1,
+            radius: 8
+        }).addTo(map);
+    });
+</script>
+</body>
+</html>
