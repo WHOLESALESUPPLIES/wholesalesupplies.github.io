@@ -8,18 +8,18 @@
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
     <style>
         body {font-family: monospace; padding: 20px;}
-        select {margin-top: 20px; padding: 10px; font-size: 16px;}
         .balance {margin-top: 20px;}
-        .balance-info {font-size: 20px; font-weight: bold;}
+        select {margin-top: 20px; padding: 5px; font-size: 16px;}
+        .currency-info {margin-top: 20px; font-size: 18px;}
     </style>
 </head>
 <body>
     <div class="balance">
         <!-- Выпадающий список для выбора валюты -->
-        <select id="currencySelect" onchange="updateBalanceDisplay()">
+        <select id="currencySelect">
             <option value="ETH">ETH</option>
-            <option value="USD">USD</option>
             <option value="RUB">RUB</option>
+            <option value="USD">USD</option>
             <option value="EUR">EUR</option>
             <option value="CNY">CNY</option>
             <option value="GHS">GHS</option>
@@ -27,124 +27,164 @@
             <option value="KES">KES</option>
             <option value="ZAR">ZAR</option>
         </select>
-        <div class="balance-info">
-            <p id="balanceText">Выберите валюту для отображения баланса.</p>
-        </div>
+
+        <p id="walletStatus"></p>
+
+        <!-- Информация о балансе -->
+        <div id="currencyInfo" class="currency-info"></div>
     </div>
 
     <script>
-        // Объявление объекта balances на глобальном уровне
-        const balances = {
-            ETH: 0.00,
-            USD: 0.00,
-            RUB: 0.00,
-            EUR: 0.00,
-            CNY: 0.00,
-            GHS: 0.00,
-            NGN: 0.00,
-            KES: 0.00,
-            ZAR: 0.00
-        };
-
         // Проверка наличия MetaMask
         if (typeof window.ethereum === 'undefined') {
-            document.getElementById('currencySelect').style.display = 'none'; // Скрыть выпадающий список
-            document.getElementById('balanceText').innerText = 'Кошелек не подключен!';
+            document.getElementById('walletStatus').innerText = 'Кошелек не подключен';
         } else {
-            document.addEventListener('DOMContentLoaded', () => {
-                const updateBalances = async () => {
-                    try {
-                        const web3 = new Web3(window.ethereum);
-                        const accounts = await web3.eth.getAccounts();
-                        const account = accounts[0];
+            const updateBalances = async () => {
+                try {
+                    const web3 = new Web3(window.ethereum);
+                    const accounts = await web3.eth.getAccounts();
+                    const account = accounts[0];
 
-                        // Получаем баланс в Wei и конвертируем в Ether
-                        const balanceWei = await web3.eth.getBalance(account);
-                        const balanceEth = parseFloat(web3.utils.fromWei(balanceWei, 'ether'));
-
-                        if (isNaN(balanceEth)) {
-                            document.getElementById('currencySelect').style.display = 'none';
-                            document.getElementById('balanceText').innerText = 'Ошибка получения баланса';
-                            return;
-                        }
-
-                        // Получаем актуальные курсы валют
-                        const rates = await getExchangeRates();
-                        balances.ETH = balanceEth;
-                        balances.USD = balanceEth * rates.ethToUsd;
-                        balances.RUB = balanceEth * rates.ethToRub;
-                        balances.EUR = balanceEth * rates.ethToEur;
-                        balances.CNY = balanceEth * rates.ethToCny;
-                        balances.GHS = balances.USD * rates.usdToGhs;
-                        balances.NGN = balances.USD * rates.usdToNgn;
-                        balances.KES = balances.USD * rates.usdToKes;
-                        balances.ZAR = balances.USD * rates.usdToZar;
-
-                        // Обновление выпадающего списка и отображение баланса
-                        document.getElementById('currencySelect').style.display = 'block';
-                        document.getElementById('balanceText').innerText = `Баланс в ETH: ${balanceEth.toFixed(2)} ETH`;
-                        updateBalanceDisplay();
-                    } catch (error) {
-                        console.error(error);
-                        document.getElementById('currencySelect').style.display = 'none';
-                        document.getElementById('balanceText').innerText = 'Ошибка подключения к кошельку';
+                    if (!account) {
+                        document.getElementById('walletStatus').innerText = 'Кошелек не подключен';
+                        return;
                     }
-                };
 
-                // Обновляем балансы при загрузке страницы и затем каждую минуту
-                updateBalances();
-                setInterval(updateBalances, 60000); // Обновление балансов каждую минуту
+                    // Получаем баланс в Wei и конвертируем в Ether
+                    const balanceWei = await web3.eth.getBalance(account);
+                    const balanceEth = parseFloat(web3.utils.fromWei(balanceWei, 'ether'));
 
-                // Запрашиваем подключение к кошельку при загрузке
-                window.ethereum.request({ method: 'eth_requestAccounts' }).then(() => {
-                    updateBalances();
-                }).catch((error) => {
-                    console.error("Ошибка при подключении к кошельку:", error);
-                    document.getElementById('currencySelect').style.display = 'none';
-                    document.getElementById('balanceText').innerText = 'Ошибка подключения к кошельку';
-                });
-            });
-        }
+                    // Проверка корректности суммы
+                    if (isNaN(balanceEth)) {
+                        document.getElementById('walletStatus').innerText = 'Ошибка: неверный баланс';
+                        return;
+                    }
 
-        // Получение актуальных курсов валют из CoinGecko и ExchangeRate-API
-        async function getExchangeRates() {
-            try {
-                const exchangeRateResponse = await fetch('https://v6.exchangerate-api.com/v6/58dc3def9033dec59baf1b26/latest/USD');
-                const exchangeRateData = await exchangeRateResponse.json();
+                    // Получение конвертированных значений
+                    const rates = await getExchangeRates();
+                    const rub = balanceEth * rates.ethToRub;
+                    const usd = balanceEth * rates.ethToUsd;
+                    const eur = balanceEth * rates.ethToEur;
+                    const cny = balanceEth * rates.ethToCny;
+                    const ghs = usd * rates.usdToGhs;
+                    const ngn = usd * rates.usdToNgn;
+                    const kes = usd * rates.usdToKes;
+                    const zar = usd * rates.usdToZar;
 
-                const usdToGhs = exchangeRateData.conversion_rates.GHS;
-                const usdToNgn = exchangeRateData.conversion_rates.NGN;
-                const usdToKes = exchangeRateData.conversion_rates.KES;
-                const usdToZar = exchangeRateData.conversion_rates.ZAR;
+                    // Форматирование чисел с пробелами в качестве разделителя тысяч
+                    const formatNumber = (num) => {
+                        return num.toFixed(1).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+                    };
 
-                const coingeckoResponse = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd,rub,eur,cny');
-                const coingeckoData = await coingeckoResponse.json();
+                    // Отображение всех валютных балансов с символами валют
+                    const currencyBalances = {
+                        'ETH': balanceEth,
+                        'RUB': rub,
+                        'USD': usd,
+                        'EUR': eur,
+                        'CNY': cny,
+                        'GHS': ghs,
+                        'NGN': ngn,
+                        'KES': kes,
+                        'ZAR': zar,
+                    };
 
-                return {
-                    ethToUsd: coingeckoData.ethereum.usd || 0,
-                    ethToRub: coingeckoData.ethereum.rub || 0,
-                    ethToEur: coingeckoData.ethereum.eur || 0,
-                    ethToCny: coingeckoData.ethereum.cny || 0,
-                    usdToGhs: usdToGhs || 0,
-                    usdToNgn: usdToNgn || 0,
-                    usdToKes: usdToKes || 0,
-                    usdToZar: usdToZar || 0,
-                };
-            } catch (error) {
-                console.error('Ошибка при получении курсов валют:', error);
-                return { 
-                    ethToUsd: 0, ethToRub: 0, ethToEur: 0, ethToCny: 0,
-                    usdToGhs: 0, usdToNgn: 0, usdToKes: 0, usdToZar: 0
-                };
+                    // Обновление выбранной валюты
+                    updateSelectedCurrency(balanceEth, rates, currencyBalances);
+                } catch (error) {
+                    console.error(error);
+                    document.getElementById('walletStatus').innerText = 'Ошибка при обновлении баланса';
+                }
+            };
+
+            // Получение актуальных курсов валют из CoinGecko и ExchangeRate-API
+            async function getExchangeRates() {
+                try {
+                    // Используем ExchangeRate-API для получения курсов USD → GHS, NGN, KES, ZAR
+                    const exchangeRateResponse = await fetch('https://v6.exchangerate-api.com/v6/58dc3def9033dec59baf1b26/latest/USD');
+                    const exchangeRateData = await exchangeRateResponse.json();
+
+                    const usdToGhs = exchangeRateData.conversion_rates.GHS;
+                    const usdToNgn = exchangeRateData.conversion_rates.NGN;
+                    const usdToKes = exchangeRateData.conversion_rates.KES;
+                    const usdToZar = exchangeRateData.conversion_rates.ZAR;
+
+                    // Получение курсов через CoinGecko для других валют
+                    const coingeckoResponse = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd,rub,eur,cny');
+                    const coingeckoData = await coingeckoResponse.json();
+
+                    return {
+                        ethToUsd: coingeckoData.ethereum.usd || 0,
+                        ethToRub: coingeckoData.ethereum.rub || 0,
+                        ethToEur: coingeckoData.ethereum.eur || 0,
+                        ethToCny: coingeckoData.ethereum.cny || 0,
+                        usdToGhs: usdToGhs || 0,
+                        usdToNgn: usdToNgn || 0,
+                        usdToKes: usdToKes || 0,
+                        usdToZar: usdToZar || 0,
+                    };
+                } catch (error) {
+                    console.error('Ошибка при получении курсов валют:', error);
+                    return { 
+                        ethToUsd: 0, ethToRub: 0, ethToEur: 0, ethToCny: 0,
+                        usdToGhs: 0, usdToNgn: 0, usdToKes: 0, usdToZar: 0
+                    }; // Возврат нулевых курсов в случае ошибки
+                }
             }
-        }
 
-        // Обновление отображаемого баланса при изменении выбора в выпадающем списке
-        function updateBalanceDisplay() {
-            const selectedCurrency = document.getElementById('currencySelect').value;
-            const balance = balances[selectedCurrency];
-            const formattedBalance = balance.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-            document.getElementById('balanceText').innerText = `Баланс в ${selectedCurrency}: ${formattedBalance}`;
+            // Функция для обновления отображаемой валюты на основе выбранного значения
+            const updateSelectedCurrency = (balanceEth, rates, balances) => {
+                const selectedCurrency = document.getElementById('currencySelect').value;
+                let balance;
+
+                switch (selectedCurrency) {
+                    case 'ETH':
+                        balance = balances['ETH'];
+                        break;
+                    case 'RUB':
+                        balance = balances['RUB'];
+                        break;
+                    case 'USD':
+                        balance = balances['USD'];
+                        break;
+                    case 'EUR':
+                        balance = balances['EUR'];
+                        break;
+                    case 'CNY':
+                        balance = balances['CNY'];
+                        break;
+                    case 'GHS':
+                        balance = balances['GHS'];
+                        break;
+                    case 'NGN':
+                        balance = balances['NGN'];
+                        break;
+                    case 'KES':
+                        balance = balances['KES'];
+                        break;
+                    case 'ZAR':
+                        balance = balances['ZAR'];
+                        break;
+                    default:
+                        balance = balances['ETH'];
+                }
+
+                const formattedBalance = balance.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+                document.getElementById('currencyInfo').innerText = `Ваш баланс: ${formattedBalance} ${selectedCurrency}`;
+            };
+
+            // Слушаем изменения выбора валюты
+            document.getElementById('currencySelect').addEventListener('change', () => {
+                updateBalances();
+            });
+
+            // Сначала загружаем баланс кошелька
+            window.ethereum.request({ method: 'eth_requestAccounts' }).then(() => {
+                updateBalances();
+            }).catch((error) => {
+                console.error("Ошибка подключения к кошельку:", error);
+                document.getElementById('walletStatus').innerText = 'Ошибка при подключении к кошельку';
+            });
         }
     </script>
 </body>
