@@ -3,119 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Цвета нефти и их химический состав</title>
+    <title>Wallet</title>
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
     <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            font-family:monospace;
+        body {
+            font-family: Arial, sans-serif;
         }
-        th, td {
-            padding: 10px;
-            border: 1px solid #ddd;
-            text-align: left;
+        .balance {
+            margin-top: 20px;
         }
-        th {
-            background-color: #f2f2f2;
-        }
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }::-webkit-scrollbar {width: 0px;}
     </style>
 </head>
 <body>
+    <div class="balance">
+        <h2>Баланс:</h2>
+        <p id="balance">wallet not connected</p>
+        <ul id="currencyBalances" style="display: none;">
+            <li><strong>Баланс в рублях (RUB): </strong><span id="rub"></span> ₽</li>
+            <li><strong>Баланс в долларах (USD): </strong><span id="usd"></span> $</li>
+            <li><strong>Баланс в евро (EUR): </strong><span id="eur"></span> €</li>
+            <li><strong>Баланс в китайских юанях (CNY): </strong><span id="cny"></span> 元</li>
+        </ul>
+    </div>
 
-    <h2>Цвета нефти и их химический состав</h2>
+    <script>
+        // Проверка наличия MetaMask
+        if (typeof window.ethereum === 'undefined') {
+            document.getElementById('balance').innerText = 'wallet not connected';
+        } else {
+            // Попытка подключения к MetaMask
+            window.ethereum.request({ method: 'eth_requestAccounts' })
+                .then(async () => {
+                    const web3 = new Web3(window.ethereum);
+                    const accounts = await web3.eth.getAccounts();
+                    const account = accounts[0];
 
-    <table>
-        <thead>
-            <tr>
-                <th>Цвет нефти</th>
-                <th>Химический состав (в %)</th>
-                <th>Особенности</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>Чёрный</strong></td>
-                <td>
-                    Асфальтены: 20–50%<br>
-                    Сера: 1–5%<br>
-                    Парафины: 10–15%<br>
-                    Смолы: 10–30%<br>
-                    Вода и механические примеси: 5–15%
-                </td>
-                <td>Высокое содержание тяжёлых углеводородов и примесей. Очень высокая вязкость, низкая текучесть.</td>
-            </tr>
-            <tr>
-                <td><strong>Тёмно-коричневый</strong></td>
-                <td>
-                    Асфальтены: 10–30%<br>
-                    Сера: 0,5–2%<br>
-                    Парафины: 20–35%<br>
-                    Смолы: 10–20%<br>
-                    Вода и механические примеси: 2–10%
-                </td>
-                <td>Низкая вязкость по сравнению с чёрной нефтью, но ещё достаточно тяжёлая для сложной переработки.</td>
-            </tr>
-            <tr>
-                <td><strong>Зелёный</strong></td>
-                <td>
-                    Асфальтены: 5–25%<br>
-                    Сера: 0,1–1,5%<br>
-                    Парафины: 15–30%<br>
-                    Хлорированные углеводороды: 0,05–0,3%<br>
-                    Вода и примеси: 2–5%
-                </td>
-                <td>Редкое явление, может быть связано с присутствием органических хлорсодержащих соединений.</td>
-            </tr>
-            <tr>
-                <td><strong>Жёлто-оранжевый</strong></td>
-                <td>
-                    Асфальтены: 5–10%<br>
-                    Сера: 0,1–0,5%<br>
-                    Парафины: 40–60%<br>
-                    Смолы: 5–15%<br>
-                    Вода и механические примеси: 0–3%
-                </td>
-                <td>Лёгкая нефть, которая легко перерабатывается, низкая вязкость и высокая текучесть.</td>
-            </tr>
-            <tr>
-                <td><strong>Золотистый (янтарный)</strong></td>
-                <td>
-                    Асфальтены: 3–8%<br>
-                    Сера: 0,05–0,2%<br>
-                    Парафины: 50–70%<br>
-                    Смолы: 2–10%<br>
-                    Вода и механические примеси: 0–2%
-                </td>
-                <td>Очень лёгкая нефть с минимальным содержанием тяжёлых углеводородов. Идеально подходит для переработки.</td>
-            </tr>
-            <tr>
-                <td><strong>Красноватый</strong></td>
-                <td>
-                    Асфальтены: 10–30%<br>
-                    Сера: 0,5–2%<br>
-                    Парафины: 10–25%<br>
-                    Железосодержащие минералы: 1–5%<br>
-                    Вода и примеси: 3–7%
-                </td>
-                <td>Нефть с примесями железа или минералов, которая придаёт ей красноватый оттенок. Редко встречается.</td>
-            </tr>
-            <tr>
-                <td><strong>Прозрачная нефть</strong></td>
-                <td>
-                    Асфальтены: 0–5%<br>
-                    Сера: 0,05–0,1%<br>
-                    Парафины: 60–90%<br>
-                    Смолы: 0–5%<br>
-                    Вода и механические примеси: 0–1%
-                </td>
-                <td>Очень редкий тип нефти, светлый и почти прозрачный. Практически не содержит тяжёлых углеводородов.</td>
-            </tr>
-        </tbody>
-    </table>
+                    // Получаем баланс в Wei и конвертируем в Ether
+                    const balanceWei = await web3.eth.getBalance(account);
+                    const balanceEth = parseFloat(web3.utils.fromWei(balanceWei, 'ether'));
 
+                    // Проверка корректности суммы
+                    if (isNaN(balanceEth)) {
+                        document.getElementById('balance').innerText = 'Ошибка: неверный баланс';
+                        return;
+                    }
+
+                    // Обновляем баланс на странице
+                    document.getElementById('balance').innerText = `Баланс: ${balanceEth.toFixed(6)} ETH`;
+
+                    // Получение конвертированных значений
+                    const rates = await getExchangeRates();
+                    const rub = balanceEth * (rates.rub / rates.usd);
+                    const usd = balanceEth * rates.usd;
+                    const eur = balanceEth * (rates.eur / rates.usd);
+                    const cny = balanceEth * (rates.cny / rates.usd);
+
+                    // Отображение всех валютных балансов с символами валют
+                    document.getElementById('rub').innerText = rub.toFixed(2);
+                    document.getElementById('usd').innerText = usd.toFixed(2);
+                    document.getElementById('eur').innerText = eur.toFixed(2);
+                    document.getElementById('cny').innerText = cny.toFixed(2);
+                    document.getElementById('currencyBalances').style.display = 'block';
+                })
+                .catch((error) => {
+                    console.error(error);
+                    document.getElementById('balance').innerText = 'Ошибка при подключении';
+                });
+        }
+
+        // Получение актуальных курсов валют
+        async function getExchangeRates() {
+            try {
+                const response = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+                const data = await response.json();
+
+                return {
+                    rub: data.rates.RUB,
+                    usd: 1,  // ETH всегда в USD
+                    eur: data.rates.EUR,
+                    cny: data.rates.CNY
+                };
+            } catch (error) {
+                console.error('Ошибка при получении курсов валют:', error);
+                return { rub: 0, usd: 0, eur: 0, cny: 0 }; // Возврат нулевых курсов в случае ошибки
+            }
+        }
+    </script>
 </body>
 </html>
