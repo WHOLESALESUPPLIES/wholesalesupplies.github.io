@@ -21,7 +21,7 @@
             <li><strong> (RUB): </strong><span id="rub"></span> ₽</li>
             <li><strong> (USD): </strong><span id="usd"></span> $</li>
             <li><strong> (EUR): </strong><span id="eur"></span> €</li>
-            <li><strong> (CNY): </strong><span id="cny"></span> 元</li>
+            <li><strong>Баланс в китайских юанях (CNY): </strong><span id="cny"></span> 元</li>
         </ul>
     </div>
 
@@ -57,11 +57,16 @@
                     const eur = balanceEth * rates.ethToEur;
                     const cny = balanceEth * rates.ethToCny;
 
+                    // Форматирование чисел с пробелами в качестве разделителя тысяч
+                    const formatNumber = (num) => {
+                        return num.toFixed(1).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+                    };
+
                     // Отображение всех валютных балансов с символами валют
-                    document.getElementById('rub').innerText = rub.toFixed(2);
-                    document.getElementById('usd').innerText = usd.toFixed(2);
-                    document.getElementById('eur').innerText = eur.toFixed(2);
-                    document.getElementById('cny').innerText = cny.toFixed(2);
+                    document.getElementById('rub').innerText = formatNumber(rub);
+                    document.getElementById('usd').innerText = formatNumber(usd);
+                    document.getElementById('eur').innerText = formatNumber(eur);
+                    document.getElementById('cny').innerText = formatNumber(cny);
                     document.getElementById('currencyBalances').style.display = 'block';
                 })
                 .catch((error) => {
