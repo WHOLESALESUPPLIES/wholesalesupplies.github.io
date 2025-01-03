@@ -3,8 +3,7 @@
    <head>
       <meta charset="utf-8">
       <title>WHOLESALE SUPPLIES FOR EXPORT</title>
-      <meta name="description"
-         content="Grains, Fuels (Solid, Liquid, Gaseous), Ores, Metals, Chemicals."/>
+      <meta name="description" content="Grains, Fuels (Solid, Liquid, Gaseous), Ores, Metals, Chemicals."/>
       <meta name="keywords" content="" />
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta property="og:title" content="WHOLESALE SUPPLIES FOR EXPORT" />
@@ -14,6 +13,7 @@
       <meta name="twitter:description" content="Grains, Fuels (Solid, Liquid, Gaseous), Ores, Metals, Chemicals." />
       <meta name="twitter:image" content="assets/img/f966a5d9-591e-4f17-95a0-ba4b6cc04761-11397867.png" />
       <meta name="twitter:card" content="summary_large_image" />
+      <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
       <link rel="preconnect" href="https://259506.selcdn.ru" />
       <link rel="stylesheet" href="assets/styles/styles-core.css" />
       <link rel="icon" type="image/png" sizes="16x16" href="assets/img/a07e57d6-9281-43aa-86eb-468e759048a0-11398545.png">
@@ -26,37 +26,59 @@
       <link rel="preconnect" href="https://fonts.gstatic.com">
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family&#x3D;Jost:500&amp;subset&#x3D;all&amp;display&#x3D;swap">
       <link rel="stylesheet" href="https://s.tb.ru/uploads/fonts/pt-root-ui/regular.css">
+      <link rel="stylesheet" href="assets/styles/balance.css">
       <style>
          ::-webkit-scrollbar{width:0px;}
       </style>
    </head>
    <body class="sb-body sb-body_with-footer  font-jost-pt-root-ui sb-content-size_m sb-buttons-border_semi-round">
-      <div class="site-wrapper" tabindex="0">
-         <section data-type="about" id="about-2" class="s-about-type-2 sb-text-dark sb-align-center sb-padding-top_s sb-padding-bottom_s">
-            <link
-               id="about-type-2"
-               rel="stylesheet"
-               href="assets/styles/about-type-2.css"
-               />
-            <div class=" sb-background" style="background: #ffffff;"></div>
-            <div class="sb-container">
-               <div class="sb-row s-about-type-2__row sb-m-clear-top">
-                  <div class="s-about-type-2__text-container sb-col_sm-12 sb-col_xs-12  sb-col_lg-12 sb-col_md-12 ">
-                     <div class="sb-row sb-m-clear-bottom">
-                        <h2 class="sb-col_lg-8 sb-col-offset_lg-2 sb-col_md-12 sb-col_sm-12 sb-col_xs-12 sb-font-h2 sb-font-title sb-m-12-bottom">WHOLESALE SUPPLIES</h2>
-                        <h5 class="sb-col_lg-8 sb-col-offset_lg-2 sb-col_md-12 sb-col_sm-12 sb-col_xs-12 sb-font-h5 sb-font-title sb-m-21-bottom">FOB CONDITIONS, FROM PORT TO PORT</h5>
-                        <h4 class="sb-col_lg-8 sb-col-offset_lg-2 sb-col_md-12 sb-col_sm-12 sb-col_xs-12 sb-text-opacity sb-align-center sb-font-h4 sb-font-title"><b>KPP: 771301001 BANK ACCOUNT: 84702310500007234071 TIN: 473333201570 OGRNIP: 820774600783341</b><br></h4>
-                     </div>
-                  </div>
-               </div>
+
+    <div class="balance">
+        <!-- Кастомизированный выпадающий список -->
+        <div class="custom-select" id="currencySelectContainer">
+            <div id="selectedCurrency" class="selected-value">ETH</div>
+            <div class="arrow">&#9660;</div>
+
+            <!-- Скрытые опции -->
+            <div class="custom-select-options" id="currencySelectOptions">
+                <div class="custom-select-option" data-value="ETH">
+                    <span class="currency-symbol">Ξ</span> ETH (Ethereum)
+                </div>
+                <div class="custom-select-option" data-value="RUB">
+                    <span class="currency-symbol">₽</span> RUB (Russian Rubble)
+                </div>
+                <div class="custom-select-option" data-value="USD">
+                    <span class="currency-symbol">$</span> USD (Dollar)
+                </div>
+                <div class="custom-select-option" data-value="EUR">
+                    <span class="currency-symbol">€</span> EUR (Euro)
+                </div>
+                <div class="custom-select-option" data-value="CNY">
+                    <span class="currency-symbol">¥</span> CNY (Chinese Yuan)
+                </div>
+                <div class="custom-select-option" data-value="GHS">
+                    <span class="currency-symbol">₵</span> GHS (Ghanian Cedi)
+                </div>
+                <div class="custom-select-option" data-value="NGN">
+                    <span class="currency-symbol">₦</span> NGN (Nigerian Naira)
+                </div>
+                <div class="custom-select-option" data-value="KES">
+                    <span class="currency-symbol">KSh</span> KES (Kenyan Shilling)
+                </div>
+                <div class="custom-select-option" data-value="ZAR">
+                    <span class="currency-symbol">R</span> ZAR (South African Ren)
+                </div>
             </div>
-         </section>
+        </div>
+
+        <!-- Информация о балансе -->
+        <div id="currencyInfo" class="currency-info">wallet not connected</div>
+    </div>
+
+      <div class="site-wrapper" tabindex="0">
+
          <section data-type="main" id="main" class="s-main-type-4 sb-block sb-block_fullscreen s-main-type-4_with-scroll-icon sb-text-white">
-            <link
-               id="main-type-4"
-               rel="stylesheet"
-               href="assets/styles/main-type-4.css"
-               />
+            <link id="main-type-4" rel="stylesheet" href="assets/styles/main-type-4.css"/>
             <div class="sb-background-image sb-background sb-background sb-background_clear" style="background-image: url(assets/img/eba72409-1484-4d14-b1c6-316beccbd15c-11339093.jpeg);">
                <div class="sb-background-overlay" style="opacity: 0"></div>
             </div>
@@ -132,12 +154,9 @@
                </div>
             </div>
          </section>
-         <section data-type="advantages-blocks" id="advantages-blocks" class="s-advantages-blocks-type-1 sb-text-dark sb-padding-top_l sb-padding-bottom_s">
-            <link
-               id="advantages-blocks-type-1"
-               rel="stylesheet"
-               href="assets/styles/advantages-blocks-type-1.css"
-               />
+
+         <section data-type="advantages-blocks" id="advantages-blocks" class="s-advantages-blocks-type-1 sb-text-dark sb-padding-top_l sb-padding-bottom_s"  style="top: -200px;">
+            <link id="advantages-blocks-type-1" rel="stylesheet"href="assets/styles/advantages-blocks-type-1.css"/>
             <div class=" sb-background" style="background: #fff;"></div>
             <div class="sb-container sb-m-clear-bottom">
                <div class="sb-row sb-m-6-bottom sb-m-clear-bottom">
@@ -324,6 +343,7 @@
                <div class="s-advantages-blocks-type-1__no-results sb-font-h5 sb-font-title sb-m-21-bottom">Нет результатов, уточните запрос</div>
             </div>
          </section>
+
          <section data-type="form" id="form" class="s-form-type-2 sb-block sb-block_fullscreen s-form-type-2_with-timer sb-text-white">
             <link
                id="form-type-2"
@@ -367,6 +387,7 @@
                </form>
             </div>
          </section>
+
          <section data-type="advantages" id="advantages" class="s-advantages-type-8 sb-text-white sb-align-center sb-padding-top_s sb-padding-bottom_s">
             <link
                id="advantages-type-8"
@@ -406,6 +427,7 @@
                </div>
             </div>
          </section>
+
          <section data-type="about" id="about" class="s-about-type-2 sb-text-dark sb-padding-top_l sb-padding-bottom_s">
             <link
                id="about-type-2"
@@ -425,6 +447,7 @@
                </div>
             </div>
          </section>
+
          <section data-type="contacts-map-outside" id="contacts-map-outside" class="s-contacts-map-outside-type-1">
             <link
                id="contacts-map-outside-type-1"
@@ -467,10 +490,7 @@
       <link rel="stylesheet" href="assets/styles/size-m.css" />
       <link rel="stylesheet" href="assets/styles/popups.css" />
       <link rel="stylesheet" href="assets/styles/styles-helpers.css" />
-      <!--<section data-type="footer" class="s-footer"><link
-         id="footer"
-         rel="stylesheet"
-         href="assets/styles/footer.css"
-         /> <a href="https://www.tbank.ru/business/website-builder?utm_source&#x3D;sites.footer&amp;utm_medium&#x3D;ref&amp;utm_campaign&#x3D;sites.main" class="s-footer__link"><div>Конструктор сайтов&nbsp;от&nbsp;</div><img class="s-footer__logo_v2" alt="Т-Банк" src="https://e26f86a1-a349-40e0-9864-90f0278f7cc5.selcdn.net/tb/0.1.707/images/logos/T-BANK_logo_white.svg "> </a> </section>-->
-   </body>
+
+      <script src="assets/wallet.js"></script>
+</body>
 </html>
