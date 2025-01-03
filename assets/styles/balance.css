@@ -64,6 +64,10 @@
         .currency-info {
             font-size: 18px;
             margin-left: 20px;
+            font-size: 25px;
+            margin-left: 20px;
+            color: white;
+            padding-right: 15px;
         }
 
         /* Стили для полосы прокрутки */
