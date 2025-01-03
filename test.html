@@ -744,7 +744,7 @@
                 }
 
                 const formattedBalance = balance.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-                document.getElementById('currencyInfo').innerText = `Ваш баланс: ${formattedBalance} ${selectedCurrency}`;
+                document.getElementById('currencyInfo').innerText = ` ${formattedBalance} ${selectedCurrency}`;
             };
 
             // Обработка кликов по кастомному селекту
