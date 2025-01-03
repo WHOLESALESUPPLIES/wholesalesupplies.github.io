@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>World Ports Map</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
+    <style>
+        body { 
+            margin: 0; 
+            display: flex;
+            flex-direction: column;
+            font-family: monospace;
+        }
+        .main-container {
+            display: flex;
+            flex: 1;
+            height: calc(100vh - 160px);
+        }
+        .top-panel, .bottom-panel {
+            height: 80px;
+            background: #fbce59;
+            padding: 10px 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+        .progress-container {
+            display: inline-flex;
+            gap: 20px;
+            padding: 10px;
+        }
+        .progress-item {
+            background: #e6a532;
+            padding: 10px 15px;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+        .side-panel {
+            width: 300px;
+            background: #fbce59;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            box-sizing: border-box;
+        }
+        .left-panel {
+            border-right: 2px solid #e6a532;
+        }
+        .right-panel {
+            border-left: 2px solid #e6a532;
+        }
+        #map-container {
+            flex-grow: 1;
+        }
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+        .custom-marker {
+            background: #fff;
+            border: 3px solid rgba(0,0,0,0.3);
+            border-radius: 50%;
+            width: 28px !important;
+            height: 28px !important;
+            margin-left: -14px !important;
+            margin-top: -14px !important;
+        }
+        .leaflet-tile-pane {
+            filter: sepia(100%) saturate(150%) hue-rotate(350deg);
+        }
+        .panel-title {
+            color: #000;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e6a532;
+        }
+        .tracking-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .tracking-item {
+            background: #e6a532;
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 4px;
+        }
+        .cargo-info {
+            margin-top: 5px;
+            padding-top: 5px;
+            border-top: 1px solid rgba(255,255,255,0.3);
+        }
+        .cargo-type {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-panel">
+        <div class="progress-container">
+            <div class="progress-item">
+                Shanghai → Rotterdam<br>
+                Progress: 45% | ETA: 7d 12h
+            </div>
+            <div class="progress-item">
+                Dubai → Singapore<br>
+                Progress: 78% | ETA: 2d 6h
+            </div>
+            <div class="progress-item">
+                Novorossiysk → Istanbul<br>
+                Progress: 92% | ETA: 8h
+            </div>
+            <div class="progress-item">
+                Hamburg → New York<br>
+                Progress: 23% | ETA: 12d 4h
+            </div>
+        </div>
+    </div>
+    
+    <div class="main-container">
+        <div class="side-panel left-panel">
+            <div class="panel-title">Отправленные суда</div>
+            <ul class="tracking-list">
+                <li class="tracking-item">
+                    Контейнеровоз "Star Line"<br>
+                    Шанхай → Роттердам<br>
+                    Статус: В пути<br>
+                    <div class="cargo-info">
+                        <span class="cargo-type">Груз:</span><br>
+                        - 2500 TEU контейнеров<br>
+                        - Электроника<br>
+                        - Автозапчасти
+                    </div>
+                </li>
+                <li class="tracking-item">
+                    Танкер "Ocean Queen"<br>
+                    Новороссийск → Сингапур<br>
+                    Статус: Загрузка<br>
+                    <div class="cargo-info">
+                        <span class="cargo-type">Груз:</span><br>
+                        - Нефть (125,000 тонн)<br>
+                        - Тип: Crude Oil
+                    </div>
+                </li>
+                <li class="tracking-item">
+                    Балкер "Pacific Dream"<br>
+                    Владивосток → Пусан<br>
+                    Статус: Прибыл<br>
+                    <div class="cargo-info">
+                        <span class="cargo-type">Груз:</span><br>
+                        - Зерно (65,000 тонн)<br>
+                        - Пшеница
+                    </div>
+                </li>
+                <li class="tracking-item">
+                    Газовоз "Arctic Spirit"<br>
+                    Мурманск → Роттердам<br>
+                    Статус: В пути<br>
+                    <div class="cargo-info">
+                        <span class="cargo-type">Груз:</span><br>
+                        - СПГ (145,000 м³)<br>
+                        - Температура: -163°C
+                    </div>
+                </li>
+                <li class="tracking-item">
+                    Сухогруз "Baltic Leader"<br>
+                    Рига → Гамбург<br>
+                    Статус: Загрузка<br>
+                    <div class="cargo-info">
+                        <span class="cargo-type">Груз:</span><br>
+                        - Удобрения (45,000 тонн)<br>
+                        - Тип: NPK
+                    </div>
+                </li>
+            </ul>
+        </div>
+        
+        <div id="map-container">
+            <div id="map"></div>
+        </div>
+        
+        <div class="side-panel right-panel">
+            <div class="panel-title">Ожидаемые прибытия</div>
+            <ul class="tracking-list">
+                <li class="tracking-item">
+                    Контейнеровоз "Northern Light"<br>
+                    ETA: 12:30 UTC<br>
+                    Порт: Гамбург<br>
+                    <div class="cargo-info">
+                        <span class="cargo-type">Груз:</span><br>
+                        - 3200 TEU контейнеров<br>
+                        - Текстиль<br>
+                        - Бытовая техника
+                    </div>
+                </li>
+                <li class="tracking-item">
+                    Танкер "Black Pearl"<br>
+                    ETA: 15:45 UTC<br>
+                    Порт: Дубай<br>
+                    <div class="cargo-info">
+                        <span class="cargo-type">Груз:</span><br>
+                        - Нефтепродукты (85,000 тонн)<br>
+                        - Тип: Diesel Fuel
+                    </div>
+                </li>
+                <li class="tracking-item">
+                    Балкер "Eastern Wind"<br>
+                    ETA: 18:20 UTC<br>
+                    Порт: Пирей<br>
+                    <div class="cargo-info">
+                        <span class="cargo-type">Груз:</span><br>
+                        - Железная руда (120,000 тонн)
+                    </div>
+                </li>
+                <li class="tracking-item">
+                    Газовоз "Polar Star"<br>
+                    ETA: 21:15 UTC<br>
+                    Порт: Токио<br>
+                    <div class="cargo-info">
+                        <span class="cargo-type">Груз:</span><br>
+                        - СПГ (98,000 м³)<br>
+                        - Источник: Qatar Gas
+                    </div>
+                </li>
+                <li class="tracking-item">
+                    Сухогруз "Mediterranean"<br>
+                    ETA: 23:45 UTC<br>
+                    Порт: Александрия<br>
+                    <div class="cargo-info">
+                        <span class="cargo-type">Груз:</span><br>
+                        - Зерно (55,000 тонн)<br>
+                        - Тип: Кукуруза
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="bottom-panel">
+        <div class="progress-container">
+            <div class="progress-item">
+                Los Angeles → Tokyo<br>
+                Progress: 65% | ETA: 4d 18h
+            </div>
+            <div class="progress-item">
+                Mumbai → Durban<br>
+                Progress: 33% | ETA: 8d 9h
+            </div>
+            <div class="progress-item">
+                Alexandria → Piraeus<br>
+                Progress: 88% | ETA: 1d 2h
+            </div>
+            <div class="progress-item">
+                Vancouver → Shanghai<br>
+                Progress: 12% | ETA: 11d 15h
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+    [Предыдущий JavaScript-код с картой и маркерами остается без изменений]
+    </script>
+</body>
+</html>
+
+
+
+<!--
+Основные изменения:
+1. Добавлены верхняя и нижняя панели с прогрессом движения судов
+2. Расширена информация о грузах, включая:
+   - Тип и количество контейнеров
+   - Объемы нефти и газа
+   - Типы сухих грузов
+   - Дополнительные характеристики грузов
+3. Обновлен дизайн:
+   - Изменен font-family на monospace
+   - Обновлен стиль tracking-item (убран border, изменен background-color)
+   - Добавлено больше tracking item боксов
+4. Добавлена структура с прогресс-барами для отслеживания перемещений
+
+Хотите что-то дополнительно изменить в дизайне или информации?
+-->
