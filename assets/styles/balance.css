@@ -1,5 +1,7 @@
         .balance {display: flex;align-items: center;position: absolute;
-    left: 2%;top: 2%;z-index: 2;font-family:monospace;font-weight: 900;font-size: 56px;}
+                  left: 2%;top: 2%;z-index: 2;font-family:monospace;font-weight: 900;font-size: 56px;    
+                  background-color: black;
+                  border-radius: 8px;}
 
         /* Стилизация кастомного выпадающего списка */
         .custom-select {
