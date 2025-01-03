@@ -16,7 +16,7 @@
 </head>
 <body>
     <div class="balance">
-        <h2>Баланс:</h2>
+        <h2>Балансуя:</h2>
         <p id="balance">wallet not connected</p>
         <ul id="currencyBalances" style="display: none;">
             <li><strong>Баланс в рублях (RUB): </strong><span id="rub"></span> ₽</li>
@@ -53,10 +53,10 @@
 
                     // Получение конвертированных значений
                     const rates = await getExchangeRates();
-                    const rub = balanceEth * rates.rub;
-                    const usd = balanceEth * rates.usd;
-                    const eur = balanceEth * rates.eur;
-                    const cny = balanceEth * rates.cny;
+                    const rub = balanceEth * rates.ethToRub;
+                    const usd = balanceEth * rates.ethToUsd;
+                    const eur = balanceEth * rates.ethToEur;
+                    const cny = balanceEth * rates.ethToCny;
 
                     // Отображение всех валютных балансов с символами валют
                     document.getElementById('rub').innerText = rub.toFixed(2);
@@ -74,18 +74,18 @@
         // Получение актуальных курсов валют
         async function getExchangeRates() {
             try {
-                const response = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+                const response = await fetch('https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD,RUB,EUR,CNY');
                 const data = await response.json();
 
                 return {
-                    rub: data.rates.RUB,
-                    usd: 1,  // ETH всегда в USD
-                    eur: data.rates.EUR,
-                    cny: data.rates.CNY
+                    ethToUsd: data.USD,
+                    ethToRub: data.RUB,
+                    ethToEur: data.EUR,
+                    ethToCny: data.CNY
                 };
             } catch (error) {
                 console.error('Ошибка при получении курсов валют:', error);
-                return { rub: 0, usd: 0, eur: 0, cny: 0 }; // Возврат нулевых курсов в случае ошибки
+                return { ethToUsd: 0, ethToRub: 0, ethToEur: 0, ethToCny: 0 }; // Возврат нулевых курсов в случае ошибки
             }
         }
     </script>
