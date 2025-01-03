@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Styled World Map</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
+    <style>
+        body { margin: 0; }
+        #map {
+            width: 100vw;
+            height: 100vh;
+        }
+        .custom-marker {
+            background: #fff;
+            border: 3px solid rgba(0,0,0,0.3);
+            border-radius: 50%;
+            width: 14px !important;
+            height: 14px !important;
+            margin-left: -7px !important;
+            margin-top: -7px !important;
+        }
+        .leaflet-tile-pane {
+            filter: sepia(100%) saturate(150%) hue-rotate(350deg);
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+    <script>
+        // Initialize map
+        const map = L.map('map', {
+            center: [20, 0],
+            zoom: 4, // Увеличили масштаб
+            zoomControl: true,
+            attributionControl: true
+        });
+
+        // Custom style for the map
+        const customStyle = {
+            water: '#fbce59',
+            landColor: '#e6a532',
+        };
+
+        // Add tile layer with custom styling
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Sample coordinates for markers based on the image
+        const markers = [
+            [45, -125], // North America West
+            [40, -80],  // North America East
+            [10, -80],  // Central America
+            [-20, -60], // South America
+            [50, 0],    // Europe
+            [25, 35],   // Africa North
+            [-25, 25],  // Africa South
+            [35, 140],  // Asia East
+            [20, 80],   // Asia South
+            [-25, 135]  // Australia
+        ];
+
+        // Add custom markers
+        markers.forEach(coord => {
+            L.marker(coord, {
+                icon: L.divIcon({
+                    className: 'custom-marker'
+                })
+            }).addTo(map);
+        });
+
+        /* Ships removed as requested
+        const ships = [
+            [20, -110],
+            [0, -40],
+            [10, 60],
+            [0, 100],
+            [0, 160]
+        ];
+
+        const shipIcon = L.divIcon({
+            className: 'ship-icon',
+            html: '<div style="transform: rotate(-45deg); color: #2a9d8f; font-size: 20px;">🚢</div>',
+            iconSize: [20, 20]
+        });
+
+        ships.forEach(coord => {
+            L.marker(coord, {
+                icon: shipIcon
+            }).addTo(map);
+        });
+        */
+    </script>
+</body>
+</html>
+
+<!--
+Основные изменения:
+1. Увеличил масштаб карты (zoom: 3 вместо 2)
+2. Закомментировал весь код, связанный с кораблями
+3. Немного увеличил размер маркеров (14px вместо 12px) и сделал обводку более заметной для лучшей видимости
+4. Увеличил прозрачность обводки маркеров для лучшего контраста
+
+Как вам такой вариант? Можем дополнительно настроить:
+1. Масштаб карты (если нужно ещё ближе или дальше)
+2. Размер маркеров
+3. Толщину обводки маркеров
+4. Центрирование карты
+-->
