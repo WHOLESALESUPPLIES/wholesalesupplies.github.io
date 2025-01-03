@@ -64,12 +64,10 @@
 
         /* Стили для отображаемого баланса */
         .currency-info {
-            font-size: 18px;
-            margin-left: 20px;
-            font-size: 25px;
+            font-size: 35px;
             margin-left: 20px;
             color: white;
-            padding-right: 15px;
+            padding-right: 18px;
         }
 
         /* Стили для полосы прокрутки */
