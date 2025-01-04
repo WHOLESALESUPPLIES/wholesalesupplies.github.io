@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shipping Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #fbce59;
+        }
+        #map {
+            width: 100vw;
+            height: 100vh;
+        }
+        .custom-marker {
+            background-color: #fff;
+            border: 2px solid #000;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+        }
+        .sea-route {
+            stroke-dasharray: 5, 5;
+            animation: dash 20s linear infinite;
+        }
+        @keyframes dash {
+            to {
+                stroke-dashoffset: -1000;
+            }
+        }
+    </style>
+</head>
+<body>
+<div id="map"></div>
+<script>
+    const portData = [
+        { name: "Порт Роттердам", country: "Нидерланды", type: "Контейнерный", coords: [51.95, 4.14] },
+        { name: "Порт Шанхай", country: "Китай", type: "Контейнерный", coords: [31.23, 121.49] },
+        { name: "Порт Сингапур", country: "Сингапур", type: "Контейнерный", coords: [1.29, 103.85] },
+        { name: "Порт Лос-Анджелес", country: "США", type: "Контейнерный", coords: [33.74, -118.27] }
+    ];
+
+    const seaRoutePoints = [
+        { coords: [35.8, -5.5], name: "Гибралтарский пролив" },
+        { coords: [29.9, 32.5], name: "Суэцкий канал" },
+        { coords: [12.5, 43.9], name: "Баб-эль-Мандебский пролив" },
+        { coords: [1.3, 103.8], name: "Малаккский пролив" },
+        { coords: [22.3, 114.1], name: "Южно-Китайское море" },
+        { coords: [8.9, -79.5], name: "Панамский канал" }
+    ];
+
+    const map = L.map('map', {
+        center: [30, 0],
+        zoom: 3,
+        zoomControl: true,
+        attributionControl: true
+    });
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    function createCurvedLine(start, end) {
+        const latlngs = [];
+        const offsetX = (end[1] - start[1]) / 4;
+        const offsetY = (end[0] - start[0]) / 4;
+
+        const midPoint = [
+            start[0] + offsetY,
+            start[1] + offsetX
+        ];
+
+        for (let t = 0; t <= 1; t += 0.01) {
+            const point = [
+                Math.pow(1 - t, 2) * start[0] + 2 * (1 - t) * t * midPoint[0] + Math.pow(t, 2) * end[0],
+                Math.pow(1 - t, 2) * start[1] + 2 * (1 - t) * t * midPoint[1] + Math.pow(t, 2) * end[1]
+            ];
+            latlngs.push(point);
+        }
+
+        return L.polyline(latlngs, {
+            color: '#e6a532',
+            weight: 1.5,
+            opacity: 0.4
+        }).addTo(map);
+    }
+
+    function getRouteIntermediatePoints(start, end) {
+        const points = [];
+
+        const isInRegion = (coords, bounds) => {
+            return coords[0] >= bounds[0][0] && coords[0] <= bounds[1][0] &&
+                coords[1] >= bounds[0][1] && coords[1] <= bounds[1][1];
+        };
+
+        const regions = {
+            eastAsia: [[0, 100], [45, 150]],
+            europe: [[30, -15], [65, 40]],
+            americas: [[-60, -120], [60, -30]],
+            oceania: [[-45, 110], [0, 180]]
+        };
+
+        if (isInRegion(start, regions.eastAsia) && isInRegion(end, regions.europe)) {
+            points.push(seaRoutePoints.find(p => p.name === "Малаккский пролив").coords);
+            points.push(seaRoutePoints.find(p => p.name === "Суэцкий канал").coords);
+            points.push(seaRoutePoints.find(p => p.name === "Гибралтарский пролив").coords);
+        }
+
+        return points;
+    }
+
+    function createCurvedRouteWithPoints(start, end, intermediatePoints) {
+        const points = [start, ...intermediatePoints, end];
+
+        for (let i = 0; i < points.length - 1; i++) {
+            const pt1 = points[i];
+            const pt2 = points[i + 1];
+
+            const latlngs = [];
+            const offsetX = (pt2[1] - pt1[1]) / 4;
+            const offsetY = (pt2[0] - pt1[0]) / 4;
+
+            const midPoint = [
+                pt1[0] + offsetY,
+                pt1[1] + offsetX
+            ];
+
+            for (let t = 0; t <= 1; t += 0.01) {
+                const point = [
+                    Math.pow(1 - t, 2) * pt1[0] + 2 * (1 - t) * t * midPoint[0] + Math.pow(t, 2) * pt2[0],
+                    Math.pow(1 - t, 2) * pt1[1] + 2 * (1 - t) * t * midPoint[1] + Math.pow(t, 2) * pt2[1]
+                ];
+                latlngs.push(point);
+            }
+
+            L.polyline(latlngs, {
+                color: '#2196F3',
+                weight: 1.5,
+                opacity: 0.6,
+                className: 'sea-route'
+            }).addTo(map);
+        }
+    }
+
+    function createAllSeaRoutes() {
+        const addedRoutes = new Set();
+
+        portData.forEach((startPort, i) => {
+            portData.forEach((endPort, j) => {
+                if (i !== j) {
+                    const routeKey = [startPort.name, endPort.name].sort().join('-');
+                    if (!addedRoutes.has(routeKey)) {
+                        const intermediatePoints = getRouteIntermediatePoints(startPort.coords, endPort.coords);
+                        createCurvedRouteWithPoints(startPort.coords, endPort.coords, intermediatePoints);
+                        addedRoutes.add(routeKey);
+                    }
+                }
+            });
+        });
+    }
+
+    portData.forEach(port => {
+        const marker = L.marker(port.coords, {
+            icon: L.divIcon({
+                className: 'custom-marker'
+            })
+        }).addTo(map);
+
+        marker.bindPopup(`
+            <div style="color: black; padding: 5px;">
+                <strong>${port.name}</strong><br>
+                Страна: ${port.country}<br>
+                Тип: ${port.type}<br>
+                Координаты: ${port.coords[0].toFixed(2)}, ${port.coords[1].toFixed(2)}
+            </div>
+        `, {
+            closeButton: true,
+            closeOnClick: false
+        });
+
+        marker.on('click', function () {
+            this.openPopup();
+        });
+    });
+
+    seaRoutePoints.forEach(point => {
+        L.circleMarker(point.coords, {
+            radius: 3,
+            color: '#2196F3',
+            fillColor: '#2196F3',
+            fillOpacity: 0.7,
+            weight: 1
+        }).bindTooltip(point.name).addTo(map);
+    });
+
+    createAllSeaRoutes();
+</script>
+</body>
+</html>
