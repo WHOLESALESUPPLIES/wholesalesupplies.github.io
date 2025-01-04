@@ -5,7 +5,6 @@
     <title>World Ports Map</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
     <style>
-        /* Previous styles remain the same */
         body { 
             margin: 0; 
             display: flex;
@@ -46,8 +45,15 @@
             width: 300px;
             background: #fff;
             padding: 20px;
+         /* box-shadow: 0 0 10px rgba(0,0,0,0.1); */
             overflow-y: auto;
             box-sizing: border-box;
+        }
+        .left-panel {
+           /* border-right: 2px solid #e6a532;*/
+        }
+        .right-panel {
+           /* border-left: 2px solid #e6a532;*/
         }
         #map-container {
             flex-grow: 1;
@@ -57,144 +63,346 @@
             height: 100%;
         }
         .custom-marker {
-            background: #e6a532;
+            background: #fff;
             border: 3px solid rgba(0,0,0,0.3);
             border-radius: 50%;
             width: 28px !important;
             height: 28px !important;
             margin-left: -14px !important;
             margin-top: -14px !important;
-            cursor: pointer;
-            transition: all 0.3s ease;
         }
-        .custom-marker:hover {
-            background: #ff8c00;
-            transform: scale(1.2);
+        .leaflet-tile-pane {
+            filter: sepia(100%) saturate(150%) hue-rotate(350deg);
         }
-        .leaflet-tooltip {
-            background: rgba(51, 51, 51, 0.9);
-            color: white;
-            border: none;
-            padding: 10px;
+        .panel-title {
+            color: #000;
+            font-size: 2em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e6a532;
+        }
+        .tracking-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .tracking-item {
+            background: #e6a532;
+            margin-bottom: 10px;
+            padding: 15px;
             border-radius: 4px;
-            font-size: 14px;
         }
-        .leaflet-tooltip-top:before {
-            border-top-color: rgba(51, 51, 51, 0.9);
+        .cargo-info {
+            margin-top: 5px;
+            padding-top: 5px;
+            border-top: 1px solid rgba(255,255,255,0.3);
         }
-        /* Keep all other previous styles */
+        .cargo-type {
+            font-weight: bold;
+        }.leaflet-control-attribution.leaflet-control {
+    opacity: 0;
+       }
+.custom-marker {
+    background: #e6a532;
+    border: 3px solid rgba(0,0,0,0.3);
+    border-radius: 50%;
+    width: 12px !important;
+    height: 12px !important;
+    margin-left: -6px !important;
+    margin-top: -6px !important;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.custom-marker:hover {
+    background: #ff8c00;
+    transform: scale(1.2);
+}
+
+.leaflet-popup-content-wrapper {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.leaflet-popup-tip {
+    background: rgba(255, 255, 255, 0.9);
+}
     </style>
 </head>
 <body>
-    <!-- Previous HTML structure remains the same -->
+    <center><div class="top-panel">
+        <div class="progress-container">
+            <div class="progress-item">
+                Shanghai → Rotterdam<br>
+                Progress: 45% | ETA: 7d 12h
+            </div>
+            <div class="progress-item">
+                Dubai → Singapore<br>
+                Progress: 78% | ETA: 2d 6h
+            </div>
+            <div class="progress-item">
+                Novorossiysk → Istanbul<br>
+                Progress: 92% | ETA: 8h
+            </div>
+            <div class="progress-item">
+                Hamburg → New York<br>
+                Progress: 23% | ETA: 12d 4h
+            </div>
+        </div>
+    </div></center>
     
+    <div class="main-container">
+        <div class="side-panel left-panel">
+           <center> <div class="panel-title">отправления</div> </center>
+            <ul class="tracking-list">
+                <li class="tracking-item">
+                    Контейнеровоз "Star Line"<br>
+                    Шанхай → Роттердам<br>
+                    Статус: В пути<br>
+                    <div class="cargo-info">
+                        <span class="cargo-type">Груз:</span><br>
+                        - 2500 TEU контейнеров<br>
+                        - Электроника<br>
+                        - Автозапчасти
+                    </div>
+                </li>
+                <li class="tracking-item">
+                    Танкер "Ocean Queen"<br>
+                    Новороссийск → Сингапур<br>
+                    Статус: Загрузка<br>
+                    <div class="cargo-info">
+                        <span class="cargo-type">Груз:</span><br>
+                        - Нефть (125,000 тонн)<br>
+                        - Тип: Crude Oil
+                    </div>
+                </li>
+                <li class="tracking-item">
+                    Балкер "Pacific Dream"<br>
+                    Владивосток → Пусан<br>
+                    Статус: Прибыл<br>
+                    <div class="cargo-info">
+                        <span class="cargo-type">Груз:</span><br>
+                        - Зерно (65,000 тонн)<br>
+                        - Пшеница
+                    </div>
+                </li>
+                <li class="tracking-item">
+                    Газовоз "Arctic Spirit"<br>
+                    Мурманск → Роттердам<br>
+                    Статус: В пути<br>
+                    <div class="cargo-info">
+                        <span class="cargo-type">Груз:</span><br>
+                        - СПГ (145,000 м³)<br>
+                        - Температура: -163°C
+                    </div>
+                </li>
+                <li class="tracking-item">
+                    Сухогруз "Baltic Leader"<br>
+                    Рига → Гамбург<br>
+                    Статус: Загрузка<br>
+                    <div class="cargo-info">
+                        <span class="cargo-type">Груз:</span><br>
+                        - Удобрения (45,000 тонн)<br>
+                        - Тип: NPK
+                    </div>
+                </li>
+            </ul>
+        </div>
+        
+        <div id="map-container" style="border-radius: 15px !important;overflow: hidden;">
+            <div id="map"></div>
+        </div>
+        
+        <div class="side-panel right-panel">
+           <center> <div class="panel-title">прибытия</div> </center>
+            <ul class="tracking-list">
+                <li class="tracking-item">
+                    Контейнеровоз "Northern Light"<br>
+                    ETA: 12:30 UTC<br>
+                    Порт: Гамбург<br>
+                    <div class="cargo-info">
+                        <span class="cargo-type">Груз:</span><br>
+                        - 3200 TEU контейнеров<br>
+                        - Текстиль<br>
+                        - Бытовая техника
+                    </div>
+                </li>
+                <li class="tracking-item">
+                    Танкер "Black Pearl"<br>
+                    ETA: 15:45 UTC<br>
+                    Порт: Дубай<br>
+                    <div class="cargo-info">
+                        <span class="cargo-type">Груз:</span><br>
+                        - Нефтепродукты (85,000 тонн)<br>
+                        - Тип: Diesel Fuel
+                    </div>
+                </li>
+                <li class="tracking-item">
+                    Балкер "Eastern Wind"<br>
+                    ETA: 18:20 UTC<br>
+                    Порт: Пирей<br>
+                    <div class="cargo-info">
+                        <span class="cargo-type">Груз:</span><br>
+                        - Железная руда (120,000 тонн)
+                    </div>
+                </li>
+                <li class="tracking-item">
+                    Газовоз "Polar Star"<br>
+                    ETA: 21:15 UTC<br>
+                    Порт: Токио<br>
+                    <div class="cargo-info">
+                        <span class="cargo-type">Груз:</span><br>
+                        - СПГ (98,000 м³)<br>
+                        - Источник: Qatar Gas
+                    </div>
+                </li>
+                <li class="tracking-item">
+                    Сухогруз "Mediterranean"<br>
+                    ETA: 23:45 UTC<br>
+                    Порт: Александрия<br>
+                    <div class="cargo-info">
+                        <span class="cargo-type">Груз:</span><br>
+                        - Зерно (55,000 тонн)<br>
+                        - Тип: Кукуруза
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+   <center> <div class="bottom-panel">
+        <div class="progress-container">
+            <div class="progress-item">
+                Los Angeles → Tokyo<br>
+                Progress: 65% | ETA: 4d 18h
+            </div>
+            <div class="progress-item">
+                Mumbai → Durban<br>
+                Progress: 33% | ETA: 8d 9h
+            </div>
+            <div class="progress-item">
+                Alexandria → Piraeus<br>
+                Progress: 88% | ETA: 1d 2h
+            </div>
+            <div class="progress-item">
+                Vancouver → Shanghai<br>
+                Progress: 12% | ETA: 11d 15h
+            </div>
+        </div>
+    </div> </center>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
     <script>
-        const map = L.map('map', {
-            center: [30, 0],
-            zoom: 3,
-            zoomControl: true,
-            attributionControl: true
-        });
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors'
-        }).addTo(map);
+// Определяем порты с названиями
+const portData = [
+    { coords: [31.2, 121.5], name: "Шанхай", country: "Китай", type: "Контейнерный терминал" },
+    { coords: [22.3, 114.1], name: "Гонконг", country: "Китай", type: "Контейнерный терминал" },
+    { coords: [1.3, 103.8], name: "Сингапур", country: "Сингапур", type: "Универсальный порт" },
+    { coords: [35.4, 139.7], name: "Йокогама", country: "Япония", type: "Контейнерный терминал" },
+    { coords: [35.0, 129.0], name: "Пусан", country: "Южная Корея", type: "Универсальный порт" },
+    { coords: [25.1, 121.5], name: "Тайбэй", country: "Тайвань", type: "Контейнерный терминал" },
+    { coords: [19.1, 72.9], name: "Мумбаи", country: "Индия", type: "Универсальный порт" },
+    { coords: [13.1, 80.3], name: "Ченнаи", country: "Индия", type: "Контейнерный терминал" },
+    // ... добавьте все остальные порты аналогично
+];
 
-        // Порты с названиями
-        const ports = [
-            { coords: [31.2, 121.5], name: 'Шанхай', country: 'Китай', type: 'Контейнерный терминал' },
-            { coords: [51.9, 4.5], name: 'Роттердам', country: 'Нидерланды', type: 'Универсальный порт' },
-            { coords: [44.7, 37.8], name: 'Новороссийск', country: 'Россия', type: 'Нефтяной терминал' },
-            { coords: [1.3, 103.8], name: 'Сингапур', country: 'Сингапур', type: 'Контейнерный хаб' },
-            { coords: [25.3, 55.3], name: 'Дубай', country: 'ОАЭ', type: 'Контейнерный терминал' },
-            { coords: [41.0, 29.0], name: 'Стамбул', country: 'Турция', type: 'Универсальный порт' },
-            { coords: [53.5, 9.9], name: 'Гамбург', country: 'Германия', type: 'Контейнерный терминал' },
-            { coords: [40.7, -74.0], name: 'Нью-Йорк', country: 'США', type: 'Универсальный порт' },
-            // Add other ports with their information...
+const map = L.map('map', {
+    center: [30, 0],
+    zoom: 3,
+    zoomControl: true,
+    attributionControl: true
+});
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors'
+}).addTo(map);
+
+// Функция для создания изогнутой линии между портами
+function createCurvedLine(start, end) {
+    const latlngs = [];
+    const offsetX = (end[1] - start[1]) / 4;
+    const offsetY = (end[0] - start[0]) / 4;
+    
+    // Создаем контрольную точку для изгиба
+    const midPoint = [
+        start[0] + offsetY,
+        start[1] + offsetX
+    ];
+    
+    // Генерируем точки для кривой Безье
+    for(let t = 0; t <= 1; t += 0.01) {
+        const point = [
+            Math.pow(1-t, 2) * start[0] + 2 * (1-t) * t * midPoint[0] + Math.pow(t, 2) * end[0],
+            Math.pow(1-t, 2) * start[1] + 2 * (1-t) * t * midPoint[1] + Math.pow(t, 2) * end[1]
         ];
+        latlngs.push(point);
+    }
+    
+    return L.polyline(latlngs, {
+        color: '#e6a532',
+        weight: 1.5,
+        opacity: 0.4
+    }).addTo(map);
+}
 
-        // Добавляем маркеры с всплывающими подсказками
-        ports.forEach(port => {
-            const marker = L.marker(port.coords, {
-                icon: L.divIcon({
-                    className: 'custom-marker'
-                })
-            }).addTo(map);
-
-            // Добавляем постоянную подсказку
-            marker.bindTooltip(`
-                <strong>${port.name}</strong><br>
-                Страна: ${port.country}<br>
-                Тип: ${port.type}
-            `, {
-                permanent: false,
-                direction: 'top',
-                offset: [0, -10]
-            });
-        });
-
-        // Функция для создания изогнутой линии между портами
-        function createCurvedLine(start, end) {
-            const latlngs = [];
-            const offsetX = (end[1] - start[1]) / 4;
-            const offsetY = (end[0] - start[0]) / 4;
-            const midPoint = [
-                start[0] + offsetY,
-                start[1] + offsetX
-            ];
-            
-            for(let t = 0; t <= 1; t += 0.01) {
-                const point = [
-                    Math.pow(1-t, 2) * start[0] + 2 * (1-t) * t * midPoint[0] + Math.pow(t, 2) * end[0],
-                    Math.pow(1-t, 2) * start[1] + 2 * (1-t) * t * midPoint[1] + Math.pow(t, 2) * end[1]
-                ];
-                latlngs.push(point);
+// Создаем маршруты между всеми портами
+function createAllRoutes() {
+    for(let i = 0; i < portData.length; i++) {
+        for(let j = i + 1; j < portData.length; j++) {
+            if(calculateDistance(portData[i].coords, portData[j].coords) <= 5000) { // Ограничиваем дистанцию для уменьшения визуального шума
+                createCurvedLine(portData[i].coords, portData[j].coords);
             }
-            
-            return L.polyline(latlngs, {
-                color: '#e6a532',
-                weight: 2,
-                opacity: 0.6
-            }).addTo(map);
         }
+    }
+}
 
-        // Добавляем маршруты между портами
-        const routes = [
-            ['Шанхай', 'Роттердам'],
-            ['Дубай', 'Сингапур'],
-            ['Новороссийск', 'Стамбул'],
-            ['Гамбург', 'Нью-Йорк'],
-            // Add other routes...
-        ];
+// Функция для расчета расстояния между портами (в км)
+function calculateDistance(coord1, coord2) {
+    const R = 6371; // Радиус Земли в км
+    const lat1 = coord1[0] * Math.PI / 180;
+    const lat2 = coord2[0] * Math.PI / 180;
+    const dLat = (coord2[0] - coord1[0]) * Math.PI / 180;
+    const dLon = (coord2[1] - coord1[1]) * Math.PI / 180;
 
-        routes.forEach(route => {
-            const startPort = ports.find(p => p.name === route[0]);
-            const endPort = ports.find(p => p.name === route[1]);
-            if(startPort && endPort) {
-                createCurvedLine(startPort.coords, endPort.coords);
-            }
-        });
+    const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+              Math.cos(lat1) * Math.cos(lat2) *
+              Math.sin(dLon/2) * Math.sin(dLon/2);
+    
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    return R * c;
+}
+
+// Добавляем маркеры с всплывающими подсказками
+portData.forEach(port => {
+    const marker = L.marker(port.coords, {
+        icon: L.divIcon({
+            className: 'custom-marker'
+        })
+    }).addTo(map);
+
+    // Добавляем попап при клике
+    marker.bindPopup(`
+        <div style="color: black; padding: 5px;">
+            <strong>${port.name}</strong><br>
+            Страна: ${port.country}<br>
+            Тип: ${port.type}<br>
+            Координаты: ${port.coords[0].toFixed(2)}, ${port.coords[1].toFixed(2)}
+        </div>
+    `, {
+        closeButton: true,
+        closeOnClick: false
+    });
+
+    // Добавляем обработчик события клика
+    marker.on('click', function() {
+        this.openPopup();
+    });
+});
+
+// Создаем все маршруты
+createAllRoutes();
     </script>
 </body>
 </html>
-
-
-
-<!--
-Я внес следующие изменения в карту:
-
-1. Добавил информацию о портах (название, страна, тип)
-2. Реализовал всплывающие подсказки при наведении на порт
-3. Добавил изогнутые маршруты между портами
-4. Улучшил стиль маркеров и добавил анимацию при наведении
-5. Сделал подсказки в стиле вашего дизайна (темный фон, белый текст)
-
-Особенности реализации:
-- Маршруты отображаются изогнутыми линиями для лучшей визуализации
-- Подсказки появляются при наведении на порт
-- Маркеры портов анимируются при наведении
-- Цветовая схема соответствует общему дизайну (оранжевый #e6a532)
-
-Хотите ли вы добавить дополнительную информацию в подсказки или изменить стиль маршрутов?
--->
