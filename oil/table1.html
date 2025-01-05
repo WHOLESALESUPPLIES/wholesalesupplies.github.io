@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Таблица с CSS</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+
+    table {
+      width: 80%;
+      margin: 50px auto;
+      border-collapse: collapse;
+      border: 2px solid #000;
+      background-color: #fff;
+    }
+
+    th, td {
+      padding: 15px;
+      text-align: center;
+      border: 1px solid #000;
+    }
+
+    th {
+      background-color: #fcd200;
+      color: #000;
+      font-weight: bold;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f4f4f4;
+    }
+
+    tr:nth-child(odd) {
+      background-color: #fff;
+    }
+
+    tr:hover {
+      background-color: #fcd200;
+      color: #000;
+    }
+
+    td {
+      background-color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <table>
+    <thead>
+      <tr>
+        <th>Компонент</th>
+        <th>Состав</th>
+        <th>Описание</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Компонент 1</td>
+        <td>Состав 1</td>
+        <td>Описание 1</td>
+      </tr>
+      <tr>
+        <td>Компонент 2</td>
+        <td>Состав 2</td>
+        <td>Описание 2</td>
+      </tr>
+      <tr>
+        <td>Компонент 3</td>
+        <td>Состав 3</td>
+        <td>Описание 3</td>
+      </tr>
+      <tr>
+        <td>Компонент 4</td>
+        <td>Состав 4</td>
+        <td>Описание 4</td>
+      </tr>
+      <tr>
+        <td>Компонент 5</td>
+        <td>Состав 5</td>
+        <td>Описание 5</td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+</html>
