@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Интерактивная шкала цвета нефти</title>
+  <style>
+    .oil-container {
+      width: 100%;
+      height: 300px;
+      border: 2px solid #000;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+
+    .slider {
+      width: 100%;
+    }
+
+    .label {
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+<body>
+  <h1>Интерактивная шкала цвета нефти</h1>
+
+  <div class="label">
+    <span>Асфальтены</span>
+    <span>Лёгкие углеводороды</span>
+  </div>
+  
+  <input type="range" class="slider" id="asphaltenes" min="0" max="100" value="50">
+  <input type="range" class="slider" id="lightHydrocarbons" min="0" max="100" value="50">
+  
+  <div class="oil-container" id="oilContainer"></div>
+
+  <script>
+    const asphaltenesSlider = document.getElementById("asphaltenes");
+    const lightHydrocarbonsSlider = document.getElementById("lightHydrocarbons");
+    const oilContainer = document.getElementById("oilContainer");
+
+    function updateOilColor() {
+      const asphaltenes = asphaltenesSlider.value;
+      const lightHydrocarbons = lightHydrocarbonsSlider.value;
+
+      const r = Math.min(255, (asphaltenes * 2) + (lightHydrocarbons * 0.5));
+      const g = Math.min(255, (asphaltenes * 0.5) + (lightHydrocarbons * 1.2));
+      const b = Math.min(255, (asphaltenes * 0.3) + (lightHydrocarbons * 1.5));
+      
+      const opacity = 1 - (lightHydrocarbons / 100);
+
+      oilContainer.style.backgroundColor = `rgba(${r}, ${g}, ${b}, ${opacity})`;
+    }
+
+    asphaltenesSlider.addEventListener("input", updateOilColor);
+    lightHydrocarbonsSlider.addEventListener("input", updateOilColor);
+
+    updateOilColor(); // Initial color update
+  </script>
+</body>
+</html>
