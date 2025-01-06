@@ -13,6 +13,10 @@
       margin-top: 20px;
     }
 
+    .slider-container {
+      margin-top: 10px;
+    }
+
     .slider {
       width: 100%;
     }
@@ -20,44 +24,81 @@
     .label {
       display: flex;
       justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .slider-title {
+      margin-bottom: 10px;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
   <h1>Интерактивная шкала цвета нефти</h1>
 
-  <div class="label">
-    <span>Асфальтены</span>
-    <span>Лёгкие углеводороды</span>
+  <div class="slider-container">
+    <div class="slider-title">Асфальтены и смолы (Тёмные оттенки)</div>
+    <input type="range" class="slider" id="asphaltenes" min="0" max="100" value="50">
   </div>
-  
-  <input type="range" class="slider" id="asphaltenes" min="0" max="100" value="50">
-  <input type="range" class="slider" id="lightHydrocarbons" min="0" max="100" value="50">
-  
+
+  <div class="slider-container">
+    <div class="slider-title">Лёгкие углеводороды (Светлые оттенки)</div>
+    <input type="range" class="slider" id="lightHydrocarbons" min="0" max="100" value="50">
+  </div>
+
+  <div class="slider-container">
+    <div class="slider-title">Парафины (Жёлтые и золотистые оттенки)</div>
+    <input type="range" class="slider" id="paraffins" min="0" max="100" value="50">
+  </div>
+
+  <div class="slider-container">
+    <div class="slider-title">Минералы (Красный и зелёный оттенки)</div>
+    <input type="range" class="slider" id="minerals" min="0" max="100" value="50">
+  </div>
+
+  <div class="slider-container">
+    <div class="slider-title">Прочие компоненты (Сера, кислород, etc.)</div>
+    <input type="range" class="slider" id="otherComponents" min="0" max="100" value="50">
+  </div>
+
   <div class="oil-container" id="oilContainer"></div>
 
   <script>
     const asphaltenesSlider = document.getElementById("asphaltenes");
     const lightHydrocarbonsSlider = document.getElementById("lightHydrocarbons");
+    const paraffinsSlider = document.getElementById("paraffins");
+    const mineralsSlider = document.getElementById("minerals");
+    const otherComponentsSlider = document.getElementById("otherComponents");
     const oilContainer = document.getElementById("oilContainer");
 
     function updateOilColor() {
       const asphaltenes = asphaltenesSlider.value;
       const lightHydrocarbons = lightHydrocarbonsSlider.value;
+      const paraffins = paraffinsSlider.value;
+      const minerals = mineralsSlider.value;
+      const otherComponents = otherComponentsSlider.value;
 
-      const r = Math.min(255, (asphaltenes * 2) + (lightHydrocarbons * 0.5));
-      const g = Math.min(255, (asphaltenes * 0.5) + (lightHydrocarbons * 1.2));
-      const b = Math.min(255, (asphaltenes * 0.3) + (lightHydrocarbons * 1.5));
-      
+      // Цвет на основе асфальтенов и смол (темнее)
+      const r = Math.min(255, (asphaltenes * 1.5) + (lightHydrocarbons * 0.5) + (paraffins * 0.3) + (minerals * 0.7));
+      const g = Math.min(255, (asphaltenes * 0.6) + (lightHydrocarbons * 1.2) + (paraffins * 1.2) + (minerals * 1));
+      const b = Math.min(255, (asphaltenes * 0.2) + (lightHydrocarbons * 1.5) + (paraffins * 1.5) + (minerals * 0.5));
+
+      // Прозрачность, учитывая лёгкие углеводороды
       const opacity = 1 - (lightHydrocarbons / 100);
 
+      // Применяем изменения на контейнер
       oilContainer.style.backgroundColor = `rgba(${r}, ${g}, ${b}, ${opacity})`;
     }
 
+    // Слушаем изменения ползунков
     asphaltenesSlider.addEventListener("input", updateOilColor);
     lightHydrocarbonsSlider.addEventListener("input", updateOilColor);
+    paraffinsSlider.addEventListener("input", updateOilColor);
+    mineralsSlider.addEventListener("input", updateOilColor);
+    otherComponentsSlider.addEventListener("input", updateOilColor);
 
-    updateOilColor(); // Initial color update
+    // Начальная отрисовка
+    updateOilColor();
   </script>
 </body>
 </html>
