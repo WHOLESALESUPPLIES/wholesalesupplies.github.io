@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Интерактивная шкала цвета нефти</title>
+  <style>
+    .oil-container {
+      width: 100%;
+      height: 300px;
+      border: 2px solid #000;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+
+    .slider-container {
+      margin-top: 10px;
+    }
+
+    .slider {
+      width: 100%;
+      height: 20px;
+      -webkit-appearance: none;
+      appearance: none;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+
+    /* Стиль для каждого ползунка */
+    #asphaltenes {
+      background: linear-gradient(to right, #000000, #3e1f1b);
+    }
+
+    #lightHydrocarbons {
+      background: linear-gradient(to right, #f0f8ff, #ffff00);
+    }
+
+    #paraffins {
+      background: linear-gradient(to right, #f5deb3, #ffd700);
+    }
+
+    #minerals {
+      background: linear-gradient(to right, #ff6347, #006400); /* Красный и зелёный */
+    }
+
+    #otherComponents {
+      background: linear-gradient(to right, #c0c0c0, #ffffff); /* Серые и белые оттенки */
+    }
+
+    /* Параметры для внешнего вида ползунков */
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #fff;
+      border: 2px solid #000;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .slider::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #fff;
+      border: 2px solid #000;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .label {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .slider-title {
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Интерактивная шкала цвета нефти</h1>
+
+  <div class="slider-container">
+    <div class="slider-title">Асфальтены и смолы (Тёмные оттенки)</div>
+    <input type="range" class="slider" id="asphaltenes" min="0" max="100" value="50">
+  </div>
+
+  <div class="slider-container">
+    <div class="slider-title">Лёгкие углеводороды (Светлые оттенки)</div>
+    <input type="range" class="slider" id="lightHydrocarbons" min="0" max="100" value="50">
+  </div>
+
+  <div class="slider-container">
+    <div class="slider-title">Парафины (Жёлтые и золотистые оттенки)</div>
+    <input type="range" class="slider" id="paraffins" min="0" max="100" value="50">
+  </div>
+
+  <div class="slider-container">
+    <div class="slider-title">Минералы (Красный и зелёный оттенки)</div>
+    <input type="range" class="slider" id="minerals" min="0" max="100" value="50">
+  </div>
+
+  <div class="slider-container">
+    <div class="slider-title">Прочие компоненты (Сера, кислород, etc.)</div>
+    <input type="range" class="slider" id="otherComponents" min="0" max="100" value="50">
+  </div>
+
+  <div class="oil-container" id="oilContainer"></div>
+
+  <script>
+    const asphaltenesSlider = document.getElementById("asphaltenes");
+    const lightHydrocarbonsSlider = document.getElementById("lightHydrocarbons");
+    const paraffinsSlider = document.getElementById("paraffins");
+    const mineralsSlider = document.getElementById("minerals");
+    const otherComponentsSlider = document.getElementById("otherComponents");
+    const oilContainer = document.getElementById("oilContainer");
+
+    function updateOilColor() {
+      const asphaltenes = asphaltenesSlider.value;
+      const lightHydrocarbons = lightHydrocarbonsSlider.value;
+      const paraffins = paraffinsSlider.value;
+      const minerals = mineralsSlider.value;
+      const otherComponents = otherComponentsSlider.value;
+
+      // Цвет на основе асфальтенов и смол (темнее)
+      const r = Math.min(255, (asphaltenes * 1.5) + (lightHydrocarbons * 0.5) + (paraffins * 0.3) + (minerals * 0.7));
+      const g = Math.min(255, (asphaltenes * 0.6) + (lightHydrocarbons * 1.2) + (paraffins * 1.2) + (minerals * 1));
+      const b = Math.min(255, (asphaltenes * 0.2) + (lightHydrocarbons * 1.5) + (paraffins * 1.5) + (minerals * 0.5));
+
+      // Прозрачность, учитывая лёгкие углеводороды
+      const opacity = 1 - (lightHydrocarbons / 100);
+
+      // Применяем изменения на контейнер
+      oilContainer.style.backgroundColor = `rgba(${r}, ${g}, ${b}, ${opacity})`;
+    }
+
+    // Слушаем изменения ползунков
+    asphaltenesSlider.addEventListener("input", updateOilColor);
+    lightHydrocarbonsSlider.addEventListener("input", updateOilColor);
+    paraffinsSlider.addEventListener("input", updateOilColor);
+    mineralsSlider.addEventListener("input", updateOilColor);
+    otherComponentsSlider.addEventListener("input", updateOilColor);
+
+    // Начальная отрисовка
+    updateOilColor();
+  </script>
+</body>
+</html>
