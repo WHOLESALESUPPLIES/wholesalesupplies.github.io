@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Аккордеон</title>
+    <style>
+        /* Отключение полос прокрутки */
+        ::-webkit-scrollbar {
+            width: 0px;
+        }
+
+        /* Стиль шрифта на всю страницу */
+        body {
+            font-family: monospace;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        /* Общий стиль аккордеона */
+        .accordion {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #fff;
+            border: 1px solid #ccc;
+        }
+
+        .accordion-section {
+            background-color: #f1f1f1;
+            border-top: 1px solid #ccc;
+            cursor: pointer;
+            padding: 15px;
+            text-align: left;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .accordion-section:hover {
+            background-color: #ddd;
+        }
+
+        .accordion-content {
+            padding: 0 15px;
+            background-color: #e9e9e9;
+            display: none;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out;
+            max-height: 0;
+        }
+
+        /* Плавное открытие и закрытие */
+        .active .accordion-content {
+            display: block;
+            max-height: 200px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="accordion">
+        <div class="accordion-item">
+            <div class="accordion-section">Основные компоненты нефти</div>
+            <div class="accordion-content">
+                <p>Основные компоненты нефти включают углеводороды, вода, сернистые соединения, кислородсодержащие вещества и другие примеси.</p>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <div class="accordion-section">Примеси в составе нефти</div>
+            <div class="accordion-content">
+                <p>Примеси в нефти могут быть представлены различными веществами, такими как вода, соли, сернистые соединения и механические примеси.</p>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <div class="accordion-section">Типы нефти по физико-химическим характеристикам</div>
+            <div class="accordion-content">
+                <p>Нефть классифицируется по различным характеристикам, таким как плотность, вязкость, содержание серы и другие физико-химические параметры.</p>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <div class="accordion-section">Классификация нефти по содержанию серы</div>
+            <div class="accordion-content">
+                <p>Нефть может быть классифицирована как низкосернистая, среднесернистая и высокосернистая в зависимости от содержания серы.</p>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <div class="accordion-section">Типы месторождений нефти</div>
+            <div class="accordion-content">
+                <p>Месторождения нефти могут быть различными по происхождению и расположению, включая наземные и подводные месторождения.</p>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <div class="accordion-section">Типы нефтепродуктов</div>
+            <div class="accordion-content">
+                <p>Нефтепродукты включают бензин, дизельное топливо, керосин, мазут и другие продукты переработки нефти.</p>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <div class="accordion-section">Цвет нефти</div>
+            <div class="accordion-content">
+                <p>Цвет нефти зависит от её состава и может варьироваться от светло-желтого до темно-коричневого.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Получаем все секции аккордеона
+        const accordionSections = document.querySelectorAll('.accordion-section');
+
+        // Добавляем обработчик событий для каждой секции
+        accordionSections.forEach(section => {
+            section.addEventListener('click', () => {
+                // Находим родительский элемент и переключаем класс
+                const item = section.parentElement;
+                item.classList.toggle('active');
+            });
+        });
+    </script>
+
+</body>
+</html>
