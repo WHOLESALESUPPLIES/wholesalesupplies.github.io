@@ -3,24 +3,20 @@
 <head>
     <meta charset="utf-8">
     <title>OIL</title>
-    <meta name="description"
-          content="OIL"/>
+    <meta name="description" content="OIL"/>
     <meta name="keywords" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <meta property="og:title" content="OIL" />
     <meta property="og:description" content="" />
     <meta property="og:image" content="../assets/img/78acbc60-89b9-44b3-82cd-d4e27ffcf022-11452508.jpeg" />
-
     <meta name="twitter:title" content="OIL" />
     <meta name="twitter:description" content="" />
     <meta name="twitter:image" content="../assets/img/78acbc60-89b9-44b3-82cd-d4e27ffcf022-11452508.jpeg" />
     <meta name="twitter:card" content="summary_large_image" />
-
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
 
 
         <link rel="preconnect" href="https://259506.selcdn.ru" />
-
         <link rel="stylesheet" href="../assets/styles/styles-core.css" />
 
         <link rel="icon" type="image/png" sizes="16x16" href="../assets/img/a07e57d6-9281-43aa-86eb-468e759048a0-11398545.png">
@@ -41,6 +37,48 @@
 </head>
 
 <body class="sb-body sb-body_with-footer  font-ubuntu-opensans sb-content-size_m sb-buttons-border_round">
+
+    <div class="balance">
+        <!-- Кастомизированный выпадающий список -->
+        <div class="custom-select" id="currencySelectContainer">
+            <div id="selectedCurrency" class="selected-value">ETH</div>
+            <div class="arrow">&#9660;</div>
+
+            <!-- Скрытые опции -->
+            <div class="custom-select-options" id="currencySelectOptions">
+                <div class="custom-select-option" data-value="ETH">
+                    <span class="currency-symbol">Ξ</span> ETH (Ethereum)
+                </div>
+                <div class="custom-select-option" data-value="RUB">
+                    <span class="currency-symbol">₽</span> RUB (Russian Rubble)
+                </div>
+                <div class="custom-select-option" data-value="USD">
+                    <span class="currency-symbol">$</span> USD (Dollar)
+                </div>
+                <div class="custom-select-option" data-value="EUR">
+                    <span class="currency-symbol">€</span> EUR (Euro)
+                </div>
+                <div class="custom-select-option" data-value="CNY">
+                    <span class="currency-symbol">¥</span> CNY (Chinese Yuan)
+                </div>
+                <div class="custom-select-option" data-value="GHS">
+                    <span class="currency-symbol">₵</span> GHS (Ghanian Cedi)
+                </div>
+                <div class="custom-select-option" data-value="NGN">
+                    <span class="currency-symbol">₦</span> NGN (Nigerian Naira)
+                </div>
+                <div class="custom-select-option" data-value="KES">
+                    <span class="currency-symbol">KSh</span> KES (Kenyan Shilling)
+                </div>
+                <div class="custom-select-option" data-value="ZAR">
+                    <span class="currency-symbol">R</span> ZAR (South African Ren)
+                </div>
+            </div>
+        </div>
+        <!-- Информация о балансе -->
+        <div id="currencyInfo" class="currency-info">wallet not connected</div>
+    </div>
+
 <div class="site-wrapper" tabindex="0">
               <section data-type="about" id="about" class="s-about-type-2 sb-text-dark sb-align-center sb-padding-top_s sb-padding-bottom_s"><link
                             id="about-type-2"
