@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Current Oil Prices</title>
+    <script>
+        // Функция для получения цены на нефть по марке
+        async function fetchOilPrices() {
+            const oilSymbols = [
+                { name: 'WTI', symbol: 'CL=F' },      // West Texas Intermediate
+                { name: 'Brent', symbol: 'BZ=F' },    // Brent Crude
+                { name: 'Dubai', symbol: 'DUB=F' },   // Dubai Crude
+                { name: 'Oman', symbol: 'OM=F' },     // Oman Crude
+            ];
+
+            let prices = '';
+
+            // Для каждой марки нефти выполняем запрос
+            for (const oil of oilSymbols) {
+                const url = `https://query1.finance.yahoo.com/v8/finance/chart/${oil.symbol}?range=1d&interval=1m`;
+                const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+
+                try {
+                    const response = await fetch(proxyUrl);
+                    const data = await response.json();
+                    const jsonData = JSON.parse(data.contents);
+
+                    if (jsonData.chart && jsonData.chart.result) {
+                        const price = jsonData.chart.result[0].meta.regularMarketPrice;
+                        if (price !== undefined) {
+                            prices += `${oil.name}: $${price} <br>`;
+                        }
+                    }
+                } catch (error) {
+                    // Если возникает ошибка, просто игнорируем марку
+                }
+            }
+
+            // Обновление текста на странице с ценами на нефть
+            document.getElementById('oil-prices').innerHTML = prices || 'No data available';
+        }
+
+        // Обновление данных каждые 30 секунд
+        setInterval(fetchOilPrices, 30000);
+
+        // Первоначальный вызов функции при загрузке страницы
+        window.onload = fetchOilPrices;
+    </script>
+</head>
+<body>
+    <h1>Current Oil Prices</h1>
+    <div id="oil-prices">Loading...</div>
+</body>
+</html>
