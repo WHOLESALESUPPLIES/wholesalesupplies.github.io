@@ -51,70 +51,74 @@
     </div>
 
     <script>
-async function getPriceAndUpdate() {
-    const proxyUrl = 'https://api.allorigins.win/raw?url=';
-    const apiUrl = 'https://query1.finance.yahoo.com/v7/finance/chart/CL=F?range=1d&interval=1m';
+        let priceHistory = []; // История цен
+        let timeHistory = [];  // Временные метки для графика
 
-    try {
-        const response = await fetch(proxyUrl + encodeURIComponent(apiUrl));
-        const data = await response.json();
+        // Функция для получения данных о цене нефти
+        async function getPriceAndUpdate() {
+            const proxyUrl = 'https://api.allorigins.win/raw?url=';
+            const apiUrl = 'https://query1.finance.yahoo.com/v7/finance/chart/CL=F?range=1d&interval=1m';
 
-        // Логируем весь ответ для проверки
-        console.log(JSON.stringify(data, null, 2));
+            try {
+                const response = await fetch(proxyUrl + encodeURIComponent(apiUrl));
+                const data = await response.json();
 
-        // Проверяем структуру данных
-        if (
-            data.chart &&
-            data.chart.result &&
-            data.chart.result.length > 0
-        ) {
-            const result = data.chart.result[0];
-            const prices = result.indicators.adjclose[0].adjclose;
-            const timestamps = result.timestamp;
+                // Проверяем структуру данных
+                if (
+                    data.chart &&
+                    data.chart.result &&
+                    data.chart.result.length > 0 &&
+                    data.chart.result[0].timestamp &&
+                    data.chart.result[0].indicators &&
+                    data.chart.result[0].indicators.adjclose &&
+                    data.chart.result[0].indicators.adjclose.length > 0 &&
+                    data.chart.result[0].indicators.adjclose[0].adjclose
+                ) {
+                    const result = data.chart.result[0];
+                    const timestamps = result.timestamp; // Временные метки
+                    const prices = result.indicators.adjclose[0].adjclose; // Цены
 
-            if (prices && timestamps) {
-                const latestPrice = prices[prices.length - 1];
-                const latestTime = new Date(timestamps[timestamps.length - 1] * 1000);
+                    // Берем последнюю цену и время
+                    const latestPrice = prices[prices.length - 1];
+                    const latestTime = new Date(timestamps[timestamps.length - 1] * 1000);
 
-                // Обновляем данные для графика
-                timeHistory.push(latestTime);
-                priceHistory.push(latestPrice);
+                    // Обновляем массивы данных
+                    timeHistory.push(latestTime);
+                    priceHistory.push(latestPrice);
 
-                if (timeHistory.length > 30) {
-                    timeHistory.shift();
-                    priceHistory.shift();
+                    // Ограничиваем длину данных для графика
+                    if (timeHistory.length > 30) {
+                        timeHistory.shift();
+                        priceHistory.shift();
+                    }
+
+                    // Обновляем текст с ценой
+                    const formattedPrice = new Intl.NumberFormat('ru-RU').format(latestPrice);
+                    document.getElementById('balance').innerText = `${formattedPrice} $`;
+
+                    // Обновляем график
+                    priceChart.data.labels = timeHistory;
+                    priceChart.data.datasets[0].data = priceHistory;
+                    priceChart.update();
+                } else {
+                    throw new Error('Отсутствуют данные о временных метках или ценах');
                 }
-
-                // Форматируем и выводим цену
-                const formattedPrice = new Intl.NumberFormat('ru-RU').format(latestPrice);
-                document.getElementById('balance').innerText = `${formattedPrice} $`;
-
-                // Обновляем график
-                priceChart.data.labels = timeHistory;
-                priceChart.data.datasets[0].data = priceHistory;
-                priceChart.update();
-            } else {
-                throw new Error('Отсутствуют данные о ценах или временных метках');
+            } catch (error) {
+                console.error("Ошибка при получении данных о цене нефти:", error);
+                document.getElementById('balance').innerText = "Ошибка загрузки";
             }
-        } else {
-            throw new Error('Структура данных API изменилась или отсутствуют результаты');
         }
-    } catch (error) {
-        console.error("Ошибка при получении данных о цене нефти:", error);
-        document.getElementById('balance').innerText = "Ошибка загрузки";
-    }
-}
 
         // Настройка графика с помощью Chart.js
         const ctx = document.getElementById('priceChart').getContext('2d');
         const priceChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: [],
+                labels: [],  
                 datasets: [{
                     label: 'Цена на нефть (USD)',
-                    data: [],
-                    borderColor: 'rgba(255, 255, 255, 1)',
+                    data: [],  
+                    borderColor: 'rgba(255, 255, 255, 1)', 
                     fill: false,
                     borderWidth: 2
                 }]
@@ -124,31 +128,57 @@ async function getPriceAndUpdate() {
                 maintainAspectRatio: false,
                 plugins: {
                     tooltip: {
-                        bodyFont: { family: 'monospace', size: 14, color: '#fff' },
-                        titleFont: { family: 'monospace', size: 16, color: '#fff' }
+                        bodyFont: {
+                            family: 'monospace',
+                            size: 14,
+                            color: '#fff'
+                        },
+                        titleFont: {
+                            family: 'monospace',
+                            size: 16,
+                            color: '#fff'
+                        }
                     },
-                    legend: { display: false }
+                    legend: {
+                        display: false,
+                    }
                 },
                 scales: {
                     x: {
                         type: 'time',
-                        time: { unit: 'minute', tooltipFormat: 'HH:mm' },
-                        ticks: { maxTicksLimit: 6, color: '#fff' },
+                        time: {
+                            unit: 'minute',
+                            tooltipFormat: 'dd MMM HH:mm'
+                        },
+                        ticks: {
+                            maxTicksLimit: 6,
+                            color: '#fff'  
+                        },
                         title: {
                             display: true,
                             text: 'Время',
-                            font: { family: 'monospace', size: 14, weight: 'bold' },
-                            color: '#fff'
+                            font: {
+                                family: 'monospace',
+                                size: 14,
+                                weight: 'bold'
+                            },
+                            color: '#fff'  
                         }
                     },
                     y: {
                         beginAtZero: false,
-                        ticks: { color: '#fff' },
+                        ticks: {
+                            color: '#fff'  
+                        },
                         title: {
                             display: true,
                             text: 'Цена (USD)',
-                            font: { family: 'monospace', size: 14, weight: 'bold' },
-                            color: '#fff'
+                            font: {
+                                family: 'monospace',
+                                size: 14,
+                                weight: 'bold'
+                            },
+                            color: '#fff'  
                         }
                     }
                 }
@@ -157,7 +187,7 @@ async function getPriceAndUpdate() {
 
         // Обновляем цену и график каждые 30 секунд
         setInterval(getPriceAndUpdate, 30000);
-        getPriceAndUpdate();
+        getPriceAndUpdate(); 
     </script>
 </body>
 </html>
