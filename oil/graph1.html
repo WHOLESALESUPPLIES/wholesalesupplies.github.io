@@ -55,36 +55,17 @@
         let timeHistory = [];  // Временные метки для графика
 
         // Функция для получения данных о цене нефти с Yahoo Finance
-        async function getPriceAndUpdate() {
-            try {
-                const response = await fetch('https://query1.finance.yahoo.com/v7/finance/chart/CL=F?range=1d&interval=1m');
-                const data = await response.json();
+const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+const apiUrl = 'https://query1.finance.yahoo.com/v7/finance/chart/CL=F?range=1d&interval=1m';
 
-                // Получаем цену нефти
-                const oilPrice = data.chart.result[0].indicators.adjclose[0][data.chart.result[0].timestamp.length - 1];
-
-                // Форматируем цену
-                const formattedPrice = new Intl.NumberFormat('ru-RU').format(oilPrice);
-                document.getElementById('balance').innerText = `${formattedPrice} $`;
-
-                // Обновляем график
-                const currentTime = new Date();
-                timeHistory.push(currentTime);
-                priceHistory.push(oilPrice);
-
-                if (timeHistory.length > 30) {
-                    timeHistory.shift();
-                    priceHistory.shift();
-                }
-
-                priceChart.data.labels = timeHistory;
-                priceChart.data.datasets[0].data = priceHistory;
-                priceChart.update();
-            } catch (error) {
-                console.error("Ошибка при получении данных о цене нефти:", error);
-                document.getElementById('balance').innerText = "Ошибка загрузки данных";
-            }
-        }
+fetch(proxyUrl + apiUrl)
+    .then(response => response.json())
+    .then(data => {
+        // Обработка данных
+    })
+    .catch(error => {
+        console.error('Ошибка при получении данных:', error);
+    });
 
         // Настройка графика с помощью Chart.js
         const ctx = document.getElementById('priceChart').getContext('2d');
