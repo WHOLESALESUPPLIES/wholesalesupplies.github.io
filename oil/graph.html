@@ -7,7 +7,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
     <style>
-        html{
+        html {
             background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKAAAABQAgMAAADjM5anAAAACVBMVEX///////////+OSuX+AAAAA3RSTlMAAw9B5IqMAAAAO0lEQVR4AWOAA0Y4C6vYiFI4qnBU4ajCUYWjCpmwiZGjMBQGspbCmdjEqGX1iIrCUYWjCkcVjiocVQgAPC8OuQNGhAYAAAAASUVORK5CYII=) center 2px;
         }
         body {
@@ -74,29 +74,36 @@
 
         // Функция для получения данных о цене нефти и обновления графика
         async function getPriceAndUpdate() {
-            // Получаем цену нефти (пример из API CoinGecko)
-            const priceData = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=brent-crude-oil&vs_currencies=rub');
+            // Получаем цену нефти (API Alpha Vantage)
+            const apiKey = '31PGWTX5TXYE7Y1R'; // Замените на ваш API-ключ
+            const priceData = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=CL=F&interval=5min&apikey=${apiKey}`);
             const priceJson = await priceData.json();
-            const oilPrice = priceJson['brent-crude-oil'].rub;
 
-            // Форматируем цену с пробелами между тысячами
-            const formattedPrice = new Intl.NumberFormat('ru-RU').format(oilPrice);
-            document.getElementById('balance').innerText = `${formattedPrice} ₽`;
+            if (priceJson['Time Series (5min)']) {
+                const lastTimestamp = Object.keys(priceJson['Time Series (5min)'])[0];
+                const oilPrice = priceJson['Time Series (5min)'][lastTimestamp]['4. close'];
 
-            // Обновляем график
-            const currentTime = new Date();
-            timeHistory.push(currentTime);
-            priceHistory.push(oilPrice);
+                // Форматируем цену с пробелами между тысячами
+                const formattedPrice = new Intl.NumberFormat('ru-RU').format(oilPrice);
+                document.getElementById('balance').innerText = `${formattedPrice} ₽`;
 
-            if (timeHistory.length > 30) {
-                // Ограничиваем количество точек на графике
-                timeHistory.shift();
-                priceHistory.shift();
+                // Обновляем график
+                const currentTime = new Date();
+                timeHistory.push(currentTime);
+                priceHistory.push(oilPrice);
+
+                if (timeHistory.length > 30) {
+                    // Ограничиваем количество точек на графике
+                    timeHistory.shift();
+                    priceHistory.shift();
+                }
+
+                priceChart.data.labels = timeHistory;
+                priceChart.data.datasets[0].data = priceHistory;
+                priceChart.update();
+            } else {
+                console.error("Ошибка при получении данных о цене нефти");
             }
-
-            priceChart.data.labels = timeHistory;
-            priceChart.data.datasets[0].data = priceHistory;
-            priceChart.update();
         }
 
         // Настройка графика с помощью Chart.js
