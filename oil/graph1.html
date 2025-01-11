@@ -8,7 +8,7 @@
         // Функция для получения текущей цены на нефть
         async function fetchOilPrice() {
             const apiKey = '31PGWTX5TXYE7Y1R'; // Ваш API-ключ
-            const url = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=CL=F&apikey=${apiKey}`;
+            const url = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=CL=F&interval=5min&apikey=${apiKey}`;
             const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
 
             try {
@@ -16,8 +16,9 @@
                 const data = await response.json();
                 const jsonData = JSON.parse(data.contents);
 
-                if (jsonData['Global Quote']) {
-                    const price = jsonData['Global Quote']['05. price'];
+                if (jsonData['Time Series (5min)']) {
+                    const latestTime = Object.keys(jsonData['Time Series (5min)'])[0]; // самое последнее время
+                    const price = jsonData['Time Series (5min)'][latestTime]['4. close'];
                     document.getElementById('oil-price').textContent = `Текущая цена на нефть: $${price}`;
                 } else {
                     document.getElementById('oil-price').textContent = 'Не удалось получить данные о цене на нефть.';
