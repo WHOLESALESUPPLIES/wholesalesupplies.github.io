@@ -30,7 +30,7 @@
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family&#x3D;Ubuntu&amp;subset&#x3D;all&amp;display&#x3D;swap">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family&#x3D;Open+Sans&amp;subset&#x3D;all&amp;display&#x3D;swap">
-         <script>
+        <!-- <script>
         // Функция для получения цены на нефть по марке
         async function fetchOilPrices() {
             const oilSymbols = [
@@ -72,7 +72,52 @@
 
         // Первоначальный вызов функции при загрузке страницы
         window.onload = fetchOilPrices;
-    </script>
+    </script> -->
+
+<script>
+        // Функция для получения цены на нефть и пшеницу
+        async function fetchCommodityPrices() {
+            const commoditySymbols = [
+                { name: 'WTI', symbol: 'CL=F' },      // West Texas Intermediate
+                { name: 'Brent', symbol: 'BZ=F' },    // Brent Crude
+                { name: 'Wheat', symbol: 'ZW=F' },    // Wheat
+            ];
+
+            let prices = '';
+
+            // Для каждой марки нефти и пшеницы выполняем запрос
+            for (const commodity of commoditySymbols) {
+                const url = `https://query1.finance.yahoo.com/v8/finance/chart/${commodity.symbol}?range=1d&interval=1m`;
+                const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+
+                try {
+                    const response = await fetch(proxyUrl);
+                    const data = await response.json();
+                    const jsonData = JSON.parse(data.contents);
+
+                    if (jsonData.chart && jsonData.chart.result) {
+                        const price = jsonData.chart.result[0].meta.regularMarketPrice;
+                        prices += `${commodity.name}: $${price} <br>`;
+                    } else {
+                        prices += `${commodity.name}: Data unavailable <br>`;
+                    }
+                } catch (error) {
+                    prices += `${commodity.name}: Error loading data <br>`;
+                }
+            }
+
+            // Обновление текста на странице с ценами на нефть и пшеницу
+            document.getElementById('oil-prices').innerHTML = prices;
+        }
+
+        // Обновление данных каждые 30 секунд
+        setInterval(fetchCommodityPrices, 30000);
+
+        // Первоначальный вызов функции при загрузке страницы
+        window.onload = fetchCommodityPrices;
+</script>
+
+
       <style>
          ::-webkit-scrollbar{width:0px;}
       </style>
