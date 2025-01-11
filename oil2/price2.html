@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Баланс в Рублях</title>
+    <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Добавление адаптера для работы с датами -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+    <style>
+        /* Основные стили страницы */
+        html{
+            background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKAAAABQAgMAAADjM5anAAAACVBMVEX///////////+OSuX+AAAAA3RSTlMAAw9B5IqMAAAAO0lEQVR4AWOAA0Y4C6vYiFI4qnBU4ajCUYWjCpmwiZGjMBQGspbCmdjEqGX1iIrCUYWjCkcVjiocVQgAPC8OuQNGhAYAAAAASUVORK5CYII=) center 2px;
+        }
+        body {
+            font-family: monospace;
+            font-weight: 900;
+            background: #0f0f0f;
+            background: #262dac;
+            background: rgb(16 22 34);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            background: linear-gradient(141deg, #fd811291, #0085cac2);
+            height: 100vh;
+        }
+
+        /* Контейнер для банковской карты */
+        .card {
+            width: 350px;
+            padding: 20px;
+            height: 74%;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            color: #fff;
+            text-align: center;
+            position: relative;
+            top: 0px;
+            overflow: hidden;
+            margin: 10px;
+        }
+
+        .card #balance {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .card .chart-container {
+            width: 100%;
+            height: 200px;
+        }
+
+        /* Стиль для заголовка и подложки */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, rgba(255, 0, 150, 0.3), rgba(0, 204, 255, 0.3));
+            background-size: 400% 400%;
+            animation: gradient 3s ease infinite;
+            z-index: -1;
+        }
+
+        /* Анимация градиента */
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }::-webkit-scrollbar {width: 0px;}
+
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <div id="balance"></div>
+        <div class="chart-container">
+            <canvas id="priceChartWTI"></canvas>
+        </div>
+    </div>
+
+    <div class="card">
+        <div id="balanceBrent"></div>
+        <div class="chart-container">
+            <canvas id="priceChartBrent"></canvas>
+        </div>
+    </div>
+
+<script>
+    let priceHistoryWTI = [];  // История цен для WTI
+    let timeHistoryWTI = [];   // Временные метки для WTI
+    let priceHistoryBrent = [];  // История цен для Brent
+    let timeHistoryBrent = [];   // Временные метки для Brent
+
+    // Функция для обновления графиков и отображения цен
+    async function fetchOilPrices() {
+        const oilSymbols = [
+            { name: 'WTI', symbol: 'CL=F', chartId: 'priceChartWTI', balanceId: 'balance', priceHistory: priceHistoryWTI, timeHistory: timeHistoryWTI },  // West Texas Intermediate
+            { name: 'Brent', symbol: 'BZ=F', chartId: 'priceChartBrent', balanceId: 'balanceBrent', priceHistory: priceHistoryBrent, timeHistory: timeHistoryBrent }  // Brent Crude
+        ];
+
+        // Обновление для каждой марки нефти
+        for (const oil of oilSymbols) {
+            const url = `https://query1.finance.yahoo.com/v8/finance/chart/${oil.symbol}?range=1d&interval=1m`;
+            const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+
+            try {
+                const response = await fetch(proxyUrl);
+                const data = await response.json();
+                const jsonData = JSON.parse(data.contents);
+
+                if (jsonData.chart && jsonData.chart.result) {
+                    const price = jsonData.chart.result[0].meta.regularMarketPrice;
+
+                    // Обновляем баланс
+                    document.getElementById(oil.balanceId).innerText = `${oil.name}: $${price}`;
+
+                    // Добавляем новую точку на график
+                    const currentTime = new Date();
+                    oil.timeHistory.push(currentTime);
+                    oil.priceHistory.push(price);
+
+                    // Ограничиваем количество точек на графике
+                    if (oil.timeHistory.length > 30) {
+                        oil.timeHistory.shift();
+                        oil.priceHistory.shift();
+                    }
+
+                    // Обновление графика
+                    const ctx = document.getElementById(oil.chartId).getContext('2d');
+                    const chart = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: oil.timeHistory,
+                            datasets: [{
+                                label: `${oil.name} Oil Price`,
+                                data: oil.priceHistory,
+                                borderColor: 'rgba(255, 255, 255, 1)',
+                                fill: false,
+                                borderWidth: 2
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                tooltip: {
+                                    bodyFont: {
+                                        family: 'monospace',
+                                        size: 14,
+                                        color: '#fff'
+                                    },
+                                    titleFont: {
+                                        family: 'monospace',
+                                        size: 16,
+                                        color: '#fff'
+                                    }
+                                },
+                                legend: {
+                                    display: false
+                                }
+                            },
+                            scales: {
+                                x: {
+                                    type: 'time',
+                                    time: {
+                                        unit: 'minute',
+                                        tooltipFormat: 'll HH:mm'
+                                    },
+                                    ticks: {
+                                        maxTicksLimit: 6,
+                                        color: '#fff'
+                                    },
+                                    title: {
+                                        display: true,
+                                        text: 'Время',
+                                        font: {
+                                            family: 'monospace',
+                                            size: 14,
+                                            weight: 'bold'
+                                        },
+                                        color: '#fff'
+                                    }
+                                },
+                                y: {
+                                    beginAtZero: false,
+                                    ticks: {
+                                        color: '#fff'
+                                    },
+                                    title: {
+                                        display: true,
+                                        text: 'Цена ($)',
+                                        font: {
+                                            family: 'monospace',
+                                            size: 14,
+                                            weight: 'bold'
+                                        },
+                                        color: '#fff'
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error("Ошибка при загрузке данных", error);
+            }
+        }
+    }
+
+    // Обновление данных каждые 30 секунд
+    setInterval(fetchOilPrices, 30000);
+    fetchOilPrices(); // Первоначальный вызов для загрузки данных при загрузке страницы
+</script>
+
+</body>
+</html>
