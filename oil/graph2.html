@@ -51,46 +51,38 @@
     </div>
 
     <script>
-        const priceHistory = []; // История цен
-        const timeHistory = [];  // Временные метки для графика
+async function getPriceAndUpdate() {
+    const proxyUrl = 'https://api.allorigins.win/raw?url=';
+    const apiUrl = 'https://query1.finance.yahoo.com/v7/finance/chart/CL=F?range=1d&interval=1m';
 
-        // Функция для получения данных о цене нефти
-        async function getPriceAndUpdate() {
-            const proxyUrl = 'https://thingproxy.freeboard.io/fetch/';
-            const apiUrl = 'https://query1.finance.yahoo.com/v7/finance/chart/CL=F?range=1d&interval=1m';
+    try {
+        const response = await fetch(proxyUrl + encodeURIComponent(apiUrl));
+        const data = await response.json();
 
-            try {
-                const response = await fetch(proxyUrl + apiUrl);
-                const data = await response.json();
+        const prices = data.chart.result[0].indicators.adjclose[0].adjclose;
+        const timestamps = data.chart.result[0].timestamp;
+        const latestPrice = prices[prices.length - 1];
+        const latestTime = new Date(timestamps[timestamps.length - 1] * 1000);
 
-                // Получаем последнюю цену нефти
-                const prices = data.chart.result[0].indicators.adjclose[0].adjclose;
-                const timestamps = data.chart.result[0].timestamp;
-                const latestPrice = prices[prices.length - 1];
-                const latestTime = new Date(timestamps[timestamps.length - 1] * 1000);
+        timeHistory.push(latestTime);
+        priceHistory.push(latestPrice);
 
-                // Обновляем данные для графика
-                timeHistory.push(latestTime);
-                priceHistory.push(latestPrice);
-
-                if (timeHistory.length > 30) {
-                    timeHistory.shift();
-                    priceHistory.shift();
-                }
-
-                // Форматируем цену
-                const formattedPrice = new Intl.NumberFormat('ru-RU').format(latestPrice);
-                document.getElementById('balance').innerText = `${formattedPrice} $`;
-
-                // Обновляем график
-                priceChart.data.labels = timeHistory;
-                priceChart.data.datasets[0].data = priceHistory;
-                priceChart.update();
-            } catch (error) {
-                console.error("Ошибка при получении данных о цене нефти:", error);
-                document.getElementById('balance').innerText = "Ошибка загрузки";
-            }
+        if (timeHistory.length > 30) {
+            timeHistory.shift();
+            priceHistory.shift();
         }
+
+        const formattedPrice = new Intl.NumberFormat('ru-RU').format(latestPrice);
+        document.getElementById('balance').innerText = `${formattedPrice} $`;
+
+        priceChart.data.labels = timeHistory;
+        priceChart.data.datasets[0].data = priceHistory;
+        priceChart.update();
+    } catch (error) {
+        console.error("Ошибка при получении данных о цене нефти:", error);
+        document.getElementById('balance').innerText = "Ошибка загрузки";
+    }
+}
 
         // Настройка графика с помощью Chart.js
         const ctx = document.getElementById('priceChart').getContext('2d');
