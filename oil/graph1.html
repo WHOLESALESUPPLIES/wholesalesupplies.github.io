@@ -10,8 +10,8 @@
             const oilSymbols = [
                 { name: 'WTI', symbol: 'CL=F' },      // West Texas Intermediate
                 { name: 'Brent', symbol: 'BZ=F' },    // Brent Crude
-                { name: 'Dubai', symbol: 'DUB=F' },   // Dubai Crude
-                { name: 'Oman', symbol: 'OM=F' },     // Oman Crude
+             // { name: 'Dubai', symbol: 'DUB=F' },   // Dubai Crude
+             // { name: 'Oman', symbol: 'OM=F' },     // Oman Crude
             ];
 
             let prices = '';
@@ -28,17 +28,17 @@
 
                     if (jsonData.chart && jsonData.chart.result) {
                         const price = jsonData.chart.result[0].meta.regularMarketPrice;
-                        prices += `${oil.name}: $${price} <br>`;
-                    } else {
-                        prices += `${oil.name}: Data unavailable <br>`;
+                        if (price !== undefined) {
+                            prices += `${oil.name}: $${price} <br>`;
+                        }
                     }
                 } catch (error) {
-                    prices += `${oil.name}: Error loading data <br>`;
+                    // Если возникает ошибка, просто игнорируем марку
                 }
             }
 
             // Обновление текста на странице с ценами на нефть
-            document.getElementById('oil-prices').innerHTML = prices;
+            document.getElementById('oil-prices').innerHTML = prices || 'No data available';
         }
 
         // Обновление данных каждые 30 секунд
