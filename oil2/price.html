@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Цены на нефть</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        html {
+            background: linear-gradient(141deg, #fd811291, #0085cac2);
+        }
+        body {
+            font-family: monospace;
+            background: linear-gradient(141deg, #fd811291, #0085cac2);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+            color: #fff;
+        }
+        .card {
+            width: 400px;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            background-color: rgba(0, 0, 0, 0.5);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .card h1 {
+            margin: 0;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .chart-container {
+            width: 100%;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div id="cards-container">
+        <!-- Карточки будут добавлены динамически -->
+    </div>
+
+    <script>
+        // Данные о марках нефти
+        const oilSymbols = [
+            { name: 'WTI', symbol: 'CL=F' },      // West Texas Intermediate
+            { name: 'Brent', symbol: 'BZ=F' },    // Brent Crude
+        ];
+
+        // Хранение данных для графиков
+        const charts = {};
+        const priceHistories = {};
+
+        // Создание карточек с графиками
+        function createCard(oil) {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.id = `card-${oil.symbol}`;
+
+            card.innerHTML = `
+                <h1>${oil.name}</h1>
+                <div id="price-${oil.symbol}" style="font-size: 18px; font-weight: bold;">Загрузка...</div>
+                <div class="chart-container">
+                    <canvas id="chart-${oil.symbol}"></canvas>
+                </div>
+            `;
+
+            document.getElementById('cards-container').appendChild(card);
+
+            // Инициализация графика
+            const ctx = document.getElementById(`chart-${oil.symbol}`).getContext('2d');
+            priceHistories[oil.symbol] = { time: [], prices: [] };
+            charts[oil.symbol] = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: `Цена (${oil.name})`,
+                        data: [],
+                        borderColor: 'rgba(255, 255, 255, 1)',
+                        borderWidth: 2,
+                        fill: false,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                    },
+                    scales: {
+                        x: {
+                            type: 'time',
+                            time: { unit: 'minute', tooltipFormat: 'HH:mm' },
+                            ticks: { color: '#fff' },
+                        },
+                        y: {
+                            beginAtZero: false,
+                            ticks: { color: '#fff' },
+                        }
+                    }
+                }
+            });
+        }
+
+        // Функция для обновления цены и графика
+        async function fetchOilPrices() {
+            for (const oil of oilSymbols) {
+                const url = `https://query1.finance.yahoo.com/v8/finance/chart/${oil.symbol}?range=1d&interval=1m`;
+                const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+
+                try {
+                    const response = await fetch(proxyUrl);
+                    const data = await response.json();
+                    const jsonData = JSON.parse(data.contents);
+
+                    if (jsonData.chart && jsonData.chart.result) {
+                        const price = jsonData.chart.result[0].meta.regularMarketPrice;
+                        const currentTime = new Date();
+
+                        // Обновляем текст с текущей ценой
+                        document.getElementById(`price-${oil.symbol}`).innerHTML = `$${price.toFixed(2)}`;
+
+                        // Обновляем историю цен
+                        priceHistories[oil.symbol].time.push(currentTime);
+                        priceHistories[oil.symbol].prices.push(price);
+
+                        // Удаляем старые данные, чтобы отображалось не более 30 точек
+                        if (priceHistories[oil.symbol].time.length > 30) {
+                            priceHistories[oil.symbol].time.shift();
+                            priceHistories[oil.symbol].prices.shift();
+                        }
+
+                        // Обновляем данные графика
+                        charts[oil.symbol].data.labels = priceHistories[oil.symbol].time;
+                        charts[oil.symbol].data.datasets[0].data = priceHistories[oil.symbol].prices;
+                        charts[oil.symbol].update();
+                    } else {
+                        document.getElementById(`price-${oil.symbol}`).innerHTML = 'Данные недоступны';
+                    }
+                } catch (error) {
+                    console.error(`Ошибка загрузки данных для ${oil.name}:`, error);
+                    document.getElementById(`price-${oil.symbol}`).innerHTML = 'Ошибка загрузки данных';
+                }
+            }
+        }
+
+        // Инициализация карточек и графиков
+        window.onload = () => {
+            oilSymbols.forEach(createCard);
+            fetchOilPrices();
+            setInterval(fetchOilPrices, 30000);
+        };
+    </script>
+</body>
+</html>
