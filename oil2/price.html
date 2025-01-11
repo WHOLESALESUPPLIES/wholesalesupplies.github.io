@@ -3,159 +3,218 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Цены на нефть</title>
+    <title>Баланс в Рублях</title>
+    <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Добавление адаптера для работы с датами -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
     <style>
-        html {
-            background: linear-gradient(141deg, #fd811291, #0085cac2);
+        /* Основные стили страницы */
+        html{
+            background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKAAAABQAgMAAADjM5anAAAACVBMVEX///////////+OSuX+AAAAA3RSTlMAAw9B5IqMAAAAO0lEQVR4AWOAA0Y4C6vYiFI4qnBU4ajCUYWjCpmwiZGjMBQGspbCmdjEqGX1iIrCUYWjCkcVjiocVQgAPC8OuQNGhAYAAAAASUVORK5CYII=) center 2px;
         }
         body {
             font-family: monospace;
-            background: linear-gradient(141deg, #fd811291, #0085cac2);
-            min-height: 100vh;
+            font-weight: 900;
+            background: #0f0f0f;
+            background: #262dac;
+            background: rgb(16 22 34);
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
             margin: 0;
-            padding: 20px;
-            color: #fff;
+            background: linear-gradient(141deg, #fd811291, #0085cac2);
+            height: 100vh;
         }
+
+        /* Контейнер для банковской карты */
         .card {
-            width: 400px;
+            width: 350px;
             padding: 20px;
+            width: 92%;
+            height: 74%;
             border-radius: 15px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            background-color: rgba(0, 0, 0, 0.5);
+            color: #fff;
             text-align: center;
-            margin-bottom: 20px;
+            position: relative;
+            top: 0px;
+            overflow: hidden;
+            margin: 10px;
         }
+
         .card h1 {
-            margin: 0;
             font-size: 24px;
             margin-bottom: 10px;
         }
-        .chart-container {
+
+        .card #balance {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .card .chart-container {
             width: 100%;
             height: 200px;
         }
+
+        /* Стиль для заголовка и подложки */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, rgba(255, 0, 150, 0.3), rgba(0, 204, 255, 0.3));
+            background-size: 400% 400%;
+            animation: gradient 3s ease infinite;
+            z-index: -1;
+        }
+
+        /* Анимация градиента */
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }::-webkit-scrollbar {width: 0px;}
     </style>
 </head>
 <body>
-    <div id="cards-container">
-        <!-- Карточки будут добавлены динамически -->
+
+    <div class="card">
+        <h1>WTI Oil Price</h1>
+        <div id="balance"></div>
+        <div class="chart-container">
+            <canvas id="priceChartWTI"></canvas>
+        </div>
     </div>
 
-    <script>
-        // Данные о марках нефти
+    <div class="card">
+        <h1>Brent Oil Price</h1>
+        <div id="balanceBrent"></div>
+        <div class="chart-container">
+            <canvas id="priceChartBrent"></canvas>
+        </div>
+    </div>
+
+<script>
+    // Функция для получения данных с API и обновления графиков
+    async function fetchOilPrices() {
         const oilSymbols = [
-            { name: 'WTI', symbol: 'CL=F' },      // West Texas Intermediate
-            { name: 'Brent', symbol: 'BZ=F' },    // Brent Crude
+            { name: 'WTI', symbol: 'CL=F', chartId: 'priceChartWTI', balanceId: 'balance' },  // West Texas Intermediate
+            { name: 'Brent', symbol: 'BZ=F', chartId: 'priceChartBrent', balanceId: 'balanceBrent' }  // Brent Crude
         ];
 
-        // Хранение данных для графиков
-        const charts = {};
-        const priceHistories = {};
+        // Обновление для каждой марки нефти
+        for (const oil of oilSymbols) {
+            const url = `https://query1.finance.yahoo.com/v8/finance/chart/${oil.symbol}?range=1d&interval=1m`;
+            const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
 
-        // Создание карточек с графиками
-        function createCard(oil) {
-            const card = document.createElement('div');
-            card.className = 'card';
-            card.id = `card-${oil.symbol}`;
+            try {
+                const response = await fetch(proxyUrl);
+                const data = await response.json();
+                const jsonData = JSON.parse(data.contents);
 
-            card.innerHTML = `
-                <h1>${oil.name}</h1>
-                <div id="price-${oil.symbol}" style="font-size: 18px; font-weight: bold;">Загрузка...</div>
-                <div class="chart-container">
-                    <canvas id="chart-${oil.symbol}"></canvas>
-                </div>
-            `;
+                if (jsonData.chart && jsonData.chart.result) {
+                    const price = jsonData.chart.result[0].meta.regularMarketPrice;
 
-            document.getElementById('cards-container').appendChild(card);
+                    // Отображаем цену
+                    document.getElementById(oil.balanceId).innerText = `${oil.name}: $${price}`;
 
-            // Инициализация графика
-            const ctx = document.getElementById(`chart-${oil.symbol}`).getContext('2d');
-            priceHistories[oil.symbol] = { time: [], prices: [] };
-            charts[oil.symbol] = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: [],
-                    datasets: [{
-                        label: `Цена (${oil.name})`,
-                        data: [],
-                        borderColor: 'rgba(255, 255, 255, 1)',
-                        borderWidth: 2,
-                        fill: false,
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: false },
-                    },
-                    scales: {
-                        x: {
-                            type: 'time',
-                            time: { unit: 'minute', tooltipFormat: 'HH:mm' },
-                            ticks: { color: '#fff' },
+                    // Получаем график
+                    const ctx = document.getElementById(oil.chartId).getContext('2d');
+                    const chart = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: [new Date().toLocaleTimeString()],
+                            datasets: [{
+                                label: `${oil.name} Oil Price`,
+                                data: [price],
+                                borderColor: 'rgba(255, 255, 255, 1)',
+                                fill: false,
+                                borderWidth: 2
+                            }]
                         },
-                        y: {
-                            beginAtZero: false,
-                            ticks: { color: '#fff' },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                tooltip: {
+                                    bodyFont: {
+                                        family: 'monospace',
+                                        size: 14,
+                                        color: '#fff'
+                                    },
+                                    titleFont: {
+                                        family: 'monospace',
+                                        size: 16,
+                                        color: '#fff'
+                                    }
+                                },
+                                legend: {
+                                    display: false
+                                }
+                            },
+                            scales: {
+                                x: {
+                                    type: 'time',
+                                    time: {
+                                        unit: 'minute',
+                                        tooltipFormat: 'll HH:mm'
+                                    },
+                                    ticks: {
+                                        maxTicksLimit: 6,
+                                        color: '#fff'
+                                    },
+                                    title: {
+                                        display: true,
+                                        text: 'Время',
+                                        font: {
+                                            family: 'monospace',
+                                            size: 14,
+                                            weight: 'bold'
+                                        },
+                                        color: '#fff'
+                                    }
+                                },
+                                y: {
+                                    beginAtZero: false,
+                                    ticks: {
+                                        color: '#fff'
+                                    },
+                                    title: {
+                                        display: true,
+                                        text: 'Цена ($)',
+                                        font: {
+                                            family: 'monospace',
+                                            size: 14,
+                                            weight: 'bold'
+                                        },
+                                        color: '#fff'
+                                    }
+                                }
+                            }
                         }
-                    }
+                    });
                 }
-            });
-        }
-
-        // Функция для обновления цены и графика
-        async function fetchOilPrices() {
-            for (const oil of oilSymbols) {
-                const url = `https://query1.finance.yahoo.com/v8/finance/chart/${oil.symbol}?range=1d&interval=1m`;
-                const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
-
-                try {
-                    const response = await fetch(proxyUrl);
-                    const data = await response.json();
-                    const jsonData = JSON.parse(data.contents);
-
-                    if (jsonData.chart && jsonData.chart.result) {
-                        const price = jsonData.chart.result[0].meta.regularMarketPrice;
-                        const currentTime = new Date();
-
-                        // Обновляем текст с текущей ценой
-                        document.getElementById(`price-${oil.symbol}`).innerHTML = `$${price.toFixed(2)}`;
-
-                        // Обновляем историю цен
-                        priceHistories[oil.symbol].time.push(currentTime);
-                        priceHistories[oil.symbol].prices.push(price);
-
-                        // Удаляем старые данные, чтобы отображалось не более 30 точек
-                        if (priceHistories[oil.symbol].time.length > 30) {
-                            priceHistories[oil.symbol].time.shift();
-                            priceHistories[oil.symbol].prices.shift();
-                        }
-
-                        // Обновляем данные графика
-                        charts[oil.symbol].data.labels = priceHistories[oil.symbol].time;
-                        charts[oil.symbol].data.datasets[0].data = priceHistories[oil.symbol].prices;
-                        charts[oil.symbol].update();
-                    } else {
-                        document.getElementById(`price-${oil.symbol}`).innerHTML = 'Данные недоступны';
-                    }
-                } catch (error) {
-                    console.error(`Ошибка загрузки данных для ${oil.name}:`, error);
-                    document.getElementById(`price-${oil.symbol}`).innerHTML = 'Ошибка загрузки данных';
-                }
+            } catch (error) {
+                console.error("Ошибка при загрузке данных", error);
             }
         }
+    }
 
-        // Инициализация карточек и графиков
-        window.onload = () => {
-            oilSymbols.forEach(createCard);
-            fetchOilPrices();
-            setInterval(fetchOilPrices, 30000);
-        };
-    </script>
+    // Обновление данных каждые 30 секунд
+    setInterval(fetchOilPrices, 30000);
+    fetchOilPrices(); // Первоначальный вызов для загрузки данных при загрузке страницы
+</script>
+
 </body>
 </html>
