@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>График цены на нефть</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+    <style>
+        html{
+            background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKAAAABQAgMAAADjM5anAAAACVBMVEX///////////+OSuX+AAAAA3RSTlMAAw9B5IqMAAAAO0lEQVR4AWOAA0Y4C6vYiFI4qnBU4ajCUYWjCpmwiZGjMBQGspbCmdjEqGX1iIrCUYWjCkcVjiocVQgAPC8OuQNGhAYAAAAASUVORK5CYII=) center 2px;
+        }
+        body {
+            font-family: monospace;
+            font-weight: 900;
+            background: linear-gradient(141deg, #fd811291, #0085cac2);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+        .card {
+            width: 350px;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            color: #fff;
+            text-align: center;
+            position: relative;
+            top: 0px;
+            overflow: hidden;
+        }
+        .card #balance {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .card .chart-container {
+            width: 100%;
+            height: 200px;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, rgba(255, 0, 150, 0.3), rgba(0, 204, 255, 0.3));
+            background-size: 400% 400%;
+            animation: gradient 3s ease infinite;
+            z-index: -1;
+        }
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <div id="balance"></div>
+        <div class="chart-container">
+            <canvas id="priceChart"></canvas>
+        </div>
+    </div>
+
+   <script>
+        let priceHistory = []; // История цен
+        let timeHistory = [];  // Временные метки для графика
+
+        // Функция для получения данных о цене нефти и обновления графика
+        async function getPriceAndUpdate() {
+            // Получаем цену нефти (пример из API CoinGecko)
+            const priceData = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=brent-crude-oil&vs_currencies=rub');
+            const priceJson = await priceData.json();
+            const oilPrice = priceJson['brent-crude-oil'].rub;
+
+            // Форматируем цену с пробелами между тысячами
+            const formattedPrice = new Intl.NumberFormat('ru-RU').format(oilPrice);
+            document.getElementById('balance').innerText = `${formattedPrice} ₽`;
+
+            // Обновляем график
+            const currentTime = new Date();
+            timeHistory.push(currentTime);
+            priceHistory.push(oilPrice);
+
+            if (timeHistory.length > 30) {
+                // Ограничиваем количество точек на графике
+                timeHistory.shift();
+                priceHistory.shift();
+            }
+
+            priceChart.data.labels = timeHistory;
+            priceChart.data.datasets[0].data = priceHistory;
+            priceChart.update();
+        }
+
+        // Настройка графика с помощью Chart.js
+        const ctx = document.getElementById('priceChart').getContext('2d');
+        const priceChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [],  // Временные метки
+                datasets: [{
+                    label: 'Цена на нефть (₽)',
+                    data: [],  // Данные о ценах
+                    borderColor: 'rgba(255, 255, 255, 1)',  /* Белая линия тренда */
+                    fill: false,
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    tooltip: {
+                        bodyFont: {
+                            family: 'monospace',
+                            size: 14,
+                            color: '#fff'
+                        },
+                        titleFont: {
+                            family: 'monospace',
+                            size: 16,
+                            color: '#fff'
+                        }
+                    },
+                    legend: {
+                        display: false,  // Полностью скрыть легенду
+                    }
+                },
+                scales: {
+                    x: {
+                        type: 'time',
+                        time: {
+                            unit: 'minute',
+                            tooltipFormat: 'll HH:mm'
+                        },
+                        ticks: {
+                            maxTicksLimit: 6,
+                            color: '#fff'  /* Белый цвет меток на оси X */
+                        },
+                        title: {
+                            display: true,
+                            text: 'Время',
+                            font: {
+                                family: 'monospace',
+                                size: 14,
+                                weight: 'bold'
+                            },
+                            color: '#fff'  /* Белый цвет заголовка оси X */
+                        }
+                    },
+                    y: {
+                        beginAtZero: false,
+                        ticks: {
+                            color: '#fff'  /* Белый цвет меток на оси Y */
+                        },
+                        title: {
+                            display: true,
+                            text: 'Цена (₽)',
+                            font: {
+                                family: 'monospace',
+                                size: 14,
+                                weight: 'bold'
+                            },
+                            color: '#fff'  /* Белый цвет заголовка оси Y */
+                        }
+                    }
+                }
+            }
+        });
+
+        // Обновляем цену и график каждые 30 секунд
+        setInterval(getPriceAndUpdate, 30000);
+        getPriceAndUpdate(); // Выполняем сразу при загрузке страницы
+    </script>
+</body>
+</html>
