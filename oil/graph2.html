@@ -59,25 +59,41 @@ async function getPriceAndUpdate() {
         const response = await fetch(proxyUrl + encodeURIComponent(apiUrl));
         const data = await response.json();
 
-        const prices = data.chart.result[0].indicators.adjclose[0].adjclose;
-        const timestamps = data.chart.result[0].timestamp;
-        const latestPrice = prices[prices.length - 1];
-        const latestTime = new Date(timestamps[timestamps.length - 1] * 1000);
+        // Проверяем, существует ли структура данных
+        if (
+            data.chart &&
+            data.chart.result &&
+            data.chart.result.length > 0 &&
+            data.chart.result[0].indicators &&
+            data.chart.result[0].indicators.adjclose &&
+            data.chart.result[0].indicators.adjclose[0].adjclose &&
+            data.chart.result[0].timestamp
+        ) {
+            const prices = data.chart.result[0].indicators.adjclose[0].adjclose;
+            const timestamps = data.chart.result[0].timestamp;
+            const latestPrice = prices[prices.length - 1];
+            const latestTime = new Date(timestamps[timestamps.length - 1] * 1000);
 
-        timeHistory.push(latestTime);
-        priceHistory.push(latestPrice);
+            // Обновляем данные для графика
+            timeHistory.push(latestTime);
+            priceHistory.push(latestPrice);
 
-        if (timeHistory.length > 30) {
-            timeHistory.shift();
-            priceHistory.shift();
+            if (timeHistory.length > 30) {
+                timeHistory.shift();
+                priceHistory.shift();
+            }
+
+            // Форматируем и выводим цену
+            const formattedPrice = new Intl.NumberFormat('ru-RU').format(latestPrice);
+            document.getElementById('balance').innerText = `${formattedPrice} $`;
+
+            // Обновляем график
+            priceChart.data.labels = timeHistory;
+            priceChart.data.datasets[0].data = priceHistory;
+            priceChart.update();
+        } else {
+            throw new Error('Структура данных API изменилась или отсутствуют данные');
         }
-
-        const formattedPrice = new Intl.NumberFormat('ru-RU').format(latestPrice);
-        document.getElementById('balance').innerText = `${formattedPrice} $`;
-
-        priceChart.data.labels = timeHistory;
-        priceChart.data.datasets[0].data = priceHistory;
-        priceChart.update();
     } catch (error) {
         console.error("Ошибка при получении данных о цене нефти:", error);
         document.getElementById('balance').innerText = "Ошибка загрузки";
