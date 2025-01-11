@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Current Prices</title>
+    <script>
+        // Функция для получения цены на нефть по марке
+        async function fetchPrices() {
+            const oilSymbols = [
+                { name: 'WTI', symbol: 'CL=F' },      // West Texas Intermediate
+                { name: 'Brent', symbol: 'BZ=F' },    // Brent Crude
+                { name: 'Dubai', symbol: 'DUB=F' },   // Dubai Crude
+                { name: 'Oman', symbol: 'OM=F' },     // Oman Crude
+            ];
+
+            const wheatSymbol = 'ZC=F';  // Символ для пшеницы (на основе фьючерсов)
+            const fertilizerSymbol = 'CF=F';  // Пример символа для фьючерсов на удобрения (например, аммиачная селитра)
+
+            let prices = '';
+
+            // Для каждой марки нефти выполняем запрос
+            for (const oil of oilSymbols) {
+                const url = `https://query1.finance.yahoo.com/v8/finance/chart/${oil.symbol}?range=1d&interval=1m`;
+                const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+
+                try {
+                    const response = await fetch(proxyUrl);
+                    const data = await response.json();
+                    const jsonData = JSON.parse(data.contents);
+
+                    if (jsonData.chart && jsonData.chart.result) {
+                        const price = jsonData.chart.result[0].meta.regularMarketPrice;
+                        if (price !== undefined) {
+                            prices += `${oil.name}: $${price} <br>`;
+                        }
+                    }
+                } catch (error) {
+                    // Если возникает ошибка, просто игнорируем марку
+                }
+            }
+
+            // Получение цен на пшеницу и удобрения
+            const commodities = [
+                { name: 'Wheat', symbol: wheatSymbol },
+                { name: 'Fertilizers', symbol: fertilizerSymbol },
+            ];
+
+            for (const commodity of commodities) {
+                const url = `https://query1.finance.yahoo.com/v8/finance/chart/${commodity.symbol}?range=1d&interval=1m`;
+                try {
+                    const response = await fetch(proxyUrl);
+                    const data = await response.json();
+                    const jsonData = JSON.parse(data.contents);
+
+                    if (jsonData.chart && jsonData.chart.result) {
+                        const price = jsonData.chart.result[0].meta.regularMarketPrice;
+                        if (price !== undefined) {
+                            prices += `${commodity.name}: $${price} <br>`;
+                        }
+                    }
+                } catch (error) {
+                    // Если возникает ошибка, просто игнорируем товар
+                }
+            }
+
+            // Обновление текста на странице с ценами
+            document.getElementById('prices').innerHTML = prices || 'No data available';
+        }
+
+        // Обновление данных каждые 30 секунд
+        setInterval(fetchPrices, 30000);
+
+        // Первоначальный вызов функции при загрузке страницы
+        window.onload = fetchPrices;
+    </script>
+</head>
+<body>
+    <h1>Current Prices</h1>
+    <div id="prices">Loading...</div>
+</body>
+</html>
