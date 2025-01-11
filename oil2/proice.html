@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Цены на нефть</title>
+    <style>
+        html {
+            background: linear-gradient(141deg, #fd811291, #0085cac2);
+        }
+        body {
+            font-family: monospace;
+            background: linear-gradient(141deg, #fd811291, #0085cac2);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            color: #fff;
+        }
+        .card {
+            width: 350px;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            background-color: rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+        .card h1 {
+            margin: 0;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .card #oil-prices {
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Цены на нефть</h1>
+        <div id="oil-prices">Загрузка данных...</div>
+    </div>
+
+    <script>
+        // Функция для получения цены на нефть по марке
+        async function fetchOilPrices() {
+            const oilSymbols = [
+                { name: 'WTI', symbol: 'CL=F' },      // West Texas Intermediate
+                { name: 'Brent', symbol: 'BZ=F' },    // Brent Crude
+            ];
+
+            let prices = '';
+
+            // Для каждой марки нефти выполняем запрос
+            for (const oil of oilSymbols) {
+                const url = `https://query1.finance.yahoo.com/v8/finance/chart/${oil.symbol}?range=1d&interval=1m`;
+                const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+
+                try {
+                    const response = await fetch(proxyUrl);
+                    const data = await response.json();
+                    const jsonData = JSON.parse(data.contents);
+
+                    if (jsonData.chart && jsonData.chart.result) {
+                        const price = jsonData.chart.result[0].meta.regularMarketPrice;
+                        prices += `${oil.name}: $${price.toFixed(2)} <br>`;
+                    } else {
+                        prices += `${oil.name}: Данные недоступны <br>`;
+                    }
+                } catch (error) {
+                    console.error(`Ошибка загрузки данных для ${oil.name}:`, error);
+                    prices += `${oil.name}: Ошибка загрузки данных <br>`;
+                }
+            }
+
+            // Обновление текста на странице с ценами на нефть
+            document.getElementById('oil-prices').innerHTML = prices;
+        }
+
+        // Обновление данных каждые 30 секунд
+        setInterval(fetchOilPrices, 30000);
+
+        // Первоначальный вызов функции при загрузке страницы
+        window.onload = fetchOilPrices;
+    </script>
+</body>
+</html>
