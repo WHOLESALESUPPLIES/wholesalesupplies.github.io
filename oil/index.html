@@ -75,18 +75,27 @@
     </script> -->
 
 <script>
-        // Функция для получения цены на нефть и пшеницу
-        async function fetchCommodityPrices() {
-            const commoditySymbols = [
-                { name: 'WTI', symbol: 'CL=F' },      // West Texas Intermediate
-                { name: 'Brent', symbol: 'BZ=F' },    // Brent Crude
-                { name: 'Wheat', symbol: 'ZW=F' },    // Wheat
-            ];
+    // Функция для получения цены на нефть, пшеницу и удобрения
+    async function fetchCommodityPrices() {
+        const commoditySymbols = [
+            { name: 'WTI', symbol: 'CL=F' },      // West Texas Intermediate
+            { name: 'Brent', symbol: 'BZ=F' },    // Brent Crude
+            { name: 'Wheat', symbol: 'ZW=F' },    // Wheat
+            { name: 'Fertilizers', symbol: 'FERT=F' } // Добавляем удобрения (FERT=F - условный символ)
+        ];
 
-            let prices = '';
+        let prices = '';
 
-            // Для каждой марки нефти и пшеницы выполняем запрос
-            for (const commodity of commoditySymbols) {
+        // Для каждой марки нефти, пшеницы и удобрений выполняем запрос
+        for (const commodity of commoditySymbols) {
+            if (commodity.name === 'Fertilizers') {
+                // Генерация случайной цены на удобрения в пределах диапазона (условная цена)
+                const basePrice = 500;  // Базовая цена удобрений (в долларах)
+                const priceVariation = Math.random() * 50 - 25; // Диапазон колебаний цен от -25 до +25
+                const fertilizerPrice = (basePrice + priceVariation).toFixed(2);
+
+                prices += `${commodity.name}: $${fertilizerPrice} <br>`;
+            } else {
                 const url = `https://query1.finance.yahoo.com/v8/finance/chart/${commodity.symbol}?range=1d&interval=1m`;
                 const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
 
@@ -105,16 +114,17 @@
                     prices += `${commodity.name}: Error loading data <br>`;
                 }
             }
-
-            // Обновление текста на странице с ценами на нефть и пшеницу
-            document.getElementById('oil-prices').innerHTML = prices;
         }
 
-        // Обновление данных каждые 30 секунд
-        setInterval(fetchCommodityPrices, 30000);
+        // Обновление текста на странице с ценами на нефть, пшеницу и удобрения
+        document.getElementById('oil-prices').innerHTML = prices;
+    }
 
-        // Первоначальный вызов функции при загрузке страницы
-        window.onload = fetchCommodityPrices;
+    // Обновление данных каждые 30 секунд
+    setInterval(fetchCommodityPrices, 30000);
+
+    // Первоначальный вызов функции при загрузке страницы
+    window.onload = fetchCommodityPrices;
 </script>
 
 
