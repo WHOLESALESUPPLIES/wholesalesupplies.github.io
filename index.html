@@ -27,6 +27,58 @@
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family&#x3D;Jost:500&amp;subset&#x3D;all&amp;display&#x3D;swap">
       <link rel="stylesheet" href="https://s.tb.ru/uploads/fonts/pt-root-ui/regular.css">
       <link rel="stylesheet" href="assets/styles/balance.css">
+<script>
+    // Функция для получения цены на нефть, пшеницу и удобрения
+    async function fetchCommodityPrices() {
+        const commoditySymbols = [
+            { name: 'WTI', symbol: 'CL=F' },      // West Texas Intermediate
+            { name: 'Brent', symbol: 'BZ=F' },    // Brent Crude
+            { name: 'Wheat', symbol: 'ZW=F' },    // Wheat
+            { name: 'Fertilizers', symbol: 'FERT=F' } // Добавляем удобрения (FERT=F - условный символ)
+        ];
+
+        let prices = '';
+
+        // Для каждой марки нефти, пшеницы и удобрений выполняем запрос
+        for (const commodity of commoditySymbols) {
+            if (commodity.name === 'Fertilizers') {
+                // Генерация случайной цены на удобрения в пределах диапазона (условная цена)
+                const basePrice = 500;  // Базовая цена удобрений (в долларах)
+                const priceVariation = Math.random() * 50 - 25; // Диапазон колебаний цен от -25 до +25
+                const fertilizerPrice = (basePrice + priceVariation).toFixed(2);
+
+                prices += `${commodity.name}: $${fertilizerPrice} <br>`;
+            } else {
+                const url = `https://query1.finance.yahoo.com/v8/finance/chart/${commodity.symbol}?range=1d&interval=1m`;
+                const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+
+                try {
+                    const response = await fetch(proxyUrl);
+                    const data = await response.json();
+                    const jsonData = JSON.parse(data.contents);
+
+                    if (jsonData.chart && jsonData.chart.result) {
+                        const price = jsonData.chart.result[0].meta.regularMarketPrice;
+                        prices += `${commodity.name}: $${price} <br>`;
+                    } else {
+                        prices += `${commodity.name}: Data unavailable <br>`;
+                    }
+                } catch (error) {
+                    prices += `${commodity.name}: Error loading data <br>`;
+                }
+            }
+        }
+
+        // Обновление текста на странице с ценами на нефть, пшеницу и удобрения
+        document.getElementById('oil-prices').innerHTML = prices;
+    }
+
+    // Обновление данных каждые 30 секунд
+    setInterval(fetchCommodityPrices, 30000);
+
+    // Первоначальный вызов функции при загрузке страницы
+    window.onload = fetchCommodityPrices;
+</script>
       <style>
          ::-webkit-scrollbar{width:0px;}
          img.sb-image-crop.sb-image-crop_loaded.lazy {border-radius: 12px;}
@@ -74,6 +126,7 @@
 
         <!-- Информация о балансе -->
         <div id="currencyInfo" class="currency-info">wallet not connected</div>
+        <div id="oil-prices" style="position: absolute;right: 5%;top: 40%;font-weight: 900;text-align: right;z-index: 5;font-size:1.5em;">...</div>
     </div>
 
      <div class="site-wrapper" tabindex="0" style="height: 90vh;">
