@@ -1,0 +1,2692 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>OIL</title>
+    <meta name="description" content="OIL"/>
+    <meta name="keywords" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:title" content="OIL" />
+    <meta property="og:description" content="" />
+    <meta property="og:image" content="../assets/img/78acbc60-89b9-44b3-82cd-d4e27ffcf022-11452508.jpeg" />
+    <meta name="twitter:title" content="OIL" />
+    <meta name="twitter:description" content="" />
+    <meta name="twitter:image" content="../assets/img/78acbc60-89b9-44b3-82cd-d4e27ffcf022-11452508.jpeg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+
+        <link rel="preconnect" href="https://259506.selcdn.ru" />
+        <link rel="stylesheet" href="../assets/styles/styles-core.css" />
+        <link rel="stylesheet" href="../assets/styles/balance.css" />
+
+        <link rel="icon" type="image/png" sizes="16x16" href="../assets/img/a07e57d6-9281-43aa-86eb-468e759048a0-11398545.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="../assets/img/a07e57d6-9281-43aa-86eb-468e759048a0-11398547.png">
+        <link rel="icon" type="image/png" sizes="120x120" href="../assets/img/a07e57d6-9281-43aa-86eb-468e759048a0-11398546.png">
+        <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../assets/img/a07e57d6-9281-43aa-86eb-468e759048a0-11398546.png">
+        <link rel="icon" type="image/png" sizes="180x180" href="../assets/img/a07e57d6-9281-43aa-86eb-468e759048a0-11398548.png">
+        <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../assets/img/a07e57d6-9281-43aa-86eb-468e759048a0-11398548.png">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family&#x3D;Ubuntu&amp;subset&#x3D;all&amp;display&#x3D;swap">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family&#x3D;Open+Sans&amp;subset&#x3D;all&amp;display&#x3D;swap">
+        
+      <style>
+         ::-webkit-scrollbar{width:0px;}
+      </style>
+</head>
+
+<body class="sb-body sb-body_with-footer  font-ubuntu-opensans sb-content-size_m sb-buttons-border_round">
+
+<div class="site-wrapper" tabindex="0">
+      <section data-type="about" id="about" class="s-about-type-2 sb-text-dark sb-align-center sb-padding-top_s sb-padding-bottom_s"  style="margin-bottom: 40px;">
+<link id="about-type-2" rel="stylesheet" href="../assets/styles/about-type-2.css"/>
+     <div class="balance" style="left: 3%;top: 40%;">
+        <!-- Кастомизированный выпадающий список -->
+        <div class="custom-select" id="currencySelectContainer">
+            <div id="selectedCurrency" class="selected-value">ETH</div>
+            <div class="arrow">&#9660;</div>
+
+            <!-- Скрытые опции -->
+            <div class="custom-select-options" id="currencySelectOptions">
+                <div class="custom-select-option" data-value="ETH">
+                    <span class="currency-symbol">Ξ</span> ETH (Ethereum)
+                </div>
+                <div class="custom-select-option" data-value="RUB">
+                    <span class="currency-symbol">₽</span> RUB (Russian Rubble)
+                </div>
+                <div class="custom-select-option" data-value="USD">
+                    <span class="currency-symbol">$</span> USD (Dollar)
+                </div>
+                <div class="custom-select-option" data-value="EUR">
+                    <span class="currency-symbol">€</span> EUR (Euro)
+                </div>
+                <div class="custom-select-option" data-value="CNY">
+                    <span class="currency-symbol">¥</span> CNY (Chinese Yuan)
+                </div>
+                <div class="custom-select-option" data-value="GHS">
+                    <span class="currency-symbol">₵</span> GHS (Ghanian Cedi)
+                </div>
+                <div class="custom-select-option" data-value="NGN">
+                    <span class="currency-symbol">₦</span> NGN (Nigerian Naira)
+                </div>
+                <div class="custom-select-option" data-value="KES">
+                    <span class="currency-symbol">KSh</span> KES (Kenyan Shilling)
+                </div>
+                <div class="custom-select-option" data-value="ZAR">
+                    <span class="currency-symbol">R</span> ZAR (South African Ren)
+                </div>
+            </div>
+        </div>
+
+        <!-- Информация о балансе -->
+        <div id="currencyInfo" class="currency-info">wallet not connected</div>
+    </div>
+</section>               
+
+<section data-type="main" id="main-2" class="s-main-type-6 sb-block sb-block_fullscreen sb-text-white sb-align-center">
+<link id="main-type-6" rel="stylesheet" href="../assets/styles/main-type-6.css"/>
+    <div class="sb-background-image sb-background sb-background" style="background-image: url(../assets/img/5562351d-99b8-4cc3-b3eb-df9763265dfa-11452509.png);">
+    <div class="sb-background-overlay" style="opacity:0">
+</div>
+</div>
+<div class="s-main-type-6__wave-container"> 
+<div class=" sb-background sb-background sb-background_clear s-main-type-6__wave-editor" style="background: #fff;">
+</div> 
+<div class="s-main-type-6__wave">
+<svg class="s-main-type-6__wave-icon" width="2536" height="85" viewBox="0 0 2536 85" fill="none" xmlns="http://www.w3.org/2000/svg">  
+<path d="M0 5.24508C0 5.24508 383.286 56.6199 634 56.6199C884.714 56.6199 1017.29 1.01629 1268 0.031717C1518.12 -0.950562 1651.87 51.4065 1902 51.4065C2152.13 51.4065 2536 0.031717 2536 0.031717V87.0003H0V5.24508Z"  fill="#fff"  ></path></svg></div></div><div class="sb-container sb-m-clear-top"><div class="sb-row  sb-row_center "><div class="sb-col_lg-8 sb-col_md-12 sb-col_sm-12 sb-col_xs-12 sb-m-clear-top">     </div></div></div>  </section>                        <section data-type="header" id="header" class="s-header-type-2 sb-text-dark">
+<link id="header-type-2" rel="stylesheet" href="../assets/styles/header-type-2.css"/>
+<div class=" sb-background" style="background: #FFFFFF;"></div>
+<div class="sb-container">
+<nav class="s-header-type-2__wrapper js-wrapper">
+ <div class="s-header-type-2__burger js-burger">
+<span class="s-header-type-2__burger-line"></span></div>
+<div class="s-header-type-2__menu-wrapper js-menu ">
+<nav class="s-header-type-2__menu">
+<div class=" sb-background sb-background" style="background: #FFFFFF;"></div>
+<ul class="s-header-type-2__link-wrapper">
+<li class="s-header-type-2__link-item sb-submenu-link">
+<a href="https://companies.rbc.ru/category/868-proizvodstvo_nefteproduktov/" class="s-header-type-2__link sb-font-p3" target="_blank">SEARCH FOR PETROLEUM PRODUCTS</a>    </li>
+<li class="s-header-type-2__link-item sb-submenu-link">
+<a href="https://companies.rbc.ru/category/797-dobycha_nefti/" class="s-header-type-2__link sb-font-p3" target="_blank">SEARCH FOR OIL PRODUCTION</a></li>
+<li class="s-header-type-2__link-item sb-submenu-link">
+<a href="https://www.tek-all.ru/"     class="s-header-type-2__link sb-font-p3"   target="_blank">
+ALL CONTRACTORS AND SUPPLIERS</a></li>
+<li class="s-header-type-2__link-item sb-submenu-link">
+ <a href="https://kwabrothers.tb.ru/oil2" class="s-header-type-2__link sb-font-p3" target="_blank">OIL FIELDS AND CHEMICAL COMPOSITION OF GRADES OF EXTRACTED OIL</a>
+       </li>
+      </ul>
+     </nav>
+    </div>
+   </nav>
+  </div> 
+</section>
+
+<section data-type="text" id="text" class="s-text-type-1 sb-text-dark sb-padding-top_s sb-padding-bottom_l">
+<link id="text-type-1" rel="stylesheet" href="../assets/styles/text-type-1.css"/>
+<div class=" sb-background" style="background: #fff;"></div>
+<div class="sb-container"><div class="sb-row">
+<div class="s-text-type-1__main sb-m-8-bottom  sb-col_12 ">
+<div class="sb-row sb-m-clear-bottom">
+<h2 class="sb-col_lg-10 sb-col_md-12 sb-col_sm-12 sb-col_xs-12 sb-font-title sb-font-h2 sb-m-12-bottom">Oil Fields:</h2> 
+<div class="sb-col_lg-10 sb-col_md-12 sb-col_sm-12 sb-col_xs-12 sb-font-title sb-font-h4 sb-m-17-bottom">According to the aggregate state :</div> 
+<div class="sb-col_lg-10 sb-col_md-12 sb-col_sm-12 sb-col_xs-12 sb-font-p3 sb-align-left">Gas (combustible gases of hydrocarbon composition and non—combustible gases - helium, neon, argon, krypton).<br>
+Liquid (oil and groundwater).<br>
+Solid (valuable elements, crystals, minerals, rocks).<br>            <br>            According to industrial use, the deposits are divided into:<br>                <br>            Ore or metal deposits (deposits of ferrous, light, rare,<br>            precious and radioactive metals).<br>            Non-metallic (non-metallic) (chemical deposits,<br>            agronomic, metallurgical, technical and construction raw materials).<br>            Combustible (deposits of oil, combustible gases, coal, oil shale and peat).<br>            Hydromineral (underground and surface household,<br>            technical, balneological and mineral waters).<br>            Deposits are divided into indigenous (deposits that have not undergone changes)<br>and placers (formed as a result of the destruction of indigenous rocks).<br>            An example of a placer is gold—bearing sand. </div></div></div>   </div></div> </section>                 <section data-type="text" id="text-2" class="s-text-type-1 sb-text-dark sb-padding-top_l sb-padding-bottom_l"><link
+                            id="text-type-1"
+                            rel="stylesheet"
+                            href="../assets/styles/text-type-1.css"
+                        /><div class=" sb-background" style="background: #fff;"></div>
+<div class="sb-container"><div class="sb-row">
+<div class="s-text-type-1__main sb-m-8-bottom  sb-col_12 ">
+<div class="sb-row sb-m-clear-bottom">
+<h2 class="sb-col_lg-10 sb-col_md-12 sb-col_sm-12 sb-col_xs-12 sb-font-title sb-font-h2 sb-m-12-bottom">Oil and Petroleum Products:</h2>
+<div class="sb-col_lg-10 sb-col_md-12 sb-col_sm-12 sb-col_xs-12 sb-font-title sb-font-h4 sb-m-17-bottom">    - Urals. Siberian Light. ESPO. Sokol. Vityaz. ARCO. Sakhalin Blend.</div>
+<div class="sb-col_lg-10 sb-col_md-12 sb-col_sm-12 sb-col_xs-12 sb-font-p3">- Urals. High-sulfur oil from the fields of the Urals and the Volga region,<br>
+    mixed with light products from deposits in the Khanty-Mansiysk Autonomous Okrug.<br><br>
+    - Siberian Light. Light oil from Khanty-Mansiysk Autonomous Okrug,<br>
+    similar in composition to the Brent reference brand.<br><br>
+    - ESPO. Light low-sulfur oil from Eastern Siberia.<br><br>
+    - Sokol and Vityaz. Light oil with very low sulfur content,<br>
+    produced by various companies in the fields of Sakhalin.<br><br>
+    - Sakhalin Blend. A mixture of Vityaz brand and condensate from the Kirinskoye field.<br><br>
+    - ARCO (Arctic Oil). Heavy oil with a high sulfur content,<br>
+    It is produced at the Prirazlomnoye field on the Arctic shelf.<br>    <br>
+    - The quality of oil is determined by the percentage of sulfur content: the lower it is, the more valuable the grade.<br>    <br>
+    - Depending on the density, oil is divided into light and heavy. <br>    <br> 
+    - The first class includes Siberian Light, Sokol, ESPO, Vityaz, Sakhalin Blend, the second — Urals and ARCO.<br>    <br>
+    - The appearance of oil depends on its composition. It is unique and varies depending on the geographical location of the deposit, the depth of the well and the characteristics of the surrounding soil.<br><br>    - Oil is usually described as a viscous oily liquid of black color.<br>      But in fact, her appearance can change dramatically: It can be green,<br>      yellow and even transparent.<br><br>    - The color is determined by the content of substances:<br><br>      The green color is given by compounds of sulfur or metal ions.<br>      Brown and black shades are associated with the presence of asphaltenes and resins.<br>      Yellow, orange and transparent oil contains light fractions of associated petroleum gases and gas condensate.<br>      If the oil consists only of hydrocarbons without impurities,<br>      at the outlet of the well, a clear liquid, transparent as water, is obtained.
+</div>
+</div>
+
+<!-------------------------------------------------------------------------------------------->
+<!-------------------------------------------------------------------------------------------->
+<!-------------------------------------------------------------------------------------------->
+<!-------------------------------------------------------------------------------------------->
+<!-------------------------------------------------------------------------------------------->
+
+  <style>
+    h3{text-align: center;font-family: monospace; font-weight: 900;}
+    table{width: 100%;color: black;
+    border-collapse: collapse;
+    background-color: #fff;
+    font-family: monospace;
+    font-weight: 900;}
+
+    th, td {
+      padding: 15px;
+      text-align: center;
+      border: 1px solid #000;
+    }
+
+    th {
+      background-color: #fcd200;
+      color: #000;
+      font-weight: bold;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f4f4f4;
+    }
+
+    tr:nth-child(odd) {
+      background-color: #fff;
+    }
+
+    tr:hover {
+      background-color: #fcd200;
+      color: #000;
+    }
+
+    td {background-color: #fff;}
+        /* Общий стиль аккордеона */
+        .accordion {
+            width: 100%;
+            margin: 20px auto;
+            background-color: #fff;
+         /* border: 1px solid #ccc; */
+            border-left: 1px solid #ccc;
+            border-right: 1px solid #ccc;
+        }
+
+        .accordion-section {
+            background-color: #f1f1f1;
+            border-top: 1px solid #ccc;
+            cursor: pointer;
+            padding: 15px;color: black;
+            text-align: left;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .accordion-section:hover {
+            background-color: #ddd;
+        }
+
+        .accordion-content {
+         /* padding: 0 15px; */
+            background-color: #e9e9e9;
+            display: none;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+            max-height: 100%;
+        }
+
+        /* Плавное открытие и закрытие */
+        .active .accordion-content {
+            display: block;
+            max-height: 100%;
+            transition: all 0.5s ease-in-out;
+        }
+        /* Стили для открытой секции */
+        .active .accordion-section {
+            background-color: #4CAF50; /* Зеленый фон */
+            color: white; /* Белый текст */
+        }
+    </style>
+
+
+
+    <div class="accordion">
+        <div class="accordion-item">
+            <div class="accordion-section">Main components of oil</div>
+            <div class="accordion-content">
+
+                  <table>
+    <thead>
+      <tr>
+        <th>Component</th>
+        <th>Composition</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Hydrocarbons</td>
+        <td>Organic compounds composed of carbon and hydrogen.</td>
+        <td>       </td>
+      </tr>
+      <tr>
+        <td>Paraffins (alkanes)</td>
+        <td>Saturated hydrocarbons with a linear or branched structure. The main part of light crude oil.</td>
+        <td>Light oil</td>
+      </tr>
+      <tr>
+        <td>Petroleum distillates (naphthenes)</td>
+        <td>Hydrocarbons with a ring structure, give viscosity and density to the oil.</td>
+        <td>Heavy oil</td>
+      </tr>
+      <tr>
+        <td>Aromatic hydrocarbons</td>
+        <td>Hydrocarbons with benzene rings in the structure, often found in heavy oil.</td>
+        <td>Benzene, Toluene, Xylene</td>
+      </tr>
+    </tbody>
+  </table>
+
+            </div>
+        </div>
+
+
+        <div class="accordion-item">
+            <div class="accordion-section">Impurities in oil composition</div>
+            <div class="accordion-content">
+               
+  <table>
+    <thead>
+      <tr>
+        <th>Impurity</th>
+        <th>Composition</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Hydrogen sulfide (H2S)</td>
+        <td>A toxic substance that gives petroleum a specific odor.</td>
+        <td>High content in oil from Middle East fields</td>
+      </tr>
+      <tr>
+        <td>Nitrogen compounds</td>
+        <td>Organic compounds containing nitrogen that affect the reactivity of oil and the formation of toxic products during combustion.</td>
+        <td>Light oil</td>
+      </tr>
+      <tr>
+        <td>Oxygen-containing compounds</td>
+        <td>Substances such as phenols and ketones.</td>
+        <td>     </td>
+      </tr>
+      <tr>
+        <td>Metals and trace elements</td>
+        <td>Metals such as nickel, vanadium, iron, copper. Affect catalytic processes in oil refining.</td>
+        <td>Nickel, vanadium, copper</td>
+      </tr>
+      <tr>
+        <td>Water and salts</td>
+        <td>Dissolved water and salt inclusions affecting oil quality and refining process.</td>
+        <td>        </td>
+      </tr>
+    </tbody>
+  </table>
+
+            </div>
+        </div>
+
+
+        <div class="accordion-item">
+            <div class="accordion-section">Types of oil by physical and chemical characteristics</div>
+            <div class="accordion-content">
+            
+  <table>
+    <thead>
+      <tr>
+        <th>Type of oil</th>
+        <th>Composition</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Light oil</td>
+        <td>Oil with high content of low molecular weight hydrocarbons (paraffins, naphthenes). Light, low viscosity, more valuable. </td>
+        <td>North Sea oil, US shale oil</td>
+      </tr>
+      <tr>
+        <td>Heavy oil</td>
+        <td>Oil with a high content of high molecular weight hydrocarbons (asphaltenes, resins), with high viscosity and low fluidity, requires complex processing.</td>
+        <td>Oil from Venezuela (Maracaibo), from Canadian sandstones</td>
+      </tr>
+      <tr>
+        <td>Ultra-heavy oil</td>
+        <td>Oil with very high viscosity, high content of asphaltenes and impurities of sulfur and metals.</td>
+        <td>Oil from the Orinoco (Venezuela)</td>
+      </tr>
+      <tr>
+        <td>Shelf oil</td>
+        <td>Offshore crude oil can be either light or heavy, often with varying sulfur content.</td>
+        <td>Different deposits with different sulphur content</td>
+      </tr>
+      <tr>
+        <td>Oil with high sulfur content</td>
+        <td>Oil containing significant amounts of hydrogen sulfide, such as from fields in the Middle East.</td>
+        <td>Iraq, Iran</td>
+      </tr>
+      <tr>
+        <td>Oil from ultra-deep horizons</td>
+        <td>Oil produced from deep fields from depths of more than 5,000 meters often has unique characteristics due to geological conditions.</td>
+        <td>Northern Black Sea coast and the Azov-Caspian Basin<br>Western Siberia<br>Sakhalin<br>Tomsk and Omsk</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+            </div>
+        </div>
+        <div class="accordion-item">
+            <div class="accordion-section">Classification of oil by sulfur content</div>
+            <div class="accordion-content">
+            
+  <table>
+    <thead>
+      <tr>
+        <th>Type of oil</th>
+        <th>Composition</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Sweet oil</td>
+        <td>Low sulphur content (less than 0.5%). More valuable, easy to process.</td>
+        <td>North Sea oil, US shale oil</td>
+      </tr>
+      <tr>
+        <td>Sour oil</td>
+        <td>High sulfur content (more than 0.5%). More difficult to process, requires additional treatment processes.</td>
+        <td>Heavy oil with high sulphur concentrations</td>
+      </tr>
+    </tbody>
+  </table>
+
+            </div>
+        </div>
+        <div class="accordion-item">
+            <div class="accordion-section">Types of oil fields</div>
+            <div class="accordion-content">
+        
+  <table>
+    <thead>
+      <tr>
+        <th>Oil field type</th>
+        <th>Composition</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>By aggregate state</td>
+        <td style="text-align:left;">
+        &nbsp;&nbsp;1. Gas - hydrocarbon and non-hydrocarbon gases (helium, neon).<br>
+        &nbsp;&nbsp;2. Liquid - oil and groundwater.<br>
+        &nbsp;&nbsp;3. Solid - minerals, rocks.</td>
+        <td>Natural gas from Russia, oil from the Gulf of Mexico</td>
+      </tr>
+      <tr>
+        <td>By industrial application</td>
+        <td style="text-align:left;">
+         &nbsp;&nbsp;1. Ore (metallic) - deposits of ferrous, light, rare metals.<br>
+         &nbsp;&nbsp;2. Non-metallic - chemical, construction raw materials.<br>
+         &nbsp;&nbsp;3. Combustible - oil, coal.<br>
+         &nbsp;&nbsp;4. Hydromineral - groundwater.</td>
+        <td>Coal deposits in Kuzbass, oil in Siberia</td>
+      </tr>
+      <tr>
+        <td>By industrial application</td>
+        <td style="text-align:left;">
+        &nbsp;&nbsp;1. Indigenous - deposits that have not undergone changes.<br>
+        &nbsp;&nbsp;2. Alluvial - formed as a result of the destruction of bedrock.</td>
+        <td>Gold-bearing sands, oil from deposits. Alluvial gold deposits in Yakutia, oil in the Volga region</td>
+      </tr>
+    </tbody>
+  </table>
+
+            </div>
+        </div>
+        <div class="accordion-item">
+            <div class="accordion-section">Types of oil products</div>
+            <div class="accordion-content">
+
+              <table>
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Composition</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Urals</td>
+        <td>High-sulfur oil (with high sulfur content) from fields in the Urals and Volga regions.</td>
+        <td>Ural, Volga region</td>
+      </tr>
+      <tr>
+        <td>Siberian Light</td>
+        <td>Light crude oil from Khanty-Mansiysk Autonomous District, similar to Brent.</td>
+        <td>Khanty-Mansiysk Autonomous District</td>
+      </tr>
+      <tr>
+        <td>ESPO <br> (Eastern Siberia Pacific Ocean)</td>
+        <td>Light oil with low sulfur content from Eastern Siberia.</td>
+        <td>Eastern Siberia, exports to China</td>
+      </tr>
+      <tr>
+        <td>“Sokol” and “Vityaz”</td>
+        <td>Light oil with very low sulfur content produced on Sakhalin.</td>
+        <td>Sakhalin, Russia</td>
+      </tr>
+      <tr>
+        <td>Sakhalin mix</td>
+        <td>Blend of Vityaz grade and condensate from the Kirinskoye field.</td>
+        <td>Sakhalin, Kirinskoye field</td>
+      </tr>
+      <tr>
+        <td>ARCO</td>
+        <td>Heavy crude oil with high sulfur content <!--на Приразломном месторождении в Арктике.--> </td>
+        <td>Prirazlomnoye field in the Arctic</td>
+      </tr>
+    </tbody>
+  </table>
+
+            </div>
+        </div>
+
+
+        <div class="accordion-item">
+            <div class="accordion-section">Oil Colors</div>
+            <div class="accordion-content">
+                 <table>
+    <thead>
+      <tr>
+        <th>Color</th>
+        <th>Composition</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Green color</td>
+        <td>It is caused by the presence of organic sulfur compounds (hydrogen sulfide) or metal ions (e.g. copper, iron).</td>
+        <td>Oil with high sulfur content, e.g. from Iran</td>
+      </tr>
+      <tr>
+        <td>Brown and black shades</td>
+        <td>The presence of asphaltenes and resins that form dark and viscous liquids.</td>
+        <td>Heavy oil from Venezuela, Canada</td>
+      </tr>
+      <tr>
+        <td>Yellow, orange, transparent</td>
+        <td>Oil containing light hydrocarbons such as gas condensates. The color also depends on the presence of impurities of low molecular weight hydrocarbons.</td>
+        <td>Light crude oil from the North Sea, Sakhalin</td>
+      </tr>
+    </tbody>
+  </table>
+            </div>
+            </div>
+
+        <div class="accordion-item">
+            <div class="accordion-section">Oil Colors (By Composition)</div>
+            <div class="accordion-content">
+
+ <table>
+    <thead>
+      <tr>
+        <th style="
+    background: linear-gradient(135deg, 
+    #0A0A0A, 
+    #3E1F1B, 
+    #4B6A3C, 
+    #C88E3C, 
+    #D78F4D, 
+    #9E2A2F, 
+    rgba(34, 32, 32, 0.7)
+  );
+">The color of the oil</th>
+        <th>Chemical composition <br> (in %) and notes</th>
+        <th>Features</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="background: #666666;">Black</td>
+        <td style="text-align:left;">
+          - Asphaltenes: 20-50% <br>
+          - Sulphur: 1-5% <br>
+          - Paraffins: 10-15% <br>
+          - Resins: 10-30% <br>
+          - Water and mechanical impurities: 5-15% <br>
+        </td>
+        <td>High content of heavy hydrocarbons and impurities. Very high viscosity, low flowability. Requires complex processing.</td>
+      </tr>
+      <tr>
+        <td style="background: #3E1F1B;">Dark - brown</td>
+        <td style="text-align:left;">
+            - Asphaltenes: 15-35% <br>
+            - Sulphur: 0.5-3% <br>
+            - Paraffins: 5-12% <br>
+            - Resins: 15-25% <br>
+            - Water and mechanical impurities: 3-10% <br>
+      </td>
+        <td>Asphaltene and tar content is high, but lower than black oil. Refining requires effort.</td>
+      </tr>
+      <tr>
+        <td style="background: #4B6A3C;">Green</td>
+        <td style="text-align:left;">
+            - Sulfur: 0.1-2% <br>
+            - Paraffins: 5-10% <br>
+            - Aromatic hydrocarbons: 10-30% <br>
+            - Water and mechanical impurities: 2-5% <br>
+       </td>
+        <td>A green tint can be caused by the presence of hydrogen sulfide or metals such as copper or iron. Crude oil is often low in asphaltenes.</td>
+      </tr>
+      <tr>
+        <td style="background: #C88E3C;">Yellow - orange</td>
+        <td style="text-align:left;">
+            - Paraffins: 30-50% <br>
+            - Naphthenes: 10-25% <br>
+            - Aromatic hydrocarbons: 5-10% <br>
+            - Sulfur: 0.1-0.5% <br>
+            - Water and mechanical impurities: 1-3%
+      </td>
+        <td>Light oil with high paraffin content and low sulfur content. Well refined, high flowability.</td>
+      </tr>
+
+      <tr>
+        <td style="background-color: #D78F4D;">Golden (Amber)</td>
+        <td style="text-align:left;">
+            - Paraffins: 40-60% <br>
+            - Aromatic hydrocarbons: 5-10%  <br>
+            - Naphthenes: 5-15% <br>
+            - Sulfur: 0.1-0.5% <br>
+            - Water and mechanical impurities: 0-2%
+      </td>
+        <td>It is an oil with a high concentration of light hydrocarbons, often used to produce high quality gasoline. Very high fluidity.</td>
+      </tr>
+
+      <tr>
+        <td style="background-color: #9E2A2F;">Reddish</td>
+        <td style="text-align:left;">
+            - Paraffins: 20-40% <br>
+            - Aromatic hydrocarbons: 5-15% <br>
+            - Sulfur: 0.5-2% <br>
+            - Resins: 10-20% <br>
+            - Water and mechanical impurities: 3-8%
+      </td>
+        <td>A reddish tint may indicate the presence of organic compounds with iron or copper. Medium viscosity oil.</td>
+      </tr>
+
+      <tr>
+        <td>Transparent oil</td>
+        <td style="text-align:left;">
+            - Paraffins: 50-70% <br>
+            - Naphthenes: 10-20% <br>
+            - Aromatic hydrocarbons: 0-5% <br>
+            - Sulfur: 0.1-0.3% <br>
+            - Water and mechanical impurities: 0-1%
+      </td>
+        <td>Very light oil with almost complete absence of impurities and high quality hydrocarbons. Easy to refine and has very low viscosity.</td>
+      </tr>
+    </tbody>
+  </table>
+            </div>
+        </div>
+
+
+  <div class="accordion-item">
+            <div class="accordion-section">List of oil fields</div>
+            <div class="accordion-content">
+
+<!--
+<style>
+div p {
+    padding: 25px;
+    font-weight: 900;
+    font-family: monospace;
+    border-bottom: 1px solid;
+    background: white;
+      }
+</style>
+-->
+ <table>
+    <thead>
+      <tr>
+        <th>№</th>
+        <th>Oil field</th>
+        <th>Color</th>
+        <th>Composition</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+<tbody>
+   <tr>   
+      <td>
+<center>
+<p>1</p>   
+<!--<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;width: 30%;text-align: center;" xml:space="preserve"><g><g>
+<path d="M426.197,276.775c-20.586-23.913-48.271-42.909-80.584-55.392V33.391h27.454V0h-27.454H166.387h-27.454v33.391h27.454 v187.992c-32.315,12.483-59.999,31.478-80.584,55.392c-24.16,28.064-36.93,61.083-36.93,95.487 c0,54.964,33.353,106.41,89.222,137.619L141.89,512h228.22l3.795-2.119c55.868-31.209,89.222-82.655,89.222-137.619 C463.126,337.858,450.356,304.839,426.197,276.775z M130.793,279.505c15.974-12.784,35.39-23.244,57.493-30.493l11.492-3.77 v-100.29h41.303V111.56h-41.303V84.926h41.303V51.535h-41.303V33.391H312.22v211.851l11.492,3.77 c22.102,7.249,41.519,17.71,57.492,30.493H130.793z" fill="#000000" style="fill: rgb(116 116 116);">
+</path></g></g>
+</svg>-->
+ </center>
+</td>
+      <td>Russkoe</td>
+      <td>Yellow, orange, transparent,Brown and black shades,Green color</td>
+      <td style="text-align:left;">
+• Oil - high-viscosity, aromatic-naphthenic type <br>
+• Paraffin 0.7-1.2 %; <br>
+• Resins 10-12 %; asphaltenes 0.5-1 %; sulfur up to 0.3 %<br>
+• Density 939-942 kg/m3. <br>
+• The gas contains:<br>
+• CH4 - 99.2%;<br> 
+• C2H6 + higher - 0,2%;<br>
+• N2 - 0,4% <br> 
+• CO2 - 0.2% <br>
+• Jet and diesel fuel, arctic low-liquid low-sulfur oil, bitumen and petroleum coke are produced.
+      </td>
+      <td style="text-align:left;"> • The field has reserves estimated at 410 million recoverable oil.</td>
+   </tr>
+   <tr>
+<td>
+      <center>
+<p>2</p>   
+<!--<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;width: 30%; text-align: center;" xml:space="preserve"><g><g>
+<path d="M426.197,276.775c-20.586-23.913-48.271-42.909-80.584-55.392V33.391h27.454V0h-27.454H166.387h-27.454v33.391h27.454 v187.992c-32.315,12.483-59.999,31.478-80.584,55.392c-24.16,28.064-36.93,61.083-36.93,95.487 c0,54.964,33.353,106.41,89.222,137.619L141.89,512h228.22l3.795-2.119c55.868-31.209,89.222-82.655,89.222-137.619 C463.126,337.858,450.356,304.839,426.197,276.775z M130.793,279.505c15.974-12.784,35.39-23.244,57.493-30.493l11.492-3.77 v-100.29h41.303V111.56h-41.303V84.926h41.303V51.535h-41.303V33.391H312.22v211.851l11.492,3.77 c22.102,7.249,41.519,17.71,57.492,30.493H130.793z" fill="#000000" style="fill: rgb(116 116 116);">
+</path></g></g>
+</svg>-->
+ </center></td>
+      <td>Srednebotuobinskoy</td>
+      <td>Yellow, orange, transparent,Brown and black shades,Green color</td>
+      <td style="text-align:left;">
+            • Oil density 867 kg/m3<br>
+            • Sulfur content 0.89%
+      </td>
+      <td style="text-align:left;">
+• Reserves of the field are 134 million tons of oil and 155 billion cubic meters of natural gas.<br>
+• Annual oil production is 1.29 million tons.<br>
+• Effective thickness of reservoirs - 1.6-69.2 m, thickness of clay interlayers - 2-45 m.<br>
+• Deposits height - up to 160 m, depth of occurrence - 1770-3090 m.<br>
+• Initial reservoir pressures - 17.2-66.7 MPa, temperatures - 51-90°C.</td>
+   </tr>
+   <tr>
+    <td> 
+<center>
+<p>3</p>   
+
+<!--<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512; width: 30%;text-align: center;" xml:space="preserve"><g><g><path d="M426.197,276.775c-20.586-23.913-48.271-42.909-80.584-55.392V33.391h27.454V0h-27.454H166.387h-27.454v33.391h27.454 v187.992c-32.315,12.483-59.999,31.478-80.584,55.392c-24.16,28.064-36.93,61.083-36.93,95.487 c0,54.964,33.353,106.41,89.222,137.619L141.89,512h228.22l3.795-2.119c55.868-31.209,89.222-82.655,89.222-137.619 C463.126,337.858,450.356,304.839,426.197,276.775z M130.793,279.505c15.974-12.784,35.39-23.244,57.493-30.493l11.492-3.77 v-100.29h41.303V111.56h-41.303V84.926h41.303V51.535h-41.303V33.391H312.22v211.851l11.492,3.77 c22.102,7.249,41.519,17.71,57.492,30.493H130.793z" fill="#000000" style="fill: rgb(116 116 116);">
+</path></g></g></svg>-->
+
+ </center></td>
+      <td>Urengoyskoye</td>
+      <td>Yellow, orange, transparent,Brown and black shades,Green color</td>
+      <td style="text-align:left;">
+            • Gas deposits are methane (CH4 - 81.35-93.74; C2H6 + higher - 3.50-6.85 CH4 - 81-94%).<br>
+            • The content of N2 and CO2 does not exceed 1%. <br>
+            • Light oil (766 - 799 kg/m3) <br>
+            • Light sulfur, content: S - up to 0.06%, resins - 0.88%, paraffin - 2.87%.
+      </td>
+      <td style="text-align:left;">Recoverable reserves - up to 10 trillion m3 of gas</td>
+   </tr>
+   <tr>
+      <td><center>
+
+<p>4</p>   
+
+<!--<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512; width: 30%;text-align: center;" xml:space="preserve"><g><g><path d="M426.197,276.775c-20.586-23.913-48.271-42.909-80.584-55.392V33.391h27.454V0h-27.454H166.387h-27.454v33.391h27.454 v187.992c-32.315,12.483-59.999,31.478-80.584,55.392c-24.16,28.064-36.93,61.083-36.93,95.487 c0,54.964,33.353,106.41,89.222,137.619L141.89,512h228.22l3.795-2.119c55.868-31.209,89.222-82.655,89.222-137.619 C463.126,337.858,450.356,304.839,426.197,276.775z M130.793,279.505c15.974-12.784,35.39-23.244,57.493-30.493l11.492-3.77 v-100.29h41.303V111.56h-41.303V84.926h41.303V51.535h-41.303V33.391H312.22v211.851l11.492,3.77 c22.102,7.249,41.519,17.71,57.492,30.493H130.793z" fill="#000000" style="fill: rgb(116 116 116);">
+</path></g></g></svg>-->
+
+ </center></td>
+      <td>Beregovoye</td>
+      <td> Yellow, orange, transparent,Brown and black shades,Green color</td>
+      <td style="text-align:left;">
+            - Paraffins: 20-40% <br>
+            - Aromatic hydrocarbons: 5-15% <br>
+            - Sulfur: 0.5-2% <br>
+            - Resins: 10-20% <br>
+            - Water and mechanical impurities: 3-8%
+      </td>
+      <td style="text-align:left;"> 
+           • Gas reserves are more than 300 billion m3, gas condensate - 0.991 million tons.<br>
+           • Oil reserves are 9.035 mln tons.<br>
+           • GTU with a capacity of 40 mln m3/day of gas
+      </td>
+   </tr>
+   <tr>
+      <td>
+<center>
+<p>5</p>   
+<!--<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512; width: 30%;text-align: center;" xml:space="preserve"><g><g><path d="M426.197,276.775c-20.586-23.913-48.271-42.909-80.584-55.392V33.391h27.454V0h-27.454H166.387h-27.454v33.391h27.454 v187.992c-32.315,12.483-59.999,31.478-80.584,55.392c-24.16,28.064-36.93,61.083-36.93,95.487 c0,54.964,33.353,106.41,89.222,137.619L141.89,512h228.22l3.795-2.119c55.868-31.209,89.222-82.655,89.222-137.619 C463.126,337.858,450.356,304.839,426.197,276.775z M130.793,279.505c15.974-12.784,35.39-23.244,57.493-30.493l11.492-3.77 v-100.29h41.303V111.56h-41.303V84.926h41.303V51.535h-41.303V33.391H312.22v211.851l11.492,3.77 c22.102,7.249,41.519,17.71,57.492,30.493H130.793z" fill="#000000" style="fill: rgb(116 116 116);">
+</path></g></g></svg>-->
+ </center>
+</td>
+      <td>Kamennoye</td>
+      <td>  Yellow, orange, transparent,Brown and black shades,Green color     </td>
+      <td style="text-align:left;">
+            - Paraffins: 20-40% <br>
+            - Aromatic hydrocarbons: 5-15% <br>
+            - Sulfur: 0.5-2% <br>
+            - Resins: 10-20% <br>
+            - Water and mechanical impurities: 3-8%
+      </td>
+      <td style="text-align:left;">
+       Месторождение имеет запасы, которые оценены в 410 миллионов извлекаемой нефти.
+      </td>
+   </tr>
+   <tr>
+      <td>
+<center>
+<p>6</p>   
+<!--<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512; width: 30%; text-align: center;" xml:space="preserve"><g><g><path d="M426.197,276.775c-20.586-23.913-48.271-42.909-80.584-55.392V33.391h27.454V0h-27.454H166.387h-27.454v33.391h27.454 v187.992c-32.315,12.483-59.999,31.478-80.584,55.392c-24.16,28.064-36.93,61.083-36.93,95.487 c0,54.964,33.353,106.41,89.222,137.619L141.89,512h228.22l3.795-2.119c55.868-31.209,89.222-82.655,89.222-137.619 C463.126,337.858,450.356,304.839,426.197,276.775z M130.793,279.505c15.974-12.784,35.39-23.244,57.493-30.493l11.492-3.77 v-100.29h41.303V111.56h-41.303V84.926h41.303V51.535h-41.303V33.391H312.22v211.851l11.492,3.77 c22.102,7.249,41.519,17.71,57.492,30.493H130.793z" fill="#000000" style="fill: rgb(116 116 116);">
+</path></g></g></svg>-->
+ </center>
+</td>
+      <td>Kynskoye</td>
+      <td>  Yellow, orange, transparent,Brown and black shades,Green color     </td>
+      <td style="text-align:left;">
+            - Paraffins: 20-40% <br>
+            - Aromatic hydrocarbons: 5-15% <br>
+            - Sulfur: 0.5-2% <br>
+            - Resins: 10-20% <br>
+            - Water and mechanical impurities: 3-8%
+      </td>
+      <td>Месторождение имеет запасы, которые оценены в 410 миллионов извлекаемой нефти.</td>
+   </tr>
+   <tr>
+      <td>
+<center>
+<p>7</p> 
+<!--<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;width: 30%;text-align: center;" xml:space="preserve"><g><g><path d="M426.197,276.775c-20.586-23.913-48.271-42.909-80.584-55.392V33.391h27.454V0h-27.454H166.387h-27.454v33.391h27.454 v187.992c-32.315,12.483-59.999,31.478-80.584,55.392c-24.16,28.064-36.93,61.083-36.93,95.487 c0,54.964,33.353,106.41,89.222,137.619L141.89,512h228.22l3.795-2.119c55.868-31.209,89.222-82.655,89.222-137.619 C463.126,337.858,450.356,304.839,426.197,276.775z M130.793,279.505c15.974-12.784,35.39-23.244,57.493-30.493l11.492-3.77 v-100.29h41.303V111.56h-41.303V84.926h41.303V51.535h-41.303V33.391H312.22v211.851l11.492,3.77 c22.102,7.249,41.519,17.71,57.492,30.493H130.793z" fill="#000000" style="fill: rgb(116 116 116);">
+</path></g></g>
+</svg>-->
+ </center>
+</td>
+      <td>West Irkinskoye</td>
+      <td> Yellow, orange, transparent,Brown and black shades,Green color </td>
+      <td style="text-align:left;">
+            - Paraffins: 20-40% <br>
+            - Aromatic hydrocarbons: 5-15% <br>
+            - Sulfur: 0.5-2% <br>
+            - Resins: 10-20% <br>
+            - Water and mechanical impurities: 3-8%
+      </td>
+      <td>Месторождение имеет запасы, которые оценены в 410 миллионов извлекаемой нефти.</td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>8</p>
+      </center>
+      </td>
+      <td>Severo-Danilovskoye</td>
+      <td> Yellow, orange, transparent,Brown and black shades,Green color</td>
+            <td style="text-align:left;">
+            - Paraffins: 20-40% <br>
+            - Aromatic hydrocarbons: 5-15% <br>
+            - Sulfur: 0.5-2% <br>
+            - Resins: 10-20% <br>
+            - Water and mechanical impurities: 3-8%
+      </td>
+      <td>       </td>
+   </tr>
+
+   <tr>
+    <td>
+<center>
+<p>9</p>   
+<!--<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;width: 30%;text-align: center;" xml:space="preserve"><g><g>
+<path d="M426.197,276.775c-20.586-23.913-48.271-42.909-80.584-55.392V33.391h27.454V0h-27.454H166.387h-27.454v33.391h27.454 v187.992c-32.315,12.483-59.999,31.478-80.584,55.392c-24.16,28.064-36.93,61.083-36.93,95.487 c0,54.964,33.353,106.41,89.222,137.619L141.89,512h228.22l3.795-2.119c55.868-31.209,89.222-82.655,89.222-137.619 C463.126,337.858,450.356,304.839,426.197,276.775z M130.793,279.505c15.974-12.784,35.39-23.244,57.493-30.493l11.492-3.77 v-100.29h41.303V111.56h-41.303V84.926h41.303V51.535h-41.303V33.391H312.22v211.851l11.492,3.77 c22.102,7.249,41.519,17.71,57.492,30.493H130.793z" fill="#000000" style="fill: rgb(116 116 116);">
+</path></g></g>
+</svg>-->
+ </center>
+</td>
+      <td>Severo-Komsomolskoye</td>
+      <td> Yellow, orange, transparent,Brown and black shades,Green color</td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+
+<tr>
+<td>
+<p>10</p>   
+<!--<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;width: 30%;text-align: center;" xml:space="preserve"><g><g>
+<path d="M426.197,276.775c-20.586-23.913-48.271-42.909-80.584-55.392V33.391h27.454V0h-27.454H166.387h-27.454v33.391h27.454 v187.992c-32.315,12.483-59.999,31.478-80.584,55.392c-24.16,28.064-36.93,61.083-36.93,95.487 c0,54.964,33.353,106.41,89.222,137.619L141.89,512h228.22l3.795-2.119c55.868-31.209,89.222-82.655,89.222-137.619 C463.126,337.858,450.356,304.839,426.197,276.775z M130.793,279.505c15.974-12.784,35.39-23.244,57.493-30.493l11.492-3.77 v-100.29h41.303V111.56h-41.303V84.926h41.303V51.535h-41.303V33.391H312.22v211.851l11.492,3.77 c22.102,7.249,41.519,17.71,57.492,30.493H130.793z" fill="#000000" style="fill: rgb(116 116 116);">
+</path></g></g>
+</svg>-->
+ </center>
+</td>
+      <td>Tagulskoye Prirazlomnoye</td>
+      <td>Yellow, orange, transparent,Brown and black shades,Green color</td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+
+   <tr>
+      <td>
+      <center>
+      <p>11</p>
+      </center>
+      </td>
+      <td>Arkutun Daginskoye</td>
+      <td> Yellow, orange, transparent,Brown and black shades,Green color</td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+
+   <tr> 
+      <td><center>
+      <p>12</p>
+      </center>
+      </td>
+      <td>Suzunskoye</td>
+      <td> Yellow, orange, transparent,Brown and black shades,Green color</td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+<td>
+<center>
+<p>13</p>
+</center></td>
+      <td>Uvatskaya</td>
+      <td> Yellow, orange, transparent,Brown and black shades,Green color</td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+<td><center><p>14</p></center></td>
+      <td>Pobeda</td>
+      <td> Yellow, orange, transparent,Brown and black shades,Green color</td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+<td><center><p>15</p></center></td>
+      <td>Samotlor</td>
+      <td>  Yellow, orange, transparent,Brown and black shades,Green color</td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>16</p>
+      </center>
+      </td>
+      <td>Romashkinskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>17</p>
+      </center>
+      </td>
+      <td>Priobskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>18</p>
+      </center>
+      </td>
+      <td>Lyantorskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>19</p>
+      </center>
+      </td>
+      <td>Fedorovskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>20</p>
+      </center>
+      </td>
+      <td>Salym group (including Pravdinskoye, Salym, Northern, Upper, Western, Vadelypskoye)</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>21</p>
+      </center>
+      </td>
+      <td>Urengoyskoye gas and oil condensate field</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>22</p>
+      </center>
+      </td>
+      <td>Mamontovskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>23</p>
+      </center>
+      </td>
+      <td>Krasnoleninsk group (including Kamennoye, Talinskoye, Em-Yogovskoye, Severo-Kamennoye, Palyanovskoye, Inginskoye, Vostochno-Inginskoye, Pottymsko-Inginskoye, Elizarovskoye, Lebyazhye).</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>24</p>
+      </center>
+      </td>
+      <td>Sakhalin-5 Project</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>25</p>
+      </center>
+      </td>
+      <td>Sakhalin-3 Project</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>26</p>
+      </center>
+      </td>
+      <td>Sakhalin-2 Project</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>27</p>
+      </center>
+      </td>
+      <td>Novo-Yelkhovskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>28</p>
+      </center>
+      </td>
+      <td>Povkhovskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>29</p>
+      </center>
+      </td>
+      <td>Kurmangazy (with Kazakhstan)</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>30</p>
+      </center>
+      </td>
+      <td>Prirazlomnoye (KHMAO)</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>31</p>
+      </center>
+      </td>
+      <td>Velikoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>32</p>
+      </center>
+      </td>
+      <td>South Khylchuyu</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>33</p>
+      </center>
+      </td>
+      <td>Tuimazinskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>34</p>
+      </center>
+      </td>
+      <td>Severo-Rogozhnikovskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>35</p>
+      </center>
+      </td>
+      <td>Bavlinskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>36</p>
+      </center>
+      </td>
+      <td>Russkoe gas and oil</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>37</p>
+      </center>
+      </td>
+      <td>Arlanskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>38</p>
+      </center>
+      </td>
+      <td>Astrakhanskoye gas condensate</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>39</p>
+      </center>
+      </td>
+      <td>Severo-Dolginskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>40</p>
+       </center>
+      </td>
+      <td>Vat-Yeganskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>41</p>
+       </center>
+      </td>
+      <td>Sakhalin-1 Project (Chaivo, Odoptu, Arkutun-Dagi)</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>42</p>
+       </center>
+      </td>
+      <td>Nizhnechutinskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>43</p>
+       </center>
+      </td>
+      <td>Vankorskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>44</p>
+       </center>
+      </td>
+      <td>Yuzhno-Dolginskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>45</p>
+       </center>
+      </td>
+      <td>Tevlinsko-Russkinskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>46</p>
+       </center>
+      </td>
+      <td>Yurubcheno-Tokhomskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>47</p>
+       </center>
+      </td>
+      <td>Usinskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>48</p>
+       </center>
+      </td>
+      <td>Yuzhno-Yagunskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>49</p>
+       </center>
+      </td>
+      <td>In the name of Vladimir Filanovsky</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>50</p>
+       </center>
+      </td>
+      <td>Verkhnechonskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>51</p>
+       </center>
+      </td>
+      <td>Imilorskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>52</p>
+       </center>
+      </td>
+      <td>Srednebotuobinskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>53</p>
+       </center>
+      </td>
+      <td>Pokachevskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>54</p>
+       </center>
+      </td>
+      <td>Zapadno-Matveevskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>55</p>
+       </center>
+      </td>
+      <td>Savostyanovskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>56</p>
+       </center>
+      </td>
+      <td>Kharyaginskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>57</p>
+       </center>
+      </td>
+      <td>Sporyshevskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>58</p>
+       </center>
+      </td>
+      <td>Malobalykskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>59</p>
+       </center>
+      </td>
+      <td>Lodochnoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>60</p>
+       </center>
+      </td>
+      <td>Yaregskoye viscous oil</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>61</p>
+       </center>
+      </td>
+      <td>Voseyskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>62</p>
+       </center>
+      </td>
+      <td>Uryevskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>63</p>
+       </center>
+      </td>
+      <td>Kovyktinskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>64</p>
+       </center>
+      </td>
+      <td>Talakan oil and gas</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>65</p>
+       </center>
+      </td>
+      <td>Ishimbayskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>66</p>
+       </center>
+      </td>
+      <td>Ust-Balykskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>67</p>
+       </center>
+      </td>
+      <td>Yuzhno-Surgutskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>68</p>
+       </center>
+      </td>
+      <td>West Surgut</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>69</p>
+       </center>
+      </td>
+      <td>Groznenskoye (Gudermes, Malgobek-Gorskoe, Starogroznenskoe, Novogroznenskoe)</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>70</p>
+       </center>
+      </td>
+      <td>Komsomolskoye oil and gas condensate field</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>71</p>
+       </center>
+      </td>
+      <td>Yuri Korchagin</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>72</p>
+       </center>
+      </td>
+      <td>Severo-Pokachevskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>73</p>
+       </center>
+      </td>
+      <td>Rakushechnoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>74</p>
+       </center>
+      </td>
+      <td>170th km (Caspian)</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>75</p>
+       </center>
+      </td>
+      <td>Kholmogorskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>76</p>
+       </center>
+      </td>
+      <td>Chayanda oil and gas condensate field</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>77</p>
+       </center>
+      </td>
+      <td>Druzhnoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>78</p>
+       </center>
+      </td>
+      <td>Angaro-Lenskoye gas condensate field</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>79</p>
+       </center>
+      </td>
+      <td>Nivagalskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>80</p>
+       </center>
+      </td>
+      <td>Nong-Yeganskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>81</p>
+       </center>
+      </td>
+      <td>Khvalynskoye oil and gas condensate field</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>82</p>
+       </center>
+      </td>
+      <td>Kogalymskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>83</p>
+       </center>
+      </td>
+      <td>Pamyatno-Sasovskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>84</p>
+       </center>
+      </td>
+      <td>Yuzhno-Tambeyskoye gas condensate field</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>85</p>
+       </center>
+      </td>
+      <td>Sarmatskoye oil and gas condensate named after Y. Kuvykin</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>86</p>
+       </center>
+      </td>
+      <td>Prirazlomnoye</td>
+      <td>       </td>
+      <td style="text-align:left;">
+• Oil is low-sulfur, paraffinic, <br> 
+• Increased thermobaric conditions,, <br> 
+• Reduced density of 773 kg/m3 and viscosity of oil in reservoir conditions. <br>
+• Undersaturated with gas - saturation pressure is 2 times lower than formation pressure, average gas content is high.. <br> 
+• Carbon dioxide - up to 2.32, <br>
+• Nitrogen - up to 0.57, <br> 
+• Methane - up to 27.80,  <br>
+• Ethane - up to 6.00, <br> 
+• Propane to 9.00, <br> 
+• Isobutane to 1.90, <br> 
+• Butane - up to 5.70, Isopentane - up to 1.90, <br> 
+• Pentane - up to 3.30, <br> 
+• Hexanes + heptanes - up to 63.70, <br> 
+• Mole weight - up to 154.</td>
+      <td>Proven reserves: 658.8 million tons.  <br>Recoverable: 218.2 million tons.</td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>87</p>
+       </center>
+      </td>
+      <td>Unvinskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>88</p>
+       </center>
+      </td>
+      <td>Ety-Purovskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>89</p>
+       </center>
+      </td>
+      <td>Tazovskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>90</p>
+       </center>
+      </td>
+      <td>Yurchukskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>91</p>
+       </center>
+      </td>
+      <td>Klyuchevoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>92</p>
+       </center>
+      </td>
+      <td>Zapadno-Malobalykskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>93</p>
+       </center>
+      </td>
+      <td>Utrenneye (Salmanovskoye) gas-condensate-oil field</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>94</p>
+       </center>
+      </td>
+      <td>Verkh-Tarskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>95</p>
+       </center>
+      </td>
+      <td>Shtokmanovskoye gas</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>96</p>
+       </center>
+      </td>
+      <td>Yamburgskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>97</p>
+       </center>
+      </td>
+      <td>Luginetskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>98</p>
+       </center>
+      </td>
+      <td>Yuzhno-Shapkinskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>99</p>
+       </center>
+      </td>
+      <td>Kravtsovskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>100</p>
+       </center>
+      </td>
+      <td>Markovskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>101</p>
+       </center>
+      </td>
+      <td>Tedinskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>102</p>
+       </center>
+      </td>
+      <td>Yaraktinskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>103</p>
+       </center>
+      </td>
+      <td>Kochevskoe</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>104</p>
+       </center>
+      </td>
+      <td>Sredne-Khulymskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>105</p>
+       </center>
+      </td>
+      <td>Bovanenkovskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>106</p>
+       </center>
+      </td>
+      <td>Long-Yuganskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>107</p>
+       </center>
+      </td>
+      <td>Pashshorskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>108</p>
+       </center>
+      </td>
+      <td>Yuzhno-Russkoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>109</p>
+       </center>
+      </td>
+      <td>Yuzhno-Lyaminskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>110</p>
+       </center>
+      </td>
+      <td>Varioganskoye gas and oil field<</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>111</p>
+       </center>
+      </td>
+      <td>Verkhne-Shapshinskoye oil field</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>112</p>
+       </center>
+      </td>
+      <td>Vyngapurovskoye oil and gas condensate field</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>114</p>
+       </center>
+      </td>
+      <td>Vyngayakhinskoye gas and oil field</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>115</p>
+       </center>
+      </td>
+      <td>Zhirnovskoye oil and gas field</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>116</p>
+       </center>
+      </td>
+      <td>Zapadno-Messoyakhskoye oil and gas field</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>117</p>
+       </center>
+      </td>
+      <td>Zapadno-Rakushechnoye oil field</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>118</p>
+       </center>
+      </td>
+      <td>Zapadno-Tebukskoye oil field</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>119</p>
+       </center>
+      </td>
+      <td>Zapolyarnoye oil and gas condensate field</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>120</p>
+       </center>
+      </td>
+      <td>Karpyon oil and gas condensate field</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>121</p>
+       </center>
+      </td>
+      <td>Korobkovskoye oil and gas field</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>122</p>
+       </center>
+      </td>
+      <td>Kuyumbinskoye oil field</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>123</p>
+       </center>
+      </td>
+      <td>Layavozhskoye oil and gas condensate field</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>124</p>
+       </center>
+      </td>
+      <td>Lutseyakhskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>125</p>
+       </center>
+      </td>
+      <td>Lydushorskoye</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>126</p>
+       </center>
+      </td>
+      <td>Mangazeyskoye oil field</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>127</p>
+       </center>
+      </td>
+      <td>Megion oil field</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>128</p>
+       </center>
+      </td>
+      <td>Muravlenkovskoye oil field</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>129</p>
+       </center>
+      </td>
+      <td>Mukhanovskoye oil field</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>130</p>
+       </center>
+      </td>
+      <td>Nazymskoye oil field</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>131</p>
+       </center>
+      </td>
+      <td>Nizhne-Shapshinskoye oil field</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>132</p>
+       </center>
+      </td>
+      <td>Novogodneye oil field</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>133</p>
+       </center>
+      </td>
+      <td>Novoilkhovskoye oil field</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>134</p>
+       </center>
+      </td>
+      <td>Palnikovskoye oil field</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>135</p>
+       </center>
+      </td>
+      <td>Frontier oil field</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>136</p>
+       </center>
+      </td>
+      <td>Pokrovskoye oil field</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>137</p>
+       </center>
+      </td>
+      <td>Russko-Rechenskoye oil condensate field</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>138</p>
+       </center>
+      </td>
+      <td>Sobolevskoye oil field</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>139</p>
+       </center>
+      </td>
+      <td>Sredne-Shapshinskoye oil field</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>140</p>
+       </center>
+      </td>
+      <td>Sugmutskoye oil field</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>141</p>
+       </center>
+      </td>
+      <td>Suzunskoye oil and gas field</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>142</p>
+       </center>
+      </td>
+      <td>Sutorminskoye oil field</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>143</p>
+       </center>
+      </td>
+      <td>Tagulskoye oil and gas condensate field</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>144</p>
+       </center>
+      </td>
+      <td>Tyamkinskoye oil field</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>145</p>
+       </center>
+      </td>
+      <td>Urnenskoye oil field</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>146</p>
+       </center>
+      </td>
+      <td>Ust-Tegusskoye oil field</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>147</p>
+       </center>
+      </td>
+      <td>Kharasaveyskoye oil and gas condensate field</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>148</p>
+       </center>
+      </td>
+      <td>Central oil and gas condensate field</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>149</p>
+       </center>
+      </td>
+      <td>Chekmagushskoye oil field</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>150</p>
+       </center>
+      </td>
+      <td>Chkalovskoye (Tomsk Region)</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>151</p>
+       </center>
+      </td>
+      <td>Shaimskoye oil field</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>152</p>
+       </center>
+      </td>
+      <td>Shkapovskoye oil field</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>153</p>
+       </center>
+      </td>
+      <td>Yuzhno-Balykskoye oil field</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>154</p>
+       </center>
+      </td>
+      <td>Yurkharovskoye oil condensate field</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>155</p>
+       </center>
+      </td>
+      <td>Yuryevskoye oil field</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+   <tr>
+      <td>
+       <center>
+      <p>156</p>
+       </center>
+      </td>
+      <td>Yaro-Yakhinskoye oil condensate field</td>
+      <td>       </td>
+      <td>       </td>
+      <td>       </td>
+   </tr>
+</tbody>
+</table>
+
+<div>
+
+
+<!--
+
+<p>Russkoe</p>
+<p>Srednebotuobinskoye</p>
+<p>Urengoyskoye</p>
+<p>Beregovoye</p>
+<p>Kamennoye</p>
+<p>Kynskoye</p>
+<p>West Irkinskoye</p>
+<p>Severo-Danilovskoye</p>
+<p>Severo-Komsomolskoye</p>
+<p>Tagulskoye Prirazlomnoye</p>
+<p>Arkutun Daginskoye</p>
+<p>Suzunskoye</p>
+<p>Uvatskaya</p>
+<p>Pobeda</p>
+<p>Samotlor</p>
+<p>Romashkinskoye</p>
+<p>Priobskoye</p>
+<p>Lyantorskoye</p>
+<p>Fedorovskoye</p>
+<p>Salym group (including Pravdinskoye, Salym, Northern, Upper, Western, Vadelypskoye)</p>
+<p>Urengoyskoye gas and oil condensate field</p>
+<p>Mamontovskoye</p>
+<p>Krasnoleninsk group (including Kamennoye, Talinskoye, Em-Yogovskoye, Severo-Kamennoye, Palyanovskoye, Inginskoye, Vostochno-Inginskoye, Pottymsko-Inginskoye, Elizarovskoye, Lebyazhye).</p>
+<p>Sakhalin-5 Project</p>
+<p>Kurmangazy (with Kazakhstan)</p>
+<p>Novo-Yelkhovskoye</p>
+<p>Povkhovskoye</p>
+<p>Sakhalin-3 Project</p>
+<p>Prirazlomnoye (KMAO)</p>
+<p>Velikoye</p>
+<p>South Khylchuyu</p>
+<p>Tuimazinskoye</p>
+<p>Severo-Rogozhnikovskoye</p>
+<p>Bavlinskoye</p>
+<p>Russkoe gas and oil</p>
+<p>Arlanskoye</p>
+<p>Astrakhanskoye gas condensate</p>
+<p>Severo-Dolginskoye</p>
+<p>Vat-Yeganskoye</p>
+<p>Sakhalin-1 Project (Chaivo, Odoptu, Arkutun-Dagi)</p>
+<p>Nizhnechutinskoye</p>
+<p>Vankorskoye</p>
+<p>Yuzhno-Dolginskoye</p>
+<p>Tevlinsko-Russkinskoye</p>
+<p>Yurubcheno-Tokhomskoye</p>
+<p>Usinskoye</p>
+<p>Yuzhno-Yagunskoye</p>
+<p>In the name of Vladimir Filanovsky</p>
+<p>Verkhnechonskoye</p>
+<p>Imilorskoye</p>
+<p>Srednebotuobinskoye</p>
+<p>Pokachevskoye</p>
+<p>Sakhalin-2 project</p>
+<p>Zapadno-Matveevskoye</p>
+<p>Savostyanovskoye</p>
+<p>Kharyaginskoye</p>
+<p>Sporyshevskoye</p>
+<p>Malobalykskoye</p>
+<p>Lodochnoye</p>
+<p>Yaregskoye viscous oil</p>
+<p>Voseyskoye</p>
+<p>Uryevskoye</p>
+<p>Kovyktinskoye</p>
+<p>Talakan oil and gas</p>
+<p>Ishimbayskoye</p>
+<p>Ust-Balykskoye</p>
+<p>Yuzhno-Surgutskoye</p>
+<p>West Surgut</p>
+<p>Groznenskoye (Gudermes, Malgobek-Gorskoe, Starogroznenskoe, Novogroznenskoe)</p>
+<p>Komsomolskoye oil and gas condensate field</p>
+<p>Yuri Korchagin</p>
+<p>Severo-Pokachevskoye</p>
+<p>Rakushechnoye</p>
+<p>170th km (Caspian)</p>
+<p>Kholmogorskoye</p>
+<p>Chayanda oil and gas condensate field</p>
+<p>Druzhnoye</p>
+<p>Angaro-Lenskoye gas condensate field</p>
+<p>Nivagalskoye</p>
+<p>Nong-Yeganskoye</p>
+<p>Khvalynskoye oil and gas condensate field</p>
+<p>Kogalymskoye</p>
+<p>Pamyatno-Sasovskoye</p>
+<p>Yuzhno-Tambeyskoye gas condensate field</p>
+<p>Sarmatskoye oil and gas condensate named after Y. Kuvykin</p>
+<p>Prirazlomnoye</p>
+<p>Unvinskoye</p>
+<p>Ety-Purovskoye</p>
+<p>Tazovskoye</p>
+<p>Yurchukskoye</p>
+<p>Klyuchevoye</p>
+<p>Zapadno-Malobalykskoye</p>
+<p>Utrenneye (Salmanovskoye) gas-condensate-oil field</p>
+<p>Verkh-Tarskoye</p>
+<p>Shtokmanovskoye gas</p>
+<p>Yamburgskoye</p>
+<p>Luginetskoye</p>
+<p>Yuzhno-Shapkinskoye</p>
+<p>Kravtsovskoye</p>
+<p>Markovskoye</p>
+<p>Tedinskoye</p>
+<p>Yaraktinskoye</p>
+<p>Kochevskoe</p>
+<p>Sredne-Khulymskoye</p>
+<p>Bovanenkovskoye</p>
+<p>Long-Yuganskoye</p>
+<p>Pashshorskoye</p>
+<p>Yuzhno-Russkoye</p>
+<p>Yuzhno-Lyaminskoye</p>
+<p>Varioganskoye gas and oil field</p>
+<p>Verkhne-Shapshinskoye oil field</p>
+<p>Vyngapurovskoye oil and gas condensate field</p>
+<p>Vyngayakhinskoye gas and oil field</p>
+<p>Zhirnovskoye oil and gas field</p>
+<p>Zapadno-Messoyakhskoye oil and gas field</p>
+<p>Zapadno-Rakushechnoye oil field</p>
+<p>Zapadno-Tebukskoye oil field</p>
+<p>Zapolyarnoye oil and gas condensate field</p>
+<p>Karpyon oil and gas condensate field</p>
+<p>Korobkovskoye oil and gas field</p>
+<p>Kuyumbinskoye oil field</p>
+<p>Layavozhskoye oil and gas condensate field</p>
+<p>Lutseyakhskoye</p>
+<p>Lydushorskoye</p>
+<p>Mangazeyskoye oil field</p>
+<p>Megion oil field</p>
+<p>Muravlenkovskoye oil field</p>
+<p>Mukhanovskoye oil field</p>
+<p>Nazymskoye oil field</p>
+<p>Nizhne-Shapshinskoye oil field</p>
+<p>Novogodneye oil field</p>
+<p>Novoilkhovskoye oil field</p>
+<p>Palnikovskoye oil field</p>
+<p>Frontier oil field</p>
+<p>Pokrovskoye oil field</p>
+<p>Russko-Rechenskoye oil condensate field</p>
+<p>Sobolevskoye oil field</p>
+<p>Sredne-Shapshinskoye oil field</p>
+<p>Sugmutskoye oil field</p>
+<p>Suzunskoye oil and gas field</p>
+<p>Sutorminskoye oil field</p>
+<p>Tagulskoye oil and gas condensate field</p>
+<p>Tyamkinskoye oil field</p>
+<p>Urnenskoye oil field</p>
+<p>Ust-Tegusskoye oil field</p>
+<p>Kharasaveyskoye oil and gas condensate field</p>
+<p>Central oil and gas condensate field</p>
+<p>Chekmagushskoye oil field</p>
+<p>Chkalovskoye (Tomsk Region)</p>
+<p>Shaimskoye oil field</p>
+<p>Shkapovskoye oil field</p>
+<p>Yuzhno-Balykskoye oil field</p>
+<p>Yurkharovskoye oil condensate field</p>
+<p>Yuryevskoye oil field</p>
+<p>Yaro-Yakhinskoye oil condensate field</p>
+</div>
+
+-->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Получаем все секции аккордеона
+        const accordionSections = document.querySelectorAll('.accordion-section');
+
+        // Добавляем обработчик событий для каждой секции
+        accordionSections.forEach(section => {
+            section.addEventListener('click', () => {
+                // Находим родительский элемент и переключаем класс
+                const item = section.parentElement;
+                item.classList.toggle('active');
+            });
+        });
+    </script>
+
+
+   </div>
+  </div>
+ </div>
+
+
+ </section>
+
+   </div>
+
+<template id="popups-stash">
+</template>
+
+<template id="popups-images-stash">
+</template>
+
+<script>
+    window.tbConfig={"inFrame":false,"enableLazyLoading":false,"enableJsLazyLoading":false,"enableDynamicGoods":true,"isPreviewMode":false,"hasPromocodes":false,"posScriptUrl":"https://forma.tinkoff.ru/static/onlineScript.js","enableMessengerLazyLoading":true,"enableCssScrollSnapSlider":true,"usePublicSitesOrdersApi":false,"enableHolidayDecoration":true,"yandexMapsApiKey":"a9eba83c-b342-4dfe-ab11-2c7cbd6839cb","messengerLink":"https://w.tb.ru/open-messenger/widget?wId=W-B559B447E6804AC5A67B41C4D5389C1B","cartHash":"U2FsdGVkX1+qcbOIECdcMxKYuOLt5Wss/LUj6iaUZTpDwylpQJuvKRgwhXManphpGVPXKlhqxqtkCPFSiB6SNJW/2Do5+UkJUA289zn32HJpwYZe/iksTyzYB9tDmvsF","enableSitesCheckoutIntegration":false,"staticPath":"https://e26f86a1-a349-40e0-9864-90f0278f7cc5.selcdn.net/tb/0.1.707"};
+    window.tbConfig.isExported=true;window.tbConfig.exportedApiUrl='https://a.tb.ru';
+    window.tbConfig.apiUrl=!window.tbConfig.isExported ? '' : window.tbConfig.exportedApiUrl;
+    window.tbConfig.isModern='noModule'in HTMLScriptElement.prototype;
+    (function (){var n,o="chrome"in window,e="InstallTrigger"in window;function t(n){var o=document.createElement("script");return o.src="".concat(window.tbConfig.staticPath,"/js/").concat(n),window.tbConfig.isModern&&(o.type="module",o.src=o.src.replace(".js",".modern.js")),o.defer=!0,o}function d(n){var o=t(n);document.head.appendChild(o)}window.tbConfig.enableLazyLoading&&d("lazy-load.js"),"attachShadow"in Element.prototype||d("lit-polyfill-support.js"),d("webcomponents-loader.js"),o||e||d("smoothscroll.js"),n=t("front.js"),document.addEventListener("DOMContentLoaded",(function(){document.head.appendChild(n)}));})()
+</script>
+
+    <link rel="stylesheet" href="../assets/styles/size-m.css" />
+    <link rel="stylesheet" href="../assets/styles/popups.css" />
+    <link rel="stylesheet" href="../assets/styles/styles-helpers.css" />
+
+<!--
+    <section data-type="footer" class="s-footer"><link
+                    id="footer"
+                    rel="stylesheet"
+                    href="../assets/styles/footer.css"
+                /> <a href="https://www.tbank.ru/business/website-builder?utm_source&#x3D;sites.footer&amp;utm_medium&#x3D;ref&amp;utm_campaign&#x3D;sites.main" class="s-footer__link"><div>Конструктор сайтов&nbsp;от&nbsp;</div><img class="s-footer__logo_v2" alt="Т-Банк" src="https://e26f86a1-a349-40e0-9864-90f0278f7cc5.selcdn.net/tb/0.1.707/images/logos/T-BANK_logo_white.svg "> </a> </section>
+ -->
+<script src="../assets/wallet.js"></script>
+</body>
+</html>
