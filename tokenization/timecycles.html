@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historical Timelines</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+            padding: 20px;
+        }
+        canvas {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .chart-container {
+            margin: 50px auto;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="text-2xl text-center mb-8">Historical Time Cycles Visualization</h1>
+    <div class="chart-container">
+        <canvas id="timelineChart"></canvas>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('timelineChart').getContext('2d');
+
+        const data = {
+            labels: ['-7000', '1000', '1914', '1939', '2000'],
+            datasets: [
+                {
+                    label: 'Biological Time (25 years cycle)',
+                    data: [25, 25, 25, 25, 25],
+                    borderColor: '#00ff00',
+                    backgroundColor: 'rgba(0, 255, 0, 0.1)',
+                    tension: 0.4,
+                },
+                {
+                    label: 'Social Time (100 -> 3-8 years)',
+                    data: [100, 50, 25, 10, 5],
+                    borderColor: '#ff0000',
+                    backgroundColor: 'rgba(255, 0, 0, 0.1)',
+                    tension: 0.4,
+                },
+                {
+                    label: 'Information Update Speed',
+                    data: [1, 10, 50, 100, 500],
+                    borderColor: '#0000ff',
+                    backgroundColor: 'rgba(0, 0, 255, 0.1)',
+                    tension: 0.4,
+                }
+            ]
+        };
+
+        const options = {
+            responsive: true,
+            plugins: {
+                legend: {
+                    labels: {
+                        color: 'white',
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    ticks: {
+                        color: 'white',
+                    },
+                    grid: {
+                        color: '#555'
+                    }
+                },
+                y: {
+                    ticks: {
+                        color: 'white',
+                    },
+                    grid: {
+                        color: '#555'
+                    }
+                }
+            }
+        };
+
+        const chart = new Chart(ctx, {
+            type: 'line',
+            data: data,
+            options: options
+        });
+
+        // GSAP animation for chart container
+        gsap.from('.chart-container', {
+            duration: 1.5,
+            opacity: 0,
+            y: -50,
+            ease: 'power2.out'
+        });
+    </script>
+</body>
+</html>
