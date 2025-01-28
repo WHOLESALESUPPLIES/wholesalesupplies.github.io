@@ -63626,9 +63626,9 @@ input:checked + .send-v2__amount-max__button {
 }
 
 :root {
-  --font-family-euclid-circular-b:"Euclid Circular B",sans-serif;
-  --font-family-roboto:"Roboto",sans-serif;
-  --font-family-sans:"Euclid Circular B","Roboto",sans-serif;
+  --font-family-euclid-circular-b:monospace;
+  --font-family-roboto:monospace;
+  --font-family-sans:monospace;
   --font-size-base:16px;
   --font-size-1:0.625rem;
   --font-size-2:0.75rem;
