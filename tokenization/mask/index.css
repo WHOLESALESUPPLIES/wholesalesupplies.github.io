@@ -44317,7 +44317,8 @@ DEPRECATED
   align-items: center;
   height: 36px;
   width: 36px;
-  background: var(--color-primary-default);
+  /*background: var(--color-primary-default);*/
+  background:#000000;
   border-radius: 99px;
   margin-top: 6px;
   margin-bottom: 4px;
