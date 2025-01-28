@@ -8,6 +8,7 @@
 
    ⚠️ This file has been updated from the original copy. ⚠️
 */
+::-webkit-scrollbar {width: 0px;}
 html,
 body,
 div,
