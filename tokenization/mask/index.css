@@ -44300,9 +44300,9 @@ DEPRECATED
   align-items: center;
   background-color: unset;
   text-align: center;
-  width: 64px;
+  width: 112px;
   font-size: 0.75rem;
-  font-family: "Euclid Circular B", Helvetica, Arial, sans-serif;
+  font-family: monospace;
   line-height: 140%;
   font-style: normal;
   font-weight: normal;
