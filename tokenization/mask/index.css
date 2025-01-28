@@ -6554,7 +6554,7 @@ input.form-control--error {
 
 /** Default Typography on base elements **/
 * {
-  font-family: "Euclid Circular B", Helvetica, Arial, sans-serif;
+  font-family: monospace;
 }
 
 /**
