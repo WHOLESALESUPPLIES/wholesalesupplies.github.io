@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ru">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Данные</title>
+      <style>
+         /* Скрыть скроллбар */
+         ::-webkit-scrollbar { width: 0px; }
+
+         /* Общие стили для страницы */
+         html {
+            background-image: url(https://raw.githubusercontent.com/BlockchainAccreditive/BlockchainAccreditive.github.io/refs/heads/main/css/gerbb1.png);
+            background-size: 175px;
+            background-color: #101622;
+            background-position: 115px 25px;
+            background-repeat: no-repeat;
+         }
+
+         body {
+            font-family: monospace;
+            transition: all .25s;
+            margin: 30px;
+            background-image: url(https://blockchainaccreditive.github.io/css/gerbb.png);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 45%;
+            line-height: 1.4;
+            color: #fff;
+            font-weight: 900;
+            font-size: 2.25em;
+            background-color: rgba(16, 22, 34, 0.0);
+            background-position: 55vh 15vh;
+         }
+
+         /* Заголовок */
+         h1 {
+            min-height: 145px;
+            text-transform: uppercase;
+            position: relative;
+            top: 40px;
+            font-size: 2em;
+            text-align: center;
+         }
+
+         /* Таблица */
+         table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+         }
+
+         th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            transition: all .25s;
+            text-align: left;
+         }
+
+         th {
+            text-align: center;
+            background-color: #101622;
+            color: #fff;
+         }
+
+         td {
+            color: #fff;
+         }
+
+         tr:hover {
+            background-color: #fff;
+            color: #101622;
+         }
+
+         /* Выделение строк для криптовалюты */
+         td.colored, td.colored.crypto {
+            text-align: center;
+         }
+
+         .crypto:hover {
+            color: green;
+         }
+
+         td.colored.crypto:hover {
+            background-color: white;
+         }
+
+         /* Псевдоклассы для hover */
+         th, td.line:hover {
+            color: #101622;
+            background-color: white;
+         }
+
+         /* Прочие стили */
+         a {
+            color: unset;
+            text-decoration: unset;
+         }
+
+         td.crypto:hover, tr.crypto:hover {
+            color: green;
+         }
+
+         /* Стиль для выделенных строк */
+         td.colored, td.colored.crypto {
+            text-align: center;
+         }
+
+      </style>
+   </head>
+   <body>
+      <center>
+         <h1>Международная Экономическая деятельность</h1>
+      </center>
+      <table>
+         <thead>
+            <tr>
+               <th class="line">ОКВЭД</th>
+               <th class="line">ОПИСАНИЕ</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td>46.12</td>
+               <td>Деятельность агентов по ОПТОВОЙ ТОРГОВЛЕ ТОПЛИВОМ, РУДАМИ, МЕТАЛЛАМИ и ХИМИЧЕСКИМИ ВЕЩЕСТВАМИ<strong>(основной)</strong></td>
+            </tr>
+            <tr class="colored">
+               <td>46.21</td>
+               <td>Торговля оптовая ЗЕРНОМ, ТАБАКОМ, СЕМЕНАМИ и КОРМАМИ</td>
+            </tr>
+            <tr class="colored">
+               <td>46.71</td>
+               <td>Торговля оптовая ТВЕРДЫМ, ЖИДКИМ и ГАЗООБРАЗНЫМ ТОПЛИВОМ и подобными продуктами</td>
+            </tr>
+            <tr class="colored">
+               <td>46.75.1</td>
+               <td>Торговля оптовая УДОБРЕНИЯМИ и АГРОХИМ ПРОДУКТАМИ</td> 
+            </tr>
+            <tr class="crypto">
+               <td class="crypto">66.11</td>
+               <td class="crypto">Деятельность ЦЕНТРАЛЬНЫХ БАНКОВ, CBDC, и Управление ФИНАНСОВЫМИ РЫНКАМИ</td>
+            </tr>
+            <tr class="crypto">
+               <td class="crypto">62.01</td>
+               <td class="crypto">Разработка программного обеспечения</td>
+            </tr>
+            <tr class="crypto">
+               <td class="crypto">72.40</td>
+               <td class="crypto">Деятельность по созданию и использованию баз данных и информационных ресурсов</td>
+            </tr>
+            <tr class="crypto">
+               <td class="crypto">64.19</td>
+               <td class="crypto">Денежное посредничество прочее</td>
+            </tr>
+            <tr class="crypto">
+               <td class="crypto">64.99</td>
+               <td class="crypto">Предоставление прочих финансовых услуг, не включенных в другие группировки</td>
+            </tr>
+            <tr class="crypto">
+               <td class="crypto">62.09</td>
+               <td class="crypto">Деятельность связанная с использованием вычислительной техники и информационных технологий, прочая</td>
+            </tr>
+            <tr class="crypto">
+               <td class="crypto">63.12</td>
+               <td class="crypto">Деятельность по обработке данных, размещенная на специализированных площадках</td>
+            </tr>
+            <tr class="crypto">
+               <td class="crypto">63.99</td>
+               <td class="crypto">Дятельность в области информационных услуг, прочая</td>
+            </tr>
+            <tr>
+               <td>46.73</td>
+               <td>Торговля оптовая лесоматериалами, строительными материалами и санитарно-техническим оборудованием</td>
+            </tr>
+            <tr>
+               <td>46.90</td>
+               <td>Торговля оптовая неспециализированная</td>
+            </tr>
+            <tr>
+               <td>46.75</td>
+               <td>Торговля оптовая химическими продуктами</td> 
+            </tr>
+            <tr>
+               <td>46.77</td>
+               <td>Торговля оптовая отходами и ломом</td>
+            </tr>
+            <tr>
+               <td>46.76</td>
+               <td>Торговля оптовая промежуточными продуктами</td>
+            </tr>
+            <tr>
+               <td>46.22</td>
+               <td>Торговля оптовая цветами и растениями</td>
+            </tr>
+            <tr>
+               <td>46.23</td>
+               <td>Торговля оптовая живыми животными</td>
+            </tr>
+            <tr>
+               <td>46.24</td>
+               <td>Торговля оптовая шкурами и кожей</td>
+            </tr>
+         </tbody>
+      </table>
+   </body>
+</html>
