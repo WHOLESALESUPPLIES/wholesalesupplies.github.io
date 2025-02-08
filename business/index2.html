@@ -13,7 +13,6 @@ td.line:hover,th,tr:hover{color:#101622}td.colored.crypto:hover,td.line:hover,th
 .main:after{content:'(основной)';color:GREEN;font-weight:900;position:absolute;right:2%;margin-top:8px;font-size:20px}h1{min-height:145px;text-transform:uppercase;position:relative;top:40px;font-size:2em;text-align:center}
 table{width:100%;border-collapse:collapse;margin-bottom:20px}td,th{border:1px solid #ddd;padding:8px;text-align:left}
 .numbr,td.colored,td.colored.crypto,th{text-align:center}tr.crypto:hover td{color:green}a{color:unset;text-decoration:unset}td.crypto:hover,tr.crypto:hover{color:green}
-       
          /* Плавное появление всей таблицы */
          table {
             opacity: 0;
@@ -26,14 +25,15 @@ table{width:100%;border-collapse:collapse;margin-bottom:20px}td,th{border:1px so
             to {
                opacity: 1;
             }
-         }
+         } #searchInput{padding: 10px;margin-bottom: 20px;font-size: .5em;background-color: #ffffff;border-radius: 8px;border: 0;outline: none;}
       </style>
    </head>
    <body>
       <center>
          <h1>Международная Экономическая деятельность</h1>
          <!-- Поле поиска -->
-         <input type="text" id="searchInput" onkeyup="filterTable()" placeholder=" " style="width: 50%; padding: 10px; margin-bottom: 20px; font-size: .5em;">
+         <input type="text" id="searchInput" onkeyup="filterTable()" placeholder=" " style="width: 50%;
+">
       </center>
       <table>
          <thead>
