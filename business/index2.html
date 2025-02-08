@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ru">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Данные</title>
+      <style>
+         body,html{background-repeat:no-repeat}body,td,th{transition:.25s}::-webkit-scrollbar{width:0}html{background-image:url(https://raw.githubusercontent.com/BlockchainAccreditive/BlockchainAccreditive.github.io/refs/heads/main/css/gerbb1.png);background-size:175px;background-color:#101622;background-position:115px 25px}body{font-family:monospace;margin:30px;background-image:url(https://blockchainaccreditive.github.io/css/gerbb.png);background-size:45%;line-height:1.4;color:#fff;font-weight:900;font-size:2.25em;background-color:rgba(16,22,34,0);background-position:55vh 15vh}td.line:hover,th,tr:hover{color:#101622}td.colored.crypto:hover,td.line:hover,th,tr.crypto:hover,tr.crypto:hover td,tr:hover{background-color:#fff}.main:after{content:'(основной)';color:GREEN;font-weight:900;position:absolute;right:2%;margin-top:8px;font-size:20px}h1{min-height:145px;text-transform:uppercase;position:relative;top:40px;font-size:2em;text-align:center}table{width:100%;border-collapse:collapse;margin-bottom:20px}td,th{border:1px solid #ddd;padding:8px;text-align:left}.numbr,td.colored,td.colored.crypto,th{text-align:center}tr.crypto:hover td{color:green}a{color:unset;text-decoration:unset}td.crypto:hover,tr.crypto:hover{color:green}
+         
+         /* Плавное появление всей таблицы */
+         table {
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+         }
+         @keyframes fadeIn {
+            from {
+               opacity: 0;
+            }
+            to {
+               opacity: 1;
+            }
+         }
+      </style>
+   </head>
+   <body>
+      <center>
+         <h1>Международная Экономическая деятельность</h1>
+         <!-- Поле поиска -->
+         <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Поиск по ОКВЭД или описанию..." style="width: 50%; padding: 10px; margin-bottom: 20px; font-size: 1em;">
+      </center>
+      <table>
+         <thead>
+            <tr>
+               <th class="line">ОКВЭД</th>
+               <th class="line">ОПИСАНИЕ</th>
+            </tr>
+         </thead>
+         <tbody id="tableBody">
+            <!-- Существующие записи из первого списка -->
+            <tr>
+               <td class="numbr">46.12</td>
+               <td class="main">Деятельность агентов по ОПТОВОЙ ТОРГОВЛЕ ТОПЛИВОМ, РУДАМИ, МЕТАЛЛАМИ и ХИМИЧЕСКИМИ ВЕЩЕСТВАМИ <strong></strong></td>
+            </tr>
+            <tr class="colored">
+               <td class="numbr">46.21</td>
+               <td>Торговля оптовая ЗЕРНОМ, ТАБАКОМ, СЕМЕНАМИ и КОРМАМИ</td>
+            </tr>
+            <tr class="colored">
+               <td class="numbr">46.71</td>
+               <td>Торговля оптовая ТВЕРДЫМ, ЖИДКИМ и ГАЗООБРАЗНЫМ ТОПЛИВОМ и подобными продуктами</td>
+            </tr>
+            <tr class="colored">
+               <td class="numbr">46.75.1</td>
+               <td>Торговля оптовая УДОБРЕНИЯМИ и АГРОХИМ ПРОДУКТАМИ</td>
+            </tr>
+            <tr class="crypto">
+               <td class="crypto numbr">66.11</td>
+               <td class="crypto">Деятельность ЦЕНТРАЛЬНЫХ БАНКОВ, CBDC, и Управление ФИНАНСОВЫМИ РЫНКАМИ</td>
+            </tr>
+            <tr class="crypto">
+               <td class="crypto numbr">62.01</td>
+               <td class="crypto">Разработка программного обеспечения</td>
+            </tr>
+            <tr class="crypto">
+               <td class="crypto numbr">72.40</td>
+               <td class="crypto">Деятельность по созданию и использованию баз данных и информационных ресурсов</td>
+            </tr>
+            <tr class="crypto">
+               <td class="crypto numbr">64.19</td>
+               <td class="crypto">Денежное посредничество прочее</td>
+            </tr>
+            <tr class="crypto">
+               <td class="crypto numbr">64.99</td>
+               <td class="crypto">Предоставление прочих финансовых услуг, не включенных в другие группировки</td>
+            </tr>
+            <tr class="crypto">
+               <td class="crypto numbr">62.09</td>
+               <td class="crypto">Деятельность связанная с использованием вычислительной техники и информационных технологий, прочая</td>
+            </tr>
+            <tr class="crypto">
+               <td class="crypto numbr">63.12</td>
+               <td class="crypto">Деятельность по обработке данных, размещенная на специализированных площадках</td>
+            </tr>
+            <tr class="crypto">
+               <td class="crypto numbr">63.99</td>
+               <td class="crypto">Дятельность в области информационных услуг, прочая</td>
+            </tr>
+            <tr>
+               <td class="numbr">46.73</td>
+               <td>Торговля оптовая лесоматериалами, строительными материалами и санитарно-техническим оборудованием</td>
+            </tr>
+            <tr>
+               <td class="numbr">46.90</td>
+               <td>Торговля оптовая неспециализированная</td>
+            </tr>
+            <tr>
+               <td class="numbr">46.75</td>
+               <td>Торговля оптовая химическими продуктами</td>
+            </tr>
+            <tr>
+               <td class="numbr">46.77</td>
+               <td>Торговля оптовая отходами и ломом</td>
+            </tr>
+            <tr>
+               <td class="numbr">46.76</td>
+               <td>Торговля оптовая промежуточными продуктами</td>
+            </tr>
+            <tr>
+               <td class="numbr">46.22</td>
+               <td>Торговля оптовая цветами и растениями</td>
+            </tr>
+            <tr>
+               <td class="numbr">46.23</td>
+               <td>Торговля оптовая живыми животными</td>
+            </tr>
+            <tr>
+               <td class="numbr">46.24</td>
+               <td>Торговля оптовая шкурами и кожей</td>
+            </tr>
+            <!-- Добавленные записи из второго списка -->
+            <tr>
+               <td class="numbr">46.11</td>
+               <td>Деятельность агентов по оптовой торговле сельскохозяйственным сырьем, живыми животными, текстильным сырьем и полуфабрикатами</td>
+            </tr>
+            <tr>
+               <td class="numbr">46.13</td>
+               <td>Деятельность агентов по оптовой торговле лесоматериалами и строительными материалами</td>
+            </tr>
+            <tr>
+               <td class="numbr">46.14</td>
+               <td>Деятельность агентов по оптовой торговле машинами, промышленным оборудованием, судами и летательными аппаратами</td>
+            </tr>
+            <tr>
+               <td class="numbr">46.19</td>
+               <td>Деятельность агентов по оптовой торговле универсальным ассортиментом товаров</td>
+            </tr>
+            <tr>
+               <td class="numbr">46.18</td>
+               <td>Деятельность агентов, специализирующихся на оптовой торговле прочими отдельными видами товаров</td>
+            </tr>
+            <tr>
+               <td class="numbr">46.17</td>
+               <td>Деятельность агентов по оптовой торговле пищевыми продуктами, напитками и табачными изделиями</td>
+            </tr>
+            <tr>
+               <td class="numbr">46.16</td>
+               <td>Деятельность агентов по оптовой торговле текстильными изделиями, одеждой, обувью, изделиями из кожи и меха</td>
+            </tr>
+            <tr>
+               <td class="numbr">46.15</td>
+               <td>Деятельность агентов по оптовой торговле мебелью, бытовыми товарами, скобяными, ножевыми и прочими металлическими изделиями</td>
+            </tr>
+         </tbody>
+      </table>
+
+      <script>
+         // Функция для фильтрации таблицы
+         function filterTable() {
+            let input = document.getElementById("searchInput");
+            let filter = input.value.toLowerCase();
+            let rows = document.getElementById("tableBody").getElementsByTagName("tr");
+
+            for (let i = 0; i < rows.length; i++) {
+               let cells = rows[i].getElementsByTagName("td");
+               let found = false;
+
+               for (let j = 0; j < cells.length; j++) {
+                  if (cells[j].innerText.toLowerCase().includes(filter)) {
+                     found = true;
+                     break;
+                  }
+               }
+
+               if (found) {
+                  rows[i].style.display = "";
+               } else {
+                  rows[i].style.display = "none";
+               }
+            }
+         }
+      </script>
+   </body>
+</html>
