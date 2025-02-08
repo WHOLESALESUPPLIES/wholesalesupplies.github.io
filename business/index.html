@@ -5,202 +5,321 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Данные</title>
       <style>
-         /* Скрыть скроллбар */
-         ::-webkit-scrollbar { width: 0px; }
+body,html{background-repeat:no-repeat}
+body,td,th{transition:.5s}::-webkit-scrollbar{width:0}
+html{background-image:url(https://raw.githubusercontent.com/BlockchainAccreditive/BlockchainAccreditive.github.io/refs/heads/main/css/gerbb1.png);
+background-size:175px;background-color:#101622;background-position:115px 10px;}
+body{font-family:monospace;margin:15px;background-image:url(https://blockchainaccreditive.github.io/css/letter.jpg);
+line-height: 1.4;color: #fff;font-weight: 900;font-size: 1.55em;}
+body{background-size: 88%;background-color: rgba(16, 22, 34, 0.0);background-position: 40vh 48vh;}
+  /*body{font-family: monospace;
+    margin: 15px;
+    background-image: url(https://blockchainaccreditive.github.io/css/gerbb.png);
+    background-size: 35%;
+    line-height: 1.4;
+    color: #fff;
+    font-weight: 900;
+    background-color: rgba(16, 22, 34, 0.0);
+    background-position: 110vh 75vh;}*/
+/*td.line:hover,th,tr:hover{color:#101622}*/
+/* tr.crypto {background-color: #00ff0e2b;} */ /* #6900ff45 */
+/*.darkLine {background-color: #212a3d;}*/
+td.colored.crypto, tr.wholesale, tr.wholesales, td.line:hover,th,tr.crypto:hover,tr.crypto:hover td,tr:hover{background-color:#fff}
+tr.darkLine:hover {color: #101622;}tr.wholesale:hover {color: #ffe432;}tr.wholesales:hover {color: #00e2ff;}
+h1 {min-height: 145px;text-transform: uppercase; position: relative; top: 20px;font-size: 2em;text-align: center;}
+tr.crypto {background-color: #6900ff45;} 
 
-         /* Общие стили для страницы */
-         html {
-            background-image: url(https://raw.githubusercontent.com/BlockchainAccreditive/BlockchainAccreditive.github.io/refs/heads/main/css/gerbb1.png);
-            background-size: 175px;
-            background-color: #101622;
-            background-position: 115px 25px;
-            background-repeat: no-repeat;
-         }
-
-         body {
-            font-family: monospace;
-            transition: all .25s;
-            margin: 30px;
-            background-image: url(https://blockchainaccreditive.github.io/css/gerbb.png);
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: 45%;
-            line-height: 1.4;
-            color: #fff;
-            font-weight: 900;
-            font-size: 2.25em;
-            background-color: rgba(16, 22, 34, 0.0);
-            background-position: 55vh 15vh;
-         }
-
-         /* Заголовок */
-         h1 {
-            min-height: 145px;
-            text-transform: uppercase;
-            position: relative;
-            top: 40px;
-            font-size: 2em;
-            text-align: center;
-         }
-
-         /* Таблица */
+.main:after{content: '(основной)';
+    color: #101622;
+    font-weight: 900;
+    position: absolute;
+    right: 1.75vh;
+    margin-top: 1px;
+    font-size: 15px;
+    background-color: #ffffff;
+    padding: 2.5px;
+    border-radius: 2px;}
+tr.wholesale {background-color: #9d00ff2b;}tr.wholesales {background-color: #ff00d42b;}tr.darkLine {background-color: #00410385;}
+table{cursor: pointer;width:100%;border-collapse:collapse;margin-bottom:20px}td,th{border:1px solid #212a3d;padding:8px;text-align:left}
+.numbr,td.colored,td.colored.crypto,th{text-transform: uppercase;text-align:center}
+tr.crypto:hover td{color:green}a{color:unset;text-decoration:unset}td.crypto:hover,tr.crypto:hover{color:green}
+         /* Плавное появление всей таблицы */
          table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
+            opacity: 0;animation: fadeIn 1s forwards;
          }
-
-         th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            transition: all .25s;
-            text-align: left;
-         }
-
-         th {
-            text-align: center;
-            background-color: #101622;
-            color: #fff;
-         }
-
-         td {
-            color: #fff;
-         }
-
-         tr:hover {
-            background-color: #fff;
-            color: #101622;
-         }
-
-         /* Выделение строк для криптовалюты */
-         td.colored, td.colored.crypto {
-            text-align: center;
-         }
-
-         .crypto:hover {
-            color: green;
-         }
-
-         td.colored.crypto:hover {
-            background-color: white;
-         }
-
-         /* Псевдоклассы для hover */
-         th, td.line:hover {
-            color: #101622;
-            background-color: white;
-         }
-
-         /* Прочие стили */
-         a {
-            color: unset;
-            text-decoration: unset;
-         }
-
-         td.crypto:hover, tr.crypto:hover {
-            color: green;
-         }
-
-         /* Стиль для выделенных строк */
-         td.colored, td.colored.crypto {
-            text-align: center;
-         }
-
-      </style>
-   </head>
+         @keyframes fadeIn {
+            from {
+               opacity: 0;
+            }
+            to {
+               opacity: 1;
+            }
+         }#searchInput{border-radius: 8px;padding: 10px;width: 49%;position: absolute;margin-top: -75px;margin-left: -640px;outline: none;font-size: .5em;}
+       </style>
+     </head>
    <body>
+<body>
+
       <center>
          <h1>Международная Экономическая деятельность</h1>
-      </center>
+         <!-- Поле поиска -->
+        <center> <input type="text" id="searchInput" onkeyup="filterTable()" placeholder=" "> </center>
+       </center>
       <table>
-         <thead>
+    <thead>
+            <tr>
+                <th>ЮРИСДИКЦИЯ</th>
+                <th>НОРМАТИВ</th>
+                <th>РЕГЛАМЕНТ</th>
+                <th>ДОКУМЕНТЫ</th>
+            </tr>
+        </thead>        
+    <tbody>  
+            <tr>
+                <td style="text-align: center;">США, ЕВРОПА, КИТАЙ <br> АФРИКА, РФ, ИНДИЯ</td>
+                <td style="text-align: left;">
+                    № 259-ФЗ "О цифровых финансовых активах"<br> 
+                    № 169-ФЗ "О правовых режимах в сфере цифровых инноваций"<br> 
+                    № 221-ФЗ "О майнинге и цифровой валюте"
+                </td>
+                <td style="text-align: center;">
+                    &nbsp;&nbsp;Правовой Статус и Регулирование<br>
+                    &nbsp;&nbsp;Для Цифровых Валют, Цифровых Активов и Токенов.<br>
+                    &nbsp;&nbsp;Национальные Цифровые Валюты Центрального Банка,<br> 
+                                  (CBDC / Central Bank Digital Currency)
+                                национальные цифровые валюты цифровой рубль.<br>
+                    &nbsp;&nbsp;США, ЕВРОПА, АФРИКА, ИНДИЯ, КИТАЙ И РФ
+                   <!-- CBDC (Central Bank Digital Currency от Central Bank).--> </td>
+                <td style="text-align: center;"><a href=" " target="_blank">
+                   40 ОСНОВНЫХ<br>
+                   НОРМАТИВНЫХ АКТОВ<br>
+                   НА СЕГОДНЯШНИЙ ДЕНЬ</a></td>
+            </tr>
+      </tbody>
+    </table>
+
+
+
+
+
+
+    <table>
+        <thead>
+            <tr>
+                <th>Физическое золото и драгоценные металлы</th>
+                <th>Природные ресурсы (нефть, газ, минералы)</th>
+                <th>предприятия</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>&nbsp;&nbsp;Для золота,<br>  где каждый токен может представлять долю в физическом золоте, хранимом на складе. Платформа позволяет пользователям покупать и продавать доли золота.</td>
+                <td>&nbsp;&nbsp;Для природных ресурсов возобновляемых/не возобновляемых<br> например, токены могут представлять права на добычу нефти, газа или минералов, которые могут быть подтверждены через оракулы.</td>
+                <td>&nbsp;&nbsp;Для средних и крупных предприятий,<br> 
+                    Так же и иных активов. 
+                    Как стандарты протоколов токены могут представлять полностью программируемые доли в предприятии,
+                    включая возможность обмена или продажи токенов,
+                    что делает ликвидными такие активы.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Вторая таблица -->
+    <table>
+        <thead>
+            <tr>
+                <th>Произведения искусства</th>
+                <th>Интеллектуальная собственность</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><!--Стандрты и Протоколы--> &nbsp;&nbsp;Для произведений искусства, 
+                    где каждый токен может представлять долю в произведении, доступную для продажи и обмена на платформе.</td>
+                <td><!--Стандрты и Протоколы-->&nbsp;&nbsp;  Для патентов, авторских прав и товарных знаков, 
+                    предоставляя право на прибыль от использования интеллектуальной собственности через покупку токенов.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Третья таблица -->
+    <table>
+        <thead>
+            <tr>
+                <th>Недвижимость</th>
+                <th>Ценные бумаги и финансовые инструменты</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+        &nbsp;&nbsp;Для недвижимости, где каждый токен представляет долю в объекте недвижимости, 
+                    таком как жилой или коммерческий объект. 
+                    Токены могут быть использованы для обмена и торговли на платформе.</td>
+                <td>
+        &nbsp;&nbsp;Для акций, облигаций и долговых обязательств, позволяя инвесторам покупать доли в финансовых инструментах, таких как компании или долговые бумаги.</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+
+
+
+      <table>
+         <thead style="display:none;">
             <tr>
                <th class="line">ОКВЭД</th>
                <th class="line">ОПИСАНИЕ</th>
             </tr>
          </thead>
-         <tbody>
-            <tr>
-               <td>46.12</td>
-               <td>Деятельность агентов по ОПТОВОЙ ТОРГОВЛЕ ТОПЛИВОМ, РУДАМИ, МЕТАЛЛАМИ и ХИМИЧЕСКИМИ ВЕЩЕСТВАМИ<strong>(основной)</strong></td>
+         <tbody id="tableBody">
+            <!-- Существующие записи из первого списка -->
+            <tr class="darkLine">
+               <td class="numbr">46.12</td>
+               <td class="main darkLine">Деятельность по ОПТОВОЙ ТОРГОВЛЕ ТОПЛИВОМ, РУДАМИ, МЕТАЛЛАМИ и ХИМИЧЕСКИМИ ВЕЩЕСТВАМИ<strong></strong></td>
             </tr>
-            <tr class="colored">
-               <td>46.21</td>
-               <td>Торговля оптовая ЗЕРНОМ, ТАБАКОМ, СЕМЕНАМИ и КОРМАМИ</td>
-            </tr>
-            <tr class="colored">
-               <td>46.71</td>
-               <td>Торговля оптовая ТВЕРДЫМ, ЖИДКИМ и ГАЗООБРАЗНЫМ ТОПЛИВОМ и подобными продуктами</td>
-            </tr>
-            <tr class="colored">
-               <td>46.75.1</td>
-               <td>Торговля оптовая УДОБРЕНИЯМИ и АГРОХИМ ПРОДУКТАМИ</td> 
-            </tr>
+   
             <tr class="crypto">
-               <td class="crypto">66.11</td>
+               <td class="crypto numbr">66.11</td>
                <td class="crypto">Деятельность ЦЕНТРАЛЬНЫХ БАНКОВ, CBDC, и Управление ФИНАНСОВЫМИ РЫНКАМИ</td>
             </tr>
             <tr class="crypto">
-               <td class="crypto">62.01</td>
+               <td class="crypto numbr">62.01</td>
                <td class="crypto">Разработка программного обеспечения</td>
             </tr>
             <tr class="crypto">
-               <td class="crypto">72.40</td>
+               <td class="crypto numbr">72.40</td>
                <td class="crypto">Деятельность по созданию и использованию баз данных и информационных ресурсов</td>
             </tr>
             <tr class="crypto">
-               <td class="crypto">64.19</td>
+               <td class="crypto numbr">64.19</td>
                <td class="crypto">Денежное посредничество прочее</td>
             </tr>
             <tr class="crypto">
-               <td class="crypto">64.99</td>
+               <td class="crypto numbr">64.99</td>
                <td class="crypto">Предоставление прочих финансовых услуг, не включенных в другие группировки</td>
             </tr>
             <tr class="crypto">
-               <td class="crypto">62.09</td>
+               <td class="crypto numbr">62.09</td>
                <td class="crypto">Деятельность связанная с использованием вычислительной техники и информационных технологий, прочая</td>
             </tr>
             <tr class="crypto">
-               <td class="crypto">63.12</td>
+               <td class="crypto numbr">63.12</td>
                <td class="crypto">Деятельность по обработке данных, размещенная на специализированных площадках</td>
             </tr>
             <tr class="crypto">
-               <td class="crypto">63.99</td>
+               <td class="crypto numbr">63.99</td>
                <td class="crypto">Дятельность в области информационных услуг, прочая</td>
             </tr>
-            <tr>
-               <td>46.73</td>
-               <td>Торговля оптовая лесоматериалами, строительными материалами и санитарно-техническим оборудованием</td>
+
+            <tr class="wholesale">
+               <td class="numbr">46.90</td>
+               <td class="wholesale">Торговля оптовая неспециализированная</td>
             </tr>
-            <tr>
-               <td>46.90</td>
-               <td>Торговля оптовая неспециализированная</td>
+            <tr class="wholesale">
+               <td class="numbr">46.77</td>
+               <td class="wholesale">Торговля оптовая отходами и ломом</td>
             </tr>
-            <tr>
-               <td>46.75</td>
-               <td>Торговля оптовая химическими продуктами</td> 
+
+            <tr class="wholesale">
+               <td class="numbr">46.75</td>
+               <td class="wholesale">Торговля оптовая химическими продуктами</td>
             </tr>
-            <tr>
-               <td>46.77</td>
-               <td>Торговля оптовая отходами и ломом</td>
+
+            <tr class="wholesale">
+               <td class="numbr">46.76</td>
+               <td class="wholesale">Торговля оптовая промежуточными продуктами</td>
             </tr>
-            <tr>
-               <td>46.76</td>
-               <td>Торговля оптовая промежуточными продуктами</td>
+            <tr class="wholesale">
+               <td class="numbr">46.22</td>
+               <td class="wholesale">Торговля оптовая цветами и растениями</td>
             </tr>
-            <tr>
-               <td>46.22</td>
-               <td>Торговля оптовая цветами и растениями</td>
+            <tr class="wholesale">
+               <td class="numbr">46.23</td>
+               <td class="wholesale">Торговля оптовая живыми животными</td>
             </tr>
-            <tr>
-               <td>46.23</td>
-               <td>Торговля оптовая живыми животными</td>
+            <tr class="wholesale">
+               <td class="numbr">46.24</td>
+               <td class="wholesale">Торговля оптовая шкурами и кожей</td>
             </tr>
-            <tr>
-               <td>46.24</td>
-               <td>Торговля оптовая шкурами и кожей</td>
+           <tr class="wholesale">
+               <td class="numbr">46.21</td>
+               <td class="wholesale">Торговля оптовая ЗЕРНОМ, ТАБАКОМ, СЕМЕНАМИ и КОРМАМИ</td>
+            </tr>
+            <tr class="wholesale">
+               <td class="numbr">46.73</td>
+               <td class="wholesale">Торговля оптовая лесоматериалами, строительными материалами</td>
+            </tr>
+            <tr class="wholesale">
+               <td class="numbr">46.71</td>
+               <td class="wholesale">Торговля оптовая ТВЕРДЫМ, ЖИДКИМ и ГАЗООБРАЗНЫМ ТОПЛИВОМ и подобными продуктами</td>
+            </tr>
+            <tr class="wholesale">
+               <td class="numbr">46.75</td>
+               <td class="wholesale">Торговля оптовая УДОБРЕНИЯМИ и АГРОХИМ ПРОДУКТАМИ</td>
+            </tr>
+            <!-- Добавленные записи из второго списка -->
+           <tr class="wholesales">
+               <td class="numbr">46.11</td>
+               <td class="wholesales">Деятельность по оптовой торговле сельскохозяйственным сырьем, живыми животными, текстильным сырьем и полуфабрикатами</td>
+            </tr>
+            <tr class="wholesales">
+               <td class="numbr">46.13</td>
+               <td class="wholesales">Деятельность по оптовой торговле лесоматериалами и строительными материалами</td>
+            </tr>
+            <tr class="wholesales">
+               <td class="numbr">46.14</td>
+               <td class="wholesales">Деятельность по оптовой торговле МАШИНАМИ, ПРОМЫШЛЕННЫМ ОБОРУДОВАНИЕМ, СУДАМИ, САНИТАРНО-ТЕХНИЧЕСКИМ ОБОРУДОВАНИЕМ И ЛЕТАТЕЛЬНЫМИ АППАРАТАМИ</td>
+            </tr>
+            <tr class="wholesales">
+               <td class="numbr">46.17</td>
+               <td class="wholesales">Деятельность по оптовой торговле пищевыми продуктами, напитками и табачными изделиями</td>
+            </tr>
+            <tr class="wholesales">
+               <td class="numbr">46.16</td>
+               <td class="wholesales">Деятельность по оптовой торговле текстильными изделиями, одеждой, обувью, изделиями из кожи и меха</td>
+            </tr>
+            <tr class="wholesales">
+               <td class="numbr">46.15</td>
+               <td class="wholesales">Деятельность по оптовой торговле мебелью, бытовыми товарами, скобяными, ножевыми и прочими металлическими изделиями</td>
+            </tr>
+            <tr class="wholesales">
+               <td class="numbr">46.19</td>
+               <td class="wholesales">Деятельность по оптовой торговле универсальным ассортиментом товаров</td>
+            </tr>
+            <tr class="wholesales">
+               <td class="numbr">46.18</td>
+               <td class="wholesales">Деятельность по оптовой торговле прочими отдельными видами товаров</td>
             </tr>
          </tbody>
       </table>
+
+      <script>
+         // Функция для фильтрации таблицы
+         function filterTable() {
+            let input = document.getElementById("searchInput");
+            let filter = input.value.toLowerCase();
+            let rows = document.getElementById("tableBody").getElementsByTagName("tr");
+
+            for (let i = 0; i < rows.length; i++) {
+               let cells = rows[i].getElementsByTagName("td");
+               let found = false;
+
+               for (let j = 0; j < cells.length; j++) {
+                  if (cells[j].innerText.toLowerCase().includes(filter)) {
+                     found = true;
+                     break;
+                  }
+               }
+
+               if (found) {
+                  rows[i].style.display = "";
+               } else {
+                  rows[i].style.display = "none";
+               }
+            }
+         }
+      </script>
    </body>
 </html>
