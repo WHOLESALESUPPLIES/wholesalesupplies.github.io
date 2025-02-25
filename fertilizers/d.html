@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>100 Dollar Bill</title>
+    <style>
+        .bill {
+            width: 640px;
+            height: 272px;
+            background: #88b049;
+            position: relative;
+            font-family: 'Times New Roman', serif;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .background-pattern {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 15px,
+                    rgba(0,0,0,0.1) 15px,
+                    rgba(0,0,0,0.1) 30px
+                ),
+                linear-gradient(
+                    to bottom,
+                    #789d3a,
+                    #a0ba6d
+                );
+        }
+
+        .portrait {
+            position: absolute;
+            left: 20px;
+            top: 50px;
+            filter: sepia(100%) contrast(120%);
+        }
+
+        .seal {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            border: 2px solid #000;
+            border-radius: 50%;
+        }
+
+        .treasury-seal {
+            right: 150px;
+            top: 50px;
+            background: #f0f0f0;
+        }
+
+        .federal-seal {
+            right: 50px;
+            top: 50px;
+            background: #e0e0e0;
+        }
+
+        .serial-number {
+            position: absolute;
+            font-size: 16px;
+            letter-spacing: 2px;
+            color: #3a3a3a;
+        }
+
+        .serial-top-left { left: 40px; top: 15px; }
+        .serial-bottom-right { right: 40px; bottom: 15px; transform: rotate(180deg); }
+
+        .denomination {
+            position: absolute;
+            font-size: 24px;
+            font-weight: bold;
+            color: #2d2d2d;
+        }
+
+        .watermark {
+            position: absolute;
+            right: 200px;
+            top: 80px;
+            opacity: 0.15;
+            font-size: 80px;
+            transform: rotate(-20deg);
+        }
+
+        .microprint {
+            position: absolute;
+            font-size: 4px;
+            color: #000;
+            opacity: 0.7;
+        }
+
+        .security-thread {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 120px;
+            height: 2px;
+            background: linear-gradient(90deg, 
+                transparent 20%,
+                #d4af37 40%,
+                transparent 60%
+            );
+            opacity: 0.8;
+        }
+
+        .ribbon {
+            position: absolute;
+            right: 100px;
+            top: 130px;
+            width: 80px;
+            height: 30px;
+            background: 
+                repeating-linear-gradient(
+                    45deg,
+                    #d4af37,
+                    #d4af37 5px,
+                    transparent 5px,
+                    transparent 10px
+                );
+            transform: rotate(45deg);
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <div class="bill">
+        <div class="background-pattern"></div>
+        
+        <!-- Security Thread -->
+        <div class="security-thread"></div>
+        
+        <!-- Portrait -->
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6a/Benjamin_Franklin_portrait.jpg" 
+             class="portrait" 
+             width="140"
+             style="border-radius: 4px;">
+        
+        <!-- Seals -->
+        <div class="seal treasury-seal"></div>
+        <div class="seal federal-seal"></div>
+        
+        <!-- Serial Numbers -->
+        <div class="serial-number serial-top-left">L 42 4208 6942</div>
+        <div class="serial-number serial-bottom-right">L 42 4208 6942</div>
+        
+        <!-- Denomination -->
+        <div class="denomination" style="left: 180px; top: 20px;">100</div>
+        <div class="denomination" style="right: 180px; bottom: 20px;">100</div>
+        
+        <!-- Watermark -->
+        <div class="watermark">100</div>
+        
+        <!-- Microprint -->
+        <div class="microprint" style="left: 200px; top: 160px;">
+            THE UNITED STATES OF AMERICA THE UNITED STATES OF AMERICA
+        </div>
+        
+        <!-- Holographic Ribbon -->
+        <div class="ribbon"></div>
+        
+        <!-- Federal Reserve Seal -->
+        <svg style="position: absolute; right: 60px; top: 60px;" width="50" height="50">
+            <circle cx="25" cy="25" r="23" fill="none" stroke="#000" stroke-width="2"/>
+            <text x="25" y="30" text-anchor="middle" font-size="10">FEDERAL RESERVE</text>
+        </svg>
+    </div>
+</body>
+</html>
