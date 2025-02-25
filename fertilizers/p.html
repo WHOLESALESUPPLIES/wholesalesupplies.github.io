@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Patterns</title>
+    <style>
+        body {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            background: #f0f0f0;
+        }
+
+        .pattern-container {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            margin: 10px;
+            border: 1px solid #ccc;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            background-color: #fff;
+        }
+
+        /* Тонкие линии (микропечать) */
+        .micro-lines {
+            background-image: 
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(0, 100, 200, 0.1) 2px,
+                    rgba(0, 100, 200, 0.1) 4px
+                ),
+                repeating-linear-gradient(
+                    -45deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(200, 50, 0, 0.1) 2px,
+                    rgba(200, 50, 0, 0.1) 4px
+                );
+        }
+
+        /* Гильоширный узор */
+        .guilloche {
+            background: 
+                radial-gradient(circle at 50% 50%, 
+                    transparent 20%, 
+                    rgba(0, 80, 150, 0.15) 21%,
+                    transparent 22%),
+                repeating-linear-gradient(
+                    -55deg,
+                    transparent 0 20px,
+                    rgba(150, 0, 50, 0.1) 20px 40px
+                );
+        }
+
+        /* Микротекст */
+        .microtext::before {
+            content: "SECURE • SECURE • SECURE • ";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            font: 4px 'Arial', sans-serif;
+            letter-spacing: 1px;
+            color: rgba(0, 50, 150, 0.3);
+            white-space: nowrap;
+            transform: rotate(-30deg);
+        }
+
+        /* Защитная полоса с эффектом смещения */
+        .security-strip {
+            position: relative;
+            overflow: hidden;
+        }
+        .security-strip::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent 25%,
+                rgba(255, 215, 0, 0.3) 50%,
+                transparent 75%
+            );
+            animation: strip-shine 4s infinite;
+        }
+
+        /* Геометрическая сетка */
+        .geometric-grid {
+            background-image: 
+                repeating-linear-gradient(
+                    transparent 0 19px,
+                    rgba(0, 100, 50, 0.1) 19px 20px
+                ),
+                repeating-linear-gradient(
+                    90deg,
+                    transparent 0 19px,
+                    rgba(100, 0, 50, 0.1) 19px 20px
+                );
+        }
+
+        /* Водяной знак */
+        .watermark {
+            background: 
+                linear-gradient(45deg,
+                    transparent 40%,
+                    rgba(0, 50, 150, 0.08) 50%,
+                    transparent 60%
+                ),
+                url('data:image/svg+xml,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><text x="50%" y="50%" font-size="20" fill="rgba(0,50,150,0.1)" text-anchor="middle" dominant-baseline="middle">SECURE</text></svg>');
+        }
+
+        @keyframes strip-shine {
+            100% { left: 100%; }
+        }
+
+        .pattern-container:hover {
+            transform: scale(1.05);
+            transition: transform 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="pattern-container micro-lines"></div>
+    
+    <div class="pattern-container guilloche"></div>
+    
+    <div class="pattern-container microtext"></div>
+    
+    <div class="pattern-container security-strip"></div>
+    
+    <div class="pattern-container geometric-grid"></div>
+    
+    <div class="pattern-container watermark"></div>
+</body>
+</html>
