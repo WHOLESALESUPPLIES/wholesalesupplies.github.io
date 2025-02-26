@@ -109,7 +109,7 @@ https://xn--80akr3ae.xn--p1ai/
 ---
 
 Пересчитаем показатели в рублях с учетом особенностей российского рынка (курс: 1 USD ≈ 90 RUB).
-![](ud.png)
+![](https://raw.githubusercontent.com/WHOLESALESUPPLIES/wholesalesupplies.github.io/refs/heads/main/fertilizers/ud.png)
 ---
 
 ### **1. Расчет себестоимости и маржи (в рублях)**
