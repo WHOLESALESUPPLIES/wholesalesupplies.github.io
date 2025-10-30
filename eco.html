@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Карта стран ЭКОВАС</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            align-items: flex-start;
+        }
+        
+        .map-container {
+            flex: 1;
+            min-width: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .map-title {
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            color: #ffcc00;
+        }
+        
+        svg {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        
+        .country {
+            fill: #3498db;
+            stroke: #1a5276;
+            stroke-width: 0.5;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .country:hover {
+            fill: #2ecc71;
+            stroke-width: 1.5;
+            filter: drop-shadow(0 0 5px rgba(46, 204, 113, 0.7));
+        }
+        
+        .country.highlighted {
+            fill: #e74c3c;
+            stroke: #c0392b;
+            stroke-width: 2;
+            filter: drop-shadow(0 0 8px rgba(231, 76, 60, 0.8));
+        }
+        
+        .info-panel {
+            flex: 1;
+            min-width: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .info-title {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            color: #ffcc00;
+        }
+        
+        .country-info {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .country-name {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #ffcc00;
+        }
+        
+        .country-details {
+            line-height: 1.6;
+        }
+        
+        .country-details p {
+            margin-bottom: 8px;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .stat-card {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            background: rgba(0, 0, 0, 0.4);
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ffcc00;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .legend {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+        
+        .ecowas-info {
+            margin-top: 30px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        
+        .ecowas-info h3 {
+            color: #ffcc00;
+            margin-bottom: 10px;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                flex-direction: column;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Страны ЭКОВАС</h1>
+            <p class="subtitle">Экономическое сообщество западноафриканских государств</p>
+        </header>
+        
+        <div class="content">
+            <div class="map-container">
+                <h2 class="map-title">Интерактивная карта региона</h2>
+                <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Бенин -->
+                    <path id="benin" class="country" d="M450,350 L460,340 L470,345 L475,355 L470,365 L460,370 L450,360 Z" />
+                    
+                    <!-- Буркина-Фасо -->
+                    <path id="burkina-faso" class="country" d="M400,320 L420,310 L440,315 L450,330 L440,345 L420,340 L400,330 Z" />
+                    
+                    <!-- Кабо-Верде -->
+                    <path id="cape-verde" class="country" d="M250,250 L260,240 L270,245 L265,255 L255,260 L245,255 Z" />
+                    
+                    <!-- Кот-д'Ивуар -->
+                    <path id="cote-divoire" class="country" d="M420,380 L440,370 L460,375 L470,390 L460,405 L440,400 L420,390 Z" />
+                    
+                    <!-- Гамбия -->
+                    <path id="gambia" class="country" d="M320,320 L340,315 L345,325 L340,335 L325,330 L320,320 Z" />
+                    
+                    <!-- Гана -->
+                    <path id="ghana" class="country" d="M440,370 L460,360 L480,365 L490,380 L480,395 L460,390 L440,380 Z" />
+                    
+                    <!-- Гвинея -->
+                    <path id="guinea" class="country" d="M350,350 L370,340 L390,345 L400,360 L390,375 L370,370 L350,360 Z" />
+                    
+                    <!-- Гвинея-Бисау -->
+                    <path id="guinea-bissau" class="country" d="M330,340 L345,335 L350,345 L345,355 L335,350 L330,340 Z" />
+                    
+                    <!-- Либерия -->
+                    <path id="liberia" class="country" d="M400,400 L415,395 L420,405 L415,415 L400,410 L395,400 Z" />
+                    
+                    <!-- Мали -->
+                    <path id="mali" class="country" d="M350,280 L380,270 L410,280 L420,300 L410,320 L380,310 L350,300 Z" />
+                    
+                    <!-- Нигер -->
+                    <path id="niger" class="country" d="M430,280 L460,270 L490,280 L500,300 L490,320 L460,310 L430,300 Z" />
+                    
+                    <!-- Нигерия -->
+                    <path id="nigeria" class="country" d="M470,330 L500,320 L530,330 L540,350 L530,370 L500,360 L470,350 Z" />
+                    
+                    <!-- Сенегал -->
+                    <path id="senegal" class="country" d="M300,320 L330,310 L350,315 L355,325 L350,335 L330,330 L300,320 Z" />
+                    
+                    <!-- Сьерра-Леоне -->
+                    <path id="sierra-leone" class="country" d="M370,380 L385,375 L390,385 L385,395 L370,390 L365,380 Z" />
+                    
+                    <!-- Того -->
+                    <path id="togo" class="country" d="M460,360 L470,355 L475,365 L470,375 L460,370 L455,360 Z" />
+                </svg>
+                
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #3498db;"></div>
+                        <span>Страна ЭКОВАС</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #2ecc71;"></div>
+                        <span>При наведении</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #e74c3c;"></div>
+                        <span>Выбранная страна</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="info-panel">
+                <h2 class="info-title">Информация о стране</h2>
+                <div class="country-info">
+                    <h3 class="country-name">Выберите страну на карте</h3>
+                    <div class="country-details">
+                        <p>Наведите курсор на любую страну на карте, чтобы увидеть информацию о ней.</p>
+                    </div>
+                </div>
+                
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-value">15</div>
+                        <div class="stat-label">стран-членов</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">387 млн</div>
+                        <div class="stat-label">население</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">5.1 млн км²</div>
+                        <div class="stat-label">территория</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">1975</div>
+                        <div class="stat-label">год основания</div>
+                    </div>
+                </div>
+                
+                <div class="ecowas-info">
+                    <h3>Об ЭКОВАС</h3>
+                    <p>Экономическое сообщество стран Западной Африки (ECOWAS) было основано 28 мая 1975 года с подписания Лагосского договора. Целями сообщества являются содействие экономической интеграции и коллективному самообеспечению.</p>
+                    <p>В состав ЭКОВАС входят 15 стран Западной Африки с общим населением около 387 миллионов человек.</p>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Интерактивная карта стран ЭКОВАС | Создано для образовательных целей</p>
+        </footer>
+    </div>
+
+    <script>
+        // Данные о странах ЭКОВАС
+        const countriesData = {
+            'benin': {
+                name: 'Бенин',
+                capital: 'Порто-Ново',
+                population: '12.1 млн',
+                area: '112 622 км²',
+                language: 'Французский',
+                currency: 'Франк КФА'
+            },
+            'burkina-faso': {
+                name: 'Буркина-Фасо',
+                capital: 'Уагадугу',
+                population: '21.5 млн',
+                area: '274 200 км²',
+                language: 'Французский',
+                currency: 'Франк КФА'
+            },
+            'cape-verde': {
+                name: 'Кабо-Верде',
+                capital: 'Прая',
+                population: '556 тыс.',
+                area: '4 033 км²',
+                language: 'Португальский',
+                currency: 'Эскудо Кабо-Верде'
+            },
+            'cote-divoire': {
+                name: 'Кот-д\'Ивуар',
+                capital: 'Ямусукро',
+                population: '26.4 млн',
+                area: '322 463 км²',
+                language: 'Французский',
+                currency: 'Франк КФА'
+            },
+            'gambia': {
+                name: 'Гамбия',
+                capital: 'Банжул',
+                population: '2.4 млн',
+                area: '10 689 км²',
+                language: 'Английский',
+                currency: 'Даласи'
+            },
+            'ghana': {
+                name: 'Гана',
+                capital: 'Аккра',
+                population: '31.1 млн',
+                area: '238 535 км²',
+                language: 'Английский',
+                currency: 'Ганский седи'
+            },
+            'guinea': {
+                name: 'Гвинея',
+                capital: 'Конакри',
+                population: '13.1 млн',
+                area: '245 857 км²',
+                language: 'Французский',
+                currency: 'Гвинейский франк'
+            },
+            'guinea-bissau': {
+                name: 'Гвинея-Бисау',
+                capital: 'Бисау',
+                population: '2.0 млн',
+                area: '36 125 км²',
+                language: 'Португальский',
+                currency: 'Франк КФА'
+            },
+            'liberia': {
+                name: 'Либерия',
+                capital: 'Монровия',
+                population: '5.1 млн',
+                area: '111 369 км²',
+                language: 'Английский',
+                currency: 'Либерийский доллар'
+            },
+            'mali': {
+                name: 'Мали',
+                capital: 'Бамако',
+                population: '20.3 млн',
+                area: '1 240 192 км²',
+                language: 'Французский',
+                currency: 'Франк КФА'
+            },
+            'niger': {
+                name: 'Нигер',
+                capital: 'Ниамей',
+                population: '24.2 млн',
+                area: '1 267 000 км²',
+                language: 'Французский',
+                currency: 'Франк КФА'
+            },
+            'nigeria': {
+                name: 'Нигерия',
+                capital: 'Абуджа',
+                population: '206.1 млн',
+                area: '923 768 км²',
+                language: 'Английский',
+                currency: 'Найра'
+            },
+            'senegal': {
+                name: 'Сенегал',
+                capital: 'Дакар',
+                population: '16.7 млн',
+                area: '196 722 км²',
+                language: 'Французский',
+                currency: 'Франк КФА'
+            },
+            'sierra-leone': {
+                name: 'Сьерра-Леоне',
+                capital: 'Фритаун',
+                population: '8.0 млн',
+                area: '71 740 км²',
+                language: 'Английский',
+                currency: 'Леоне'
+            },
+            'togo': {
+                name: 'Того',
+                capital: 'Ломе',
+                population: '8.3 млн',
+                area: '56 785 км²',
+                language: 'Французский',
+                currency: 'Франк КФА'
+            }
+        };
+
+        // Получаем все элементы стран
+        const countryElements = document.querySelectorAll('.country');
+        const countryInfo = document.querySelector('.country-info');
+        
+        // Добавляем обработчики событий для каждой страны
+        countryElements.forEach(country => {
+            country.addEventListener('mouseover', function() {
+                const countryId = this.id;
+                const data = countriesData[countryId];
+                
+                // Обновляем информацию о стране
+                document.querySelector('.country-name').textContent = data.name;
+                document.querySelector('.country-details').innerHTML = `
+                    <p><strong>Столица:</strong> ${data.capital}</p>
+                    <p><strong>Население:</strong> ${data.population}</p>
+                    <p><strong>Площадь:</strong> ${data.area}</p>
+                    <p><strong>Официальный язык:</strong> ${data.language}</p>
+                    <p><strong>Валюта:</strong> ${data.currency}</p>
+                `;
+                
+                // Убираем выделение со всех стран
+                countryElements.forEach(c => c.classList.remove('highlighted'));
+                
+                // Выделяем текущую страну
+                this.classList.add('highlighted');
+            });
+            
+            country.addEventListener('mouseout', function() {
+                // Убираем выделение при уходе курсора
+                this.classList.remove('highlighted');
+            });
+        });
+    </script>
+</body>
+</html>
